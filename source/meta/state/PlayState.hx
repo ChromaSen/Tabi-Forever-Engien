@@ -1,6 +1,5 @@
 package meta.state;
 
-import DialogueBox;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -599,7 +598,6 @@ class PlayState extends MusicBeatState
 				if ((FlxG.keys.justPressed.SIX))
 				{
 					boyfriendStrums.autoplay = !boyfriendStrums.autoplay;
-					uiHUD.autoplayMark.visible = boyfriendStrums.autoplay;
 					PlayState.SONG.validScore = false;
 				}
 			}

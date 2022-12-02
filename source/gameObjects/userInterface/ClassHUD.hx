@@ -33,10 +33,6 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 	var scoreDisplay:String = 'beep bop bo skdkdkdbebedeoop brrapadop';
 
 	var cornerMark:FlxText; // engine mark at the upper right corner
-	var centerMark:FlxText; // song display name and difficulty at the center
-
-	public var autoplayMark:FlxText; // autoplay indicator at the center
-	public var autoplaySine:Float = 0;
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -100,13 +96,6 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		cornerMark.antialiasing = true;
 		add(cornerMark);
 
-		centerMark = new FlxText(0, (Init.trueSettings.get('Downscroll') ? FlxG.height - 40 : 10), 0, '- ${infoDisplay + " [" + diffDisplay}] -');
-		centerMark.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE);
-		centerMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
-		centerMark.screenCenter(X);
-		centerMark.antialiasing = true;
-		add(centerMark);
-
 		// counter
 		if (Init.trueSettings.get('Counter') != 'None')
 		{
@@ -131,22 +120,7 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		}
 		updateScoreText();
 
-		autoplayMark = new FlxText(-5, (Init.trueSettings.get('Downscroll') ? centerMark.y - 60 : centerMark.y + 60), FlxG.width - 800, '[AUTOPLAY]\n', 32);
-		autoplayMark.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
-		autoplayMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
-		autoplayMark.screenCenter(X);
-		autoplayMark.visible = PlayState.boyfriendStrums.autoplay;
-
 		// repositioning for it to not be covered by the receptors
-		if (Init.trueSettings.get('Centered Notefield'))
-		{
-			if (Init.trueSettings.get('Downscroll'))
-				autoplayMark.y = autoplayMark.y - 125;
-			else
-				autoplayMark.y = autoplayMark.y + 125;
-		}
-
-		add(autoplayMark);
 
 	}
 
@@ -180,12 +154,6 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 
 		iconP1.updateAnim(healthBar.percent);
 		iconP2.updateAnim(100 - healthBar.percent);
-
-		if (autoplayMark.visible)
-		{
-			autoplaySine += 180 * (elapsed / 4);
-			autoplayMark.alpha = 1 - Math.sin((Math.PI * autoplaySine) / 80);
-		}
 	}
 
 	private final divider:String = " • ";
