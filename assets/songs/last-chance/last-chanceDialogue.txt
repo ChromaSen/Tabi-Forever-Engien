@@ -1,0 +1,111 @@
+---SECTION START---
+:disableTypeSound:
+:switchSound:tabiText
+:enableTypeSound:
+:tabi-mad:Gh! Are you stupid? How can't you realize that this brat is just using you?!
+:fadeOut:0jesus christ its me gwebdev my man needs to calm down lol
+:switchSound:bfText
+:bf-right:Beep! Bap!
+:switchSound:tabiText
+:tabi-mad:Yes, using you for her own career success, like she used me once.
+:tabi-mad:Hah! I used to be a human like you, BF, but she and her father fooled me and took everything from me.
+:tabi-mad:My trust, my feelings, my love, and my heart. I've lost everything!
+:tabi-mad:Now look who I am, because of her!
+:switchSound:bfText
+:bf-right:Skbaa Draa papa!
+:switchSound:gfText
+:gf:...
+:noone:This situation sure is complicated, huh? BF was so confused-- what is this guy even talking about?
+:noone:Could GF really do something like that? No way.
+:noone:BF decides not to believe Tabi.
+:musicstop:
+:switchSound:tabiText
+:tabi-mad:Stop getting in my way you little freak! Let me end this all! Now!
+:switchSound:bfText
+:bf-right:Beepi! Bop dopskoop!
+:switchSound:tabiText
+:tabi-mad:Alright. That's it. I didn't want to do this, but, boyfriend, you didn't listen. 
+:tabi-mad:I have no other choice but to kill the both of you!
+---SECTION END---
+
+---SECTION START---
+:disableTypeSound:
+:switchSound:bfText
+:soundoverwrite:voices/tabi2/1
+:tabi-mad:Gh! Are you stupid? How can't you realize that this brat is just using you?!
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:Beep! Bap!
+:disableTypeSound:
+:soundoverwrite:voices/tabi2/2
+:tabi-mad:Yes, using you for her own career success, like she used me once.
+:soundoverwrite:voices/tabi2/4
+:tabi-mad:Hah! I used to be a human like you, BF, but she and her father fooled me and took everything from me.
+:soundoverwrite:voices/tabi2/5
+:tabi-mad:My trust, my feelings, my love, and my heart. I've lost everything!
+:soundoverwrite:voices/tabi2/6
+:tabi-mad:Now look who I am, because of her!
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:Skbaa Draa papa!
+:switchSound:gfText
+:gf:...
+:disableTypeSound:
+:noone:This situation sure is complicated, huh? BF was so confused-- what is this guy even talking about?
+:noone:Could GF really do something like that? No way.
+:noone:BF decides not to believe Tabi.
+:musicstop:
+:soundoverwrite:voices/tabi2/7
+:tabi-mad:Stop getting in my way you little freak! Let me end this all! Now!
+:enableTypeSound:
+:switchSound:bfText
+:bf-right:Beepi! Bop dopskoop!
+:disableTypeSound:
+:soundoverwrite:voices/tabi2/8
+:tabi-mad:Alright. That's it. I didn't want to do this, but, boyfriend, you didn't listen. 
+:soundoverwrite:voices/tabi2/9
+:tabi-mad:I have no other choice but to kill the both of you!
+:soundoverwritestop:
+---SECTION END---
+
+---SECTION START---
+:musicloop:bgms/1
+:disableTypeSound:
+:switchSound:tabiText
+:enableTypeSound:
+:tabi-mad:Гх… как ты не понимаешь, что она использует тебя лишь для своей собственной выгоды?!
+:tabi-mad:Использует так, как использовала... меня когда-то... Теперь посмотри на меня! Кто я теперь!? Летающий череп с невидимым телом? Я потерял всё!
+:switchSound:bfText
+:bf-right:Биб боб биб боп сбоп скд
+:switchSound:tabiText
+:tabi-mad:Слушай сюда, это твой последний шанс уйти. Я не остановлюсь, пока не доберусь до этой мелкой стервы! Проваливай сейчас-же, или узри последствия
+:switchSound:bfText
+:bf-right:...
+:musicstop:
+:switchSound:tabiText
+:tabi-mad:Хорошо.. Не хотел я причинять тебе вред, малыш, но ты мне не оставляешь выбора, раз так, то я.. УБЬЮ ВАС ОБОИХ!
+---SECTION END---
+
+---SECTION START---
+:musicloop:bgms/1
+:disableTypeSound:
+:switchSound:bfText
+:soundoverwrite:voices/tabi2/1
+:tabi-mad:Гх… как ты не понимаешь, что она использует тебя лишь для своей собственной выгоды?!
+:soundoverwrite:voices/tabi2/2
+:tabi-mad:Использует так, как использовала... меня когда-то... Теперь посмотри на меня! Кто я теперь!? Летающий череп с невидимым телом? Я потерял всё!
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:Биб боб биб боп сбоп скд
+:disableTypeSound:
+:soundoverwrite:voices/tabi2/3
+:tabi-mad:Слушай сюда, это твой последний шанс уйти. Я не остановлюсь, пока не доберусь до этой мелкой стервы! Проваливай сейчас-же, или узри последствия
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:...
+:disableTypeSound:
+:musicstop:
+:soundoverwrite:voices/tabi2/4
+:tabi-mad:Хорошо.. Не хотел я причинять тебе вред, малыш, но ты мне не оставляешь выбора, раз так, то я.. УБЬЮ ВАС ОБОИХ!
+:soundoverwritestop:
+---SECTION END---

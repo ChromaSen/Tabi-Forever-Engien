@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Menu_Heart.png">
+	<!-- Created with Adobe Animate version 18.0.1.115 -->
+	<!-- gwebdev sussy baka -->
+	<SubTexture name="bopping_heart0000" x="0" y="0" width="992" height="731"/>
+	<SubTexture name="bopping_heart0001" x="992" y="0" width="992" height="731"/>
+	<SubTexture name="bopping_heart0002" x="1984" y="0" width="992" height="731"/>
+	<SubTexture name="bopping_heart0003" x="1984" y="0" width="992" height="731"/>
+	<SubTexture name="bopping_heart0004" x="2976" y="0" width="992" height="731"/>
+	<SubTexture name="bopping_heart0005" x="2976" y="0" width="992" height="731"/>
+	<SubTexture name="bopping_heart0006" x="0" y="731" width="992" height="731"/>
+	<SubTexture name="bopping_heart0007" x="0" y="731" width="992" height="731"/>
+	<SubTexture name="bopping_heart0008" x="992" y="731" width="992" height="731"/>
+	<SubTexture name="bopping_heart0009" x="992" y="731" width="992" height="731"/>
+	<SubTexture name="bopping_heart0010" x="1984" y="731" width="992" height="731"/>
+	<SubTexture name="bopping_heart0011" x="1984" y="731" width="992" height="731"/>
+	<SubTexture name="bopping_heart0012" x="2976" y="731" width="992" height="731"/>
+	<SubTexture name="bopping_heart0013" x="0" y="1462" width="992" height="731"/>
+	<SubTexture name="bopping_heart0014" x="992" y="1462" width="992" height="731"/>
+	<SubTexture name="bopping_heart0015" x="1984" y="1462" width="992" height="731"/>
+	<SubTexture name="bopping_heart0016" x="2976" y="1462" width="992" height="731"/>
+	<SubTexture name="bopping_heart0017" x="0" y="2193" width="992" height="731"/>
+	<SubTexture name="bopping_heart0018" x="992" y="2193" width="992" height="731"/>
+	<SubTexture name="bopping_heart0019" x="1984" y="2193" width="992" height="731"/>
+</TextureAtlas>
