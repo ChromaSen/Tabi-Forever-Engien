@@ -1,5 +1,6 @@
 package meta.state;
 
+import DialogueBox;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -708,12 +709,6 @@ class PlayState extends MusicBeatState
 				hud.angle = FlxMath.lerp(0 + forceZoom[3], hud.angle, easeLerp);
 
 			// Controls
-
-			// RESET = Quick Game Over Screen
-			if (controls.RESET && !startingSong && !isStoryMode)
-			{
-				health = 0;
-			}
 
 			if (health <= 0 && startedCountdown)
 			{
@@ -1625,10 +1620,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (bars == null)
-		{
-			uiHUD.beatHit();
-		}
+		uiHUD.beatHit();
 
 		//
 		charactersDance(curBeat);
@@ -1836,83 +1828,8 @@ class PlayState extends MusicBeatState
 	{
 		switch (curSong.toLowerCase())
 		{
-			case "winter-horrorland":
-				inCutscene = true;
-				var blackScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
-				add(blackScreen);
-				blackScreen.scrollFactor.set();
-				camHUD.visible = false;
-
-				new FlxTimer().start(0.1, function(tmr:FlxTimer)
-				{
-					remove(blackScreen);
-					FlxG.sound.play(Paths.sound('Lights_Turn_On'));
-					camFollow.y = -2050;
-					camFollow.x += 200;
-					FlxG.camera.focusOn(camFollow.getPosition());
-					FlxG.camera.zoom = 1.5;
-
-					new FlxTimer().start(0.8, function(tmr:FlxTimer)
-					{
-						camHUD.visible = true;
-						remove(blackScreen);
-						FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
-							ease: FlxEase.quadInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								startCountdown();
-							}
-						});
-					});
-				});
-			case 'roses':
-				// the same just play angery noise LOL
-				FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX'));
+			case "my-battle" | "last-chance" | "genocide":
 				callTextbox();
-			case 'thorns':
-				inCutscene = true;
-				for (hud in allUIs)
-					hud.visible = false;
-
-				var red:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, 0xFFff1b31);
-				red.scrollFactor.set();
-
-				var senpaiEvil:FlxSprite = new FlxSprite();
-				senpaiEvil.frames = Paths.getSparrowAtlas('cutscene/senpai/senpaiCrazy');
-				senpaiEvil.animation.addByPrefix('idle', 'Senpai Pre Explosion', 24, false);
-				senpaiEvil.setGraphicSize(Std.int(senpaiEvil.width * 6));
-				senpaiEvil.scrollFactor.set();
-				senpaiEvil.updateHitbox();
-				senpaiEvil.screenCenter();
-
-				add(red);
-				add(senpaiEvil);
-				senpaiEvil.alpha = 0;
-				new FlxTimer().start(0.3, function(swagTimer:FlxTimer)
-				{
-					senpaiEvil.alpha += 0.15;
-					if (senpaiEvil.alpha < 1)
-						swagTimer.reset();
-					else
-					{
-						senpaiEvil.animation.play('idle');
-						FlxG.sound.play(Paths.sound('Senpai_Dies'), 1, false, null, true, function()
-						{
-							remove(senpaiEvil);
-							remove(red);
-							FlxG.camera.fade(FlxColor.WHITE, 0.01, true, function()
-							{
-								for (hud in allUIs)
-									hud.visible = true;
-								callTextbox();
-							}, true);
-						});
-						new FlxTimer().start(3.2, function(deadTime:FlxTimer)
-						{
-							FlxG.camera.fade(FlxColor.WHITE, 1.6, false);
-						});
-					}
-				});
 			default:
 				callTextbox();
 		}
