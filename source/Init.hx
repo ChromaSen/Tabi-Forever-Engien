@@ -190,7 +190,7 @@ class Init extends FlxState
 		'ACCEPT' => [[FlxKey.SPACE, Z, FlxKey.ENTER], 4],
 		'BACK' => [[FlxKey.BACKSPACE, X, FlxKey.ESCAPE], 5],
 		'PAUSE' => [[FlxKey.ENTER, P], 6],
-		'RESET' => [[R, null], 13],
+		'RESET' => [[R, FlxKey.NONE], 13],
 		'UI_UP' => [[FlxKey.UP, W], 8],
 		'UI_DOWN' => [[FlxKey.DOWN, S], 9],
 		'UI_LEFT' => [[FlxKey.LEFT, A], 10],
@@ -335,6 +335,7 @@ class Init extends FlxState
 	public static function updateAll()
 	{
 		FlxG.autoPause = trueSettings.get('Auto Pause');
+		flixel.FlxSprite.defaultAntialiasing = !trueSettings.get("Disable Antialiasing");
 
 		Overlay.updateDisplayInfo(trueSettings.get('FPS Counter'), trueSettings.get('Debug Info'), trueSettings.get('Memory Counter'));
 

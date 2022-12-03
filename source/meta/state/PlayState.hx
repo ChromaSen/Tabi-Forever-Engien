@@ -120,6 +120,7 @@ class PlayState extends MusicBeatState
 	var lastReportedPlayheadPosition:Int = 0;
 	var songTime:Float = 0;
 
+	public static var barHUD:FlxCamera;
 	public static var camHUD:FlxCamera;
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
@@ -203,9 +204,17 @@ class PlayState extends MusicBeatState
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 
+		barHUD = new FlxCamera();
+		barHUD.bgColor.alpha = 0;
+
 		FlxG.cameras.reset(camGame);
+
+		FlxG.cameras.add(barHUD, false);
 		FlxG.cameras.add(camHUD, false);
+
+		allUIs.push(barHUD);
 		allUIs.push(camHUD);
+
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
 		// default song

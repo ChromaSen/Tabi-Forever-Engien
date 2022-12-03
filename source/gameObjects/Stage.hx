@@ -150,7 +150,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				bars.antialiasing = false;
 				bars.updateHitbox();
 				bars.screenCenter();
-				bars.cameras = [PlayState.camHUD];
+				bars.cameras = [PlayState.barHUD];
 				add(bars);
 
 				var normal_stage:FNFSprite = new FNFSprite(-510, 230).loadGraphic(Paths.image('backgrounds/' + curStage + '/normal_stage'));
@@ -218,18 +218,18 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				case 'gf':
 					char.setPosition(gf.x, gf.y);
 					gf.visible = false;
-					/*
-						if (isStoryMode)
-						{
-							camPos.x += 600;
-							tweenCamIn();
-					}*/
-					/*
-						case 'spirit':
-							var evilTrail = new FlxTrail(char, null, 4, 24, 0.3, 0.069);
-							evilTrail.changeValuesEnabled(false, false, false, false);
-							add(evilTrail);
-					 */
+				/*
+					if (isStoryMode)
+					{
+						camPos.x += 600;
+						tweenCamIn();
+				}*/
+				/*
+					case 'spirit':
+						var evilTrail = new FlxTrail(char, null, 4, 24, 0.3, 0.069);
+						evilTrail.changeValuesEnabled(false, false, false, false);
+						add(evilTrail);
+				 */
 
 				case 'tabi':
 					boyfriend.x = 1000;
