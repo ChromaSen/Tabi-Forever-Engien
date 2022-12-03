@@ -499,7 +499,7 @@ class PlayState extends MusicBeatState
 					//
 				}
 				else // else just call bad notes
-					if (!Init.trueSettings.get('Ghost Tapping'))
+					if (!Init.trueSettings.get('Ghost Tapping') && !boyfriend.stunned)
 						missNoteCheck(true, key, boyfriend, true);
 				Conductor.songPosition = previousTime;
 			}
@@ -1450,7 +1450,12 @@ class PlayState extends MusicBeatState
 	{
 		// health += 0.012;
 		var healthBase:Float = 0.06;
-		health += (healthBase * (ratingMultiplier / 100));
+		var healthAdd:Float = (healthBase * (ratingMultiplier / 100));
+
+		if (healthAdd >= 0)
+			health += healthAdd / 6;
+		else
+			health += healthAdd;
 	}
 
 	function startSong():Void
@@ -1614,20 +1619,23 @@ class PlayState extends MusicBeatState
 				case 96:
 					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
 					defaultCamZoom = 0.7;
+					uiHUD.iconBeat = 2;
 				case 160:
 					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
 					defaultCamZoom = 0.6;
 				case 224:
 					FlxTween.tween(FlxG.camera, {zoom: 0.8}, 10);
 					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
+					uiHUD.iconBeat = 1;
 				case 256:
 					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
+
 				case 321:
 					FlxTween.tween(vignette, {alpha: 0.5}, 20, {ease: FlxEase.circOut});
 			}
 		}
 
-		uiHUD.beatHit();
+		uiHUD.beatHit(curBeat);
 
 		//
 		charactersDance(curBeat);

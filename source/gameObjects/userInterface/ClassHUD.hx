@@ -42,6 +42,8 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 
+	public var iconBeat:Int = 1;
+
 	private var stupidHealth:Float = 0;
 
 	private var timingsMap:Map<String, FlxText> = [];
@@ -121,7 +123,6 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		updateScoreText();
 
 		// repositioning for it to not be covered by the receptors
-
 	}
 
 	var counterTextSize:Int = 18;
@@ -136,7 +137,7 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		// pain, this is like the 7th attempt
 		healthBar.percent = (PlayState.health * 50);
 
-		var iconLerp = 1 - Main.framerateAdjust(0.15);
+		var iconLerp = 1 - Main.framerateAdjust(0.15 / Math.max(iconBeat, 1));
 		// iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.initialWidth, iconP1.width, iconLerp)));
 		// iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.initialWidth, iconP2.width, iconLerp)));
 
@@ -192,15 +193,18 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		PlayState.updateRPC(false);
 	}
 
-	public function beatHit()
+	public function beatHit(beat:Int = 0)
 	{
 		if (!Init.trueSettings.get('Reduced Movements'))
 		{
-			iconP1.setGraphicSize(Std.int(iconP1.width + 30));
-			iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+			if (beat % iconBeat == 0)
+			{
+				iconP1.setGraphicSize(Std.int(iconP1.width + 30));
+				iconP2.setGraphicSize(Std.int(iconP2.width + 30));
 
-			iconP1.updateHitbox();
-			iconP2.updateHitbox();
+				iconP1.updateHitbox();
+				iconP2.updateHitbox();
+			}
 		}
 		//
 	}
