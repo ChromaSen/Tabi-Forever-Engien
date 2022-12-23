@@ -111,7 +111,7 @@ class Main extends Sprite
 		// here we set up the base game
 		var gameCreate:FlxGame;
 		gameCreate = new FlxGame(gameWidth, gameHeight, mainClassState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash);
-		addChild(gameCreate); // and create it afterwards
+		addChild(gameCreate); // and create it afterwardss
 
 		// default game FPS settings, I'll probably comment over them later.
 		// addChild(new FPS(10, 3, 0xFFFFFF));
@@ -125,7 +125,7 @@ class Main extends Sprite
 		// test initialising the player settings
 		PlayerSettings.init();
 
-		infoCounter = new Overlay(0, 0);
+		infoCounter = new Overlay(4, 10);
 		addChild(infoCounter);
 	}
 

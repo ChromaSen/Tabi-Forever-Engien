@@ -25,10 +25,9 @@ class Genocide extends SongEvents
 		{
 			@:privateAccess
 			{
-				var healthBar = PlayState.uiHUD.healthBar;
-				healthBar.x = FlxMath.remapToRange(PlayState.health, 2, 4, lastHealthX, healthBar.x);
+				PlayState.uiHUD.healthBar.x = FlxMath.remapToRange(PlayState.health, 2, 4, lastHealthX, 40);
 
-				PlayState.uiHUD.healthBarBG.x = healthBar.x - 4;
+				PlayState.uiHUD.healthBarBG.x = PlayState.uiHUD.healthBar.x - 4;
 			}
 		}
 	}
