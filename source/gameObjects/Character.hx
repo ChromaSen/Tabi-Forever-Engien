@@ -101,7 +101,6 @@ class Character extends FNFSprite
 				characterData.camOffsetY = 150;
 				characterData.camOffsetX = 100;
 
-
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/DADDY_DEAREST');
@@ -157,7 +156,6 @@ class Character extends FNFSprite
 				characterData.offsetY = 70;
 				characterData.camOffsetX = 200;
 				characterData.camOffsetY = -100;
-
 			case 'bf-tabi-crazy':
 				frames = Paths.getSparrowAtlas('characters/BF_post_exp');
 
@@ -181,7 +179,7 @@ class Character extends FNFSprite
 				characterData.camOffsetX = 200;
 				characterData.camOffsetY = -100;
 
-							case 'tabi':
+			case 'tabi':
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/TABI');
 				frames = tex;
@@ -272,6 +270,13 @@ class Character extends FNFSprite
 				}
 				else
 					return setCharacter(x, y, 'bf');
+		}
+
+		switch (curCharacter)
+		{
+			case 'BF_post_exp':
+				characterData.camOffsetX = 200;
+				characterData.camOffsetY = -100;
 		}
 
 		// set up offsets cus why not

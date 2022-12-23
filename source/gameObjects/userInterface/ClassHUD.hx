@@ -135,7 +135,7 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 	override public function update(elapsed:Float)
 	{
 		// pain, this is like the 7th attempt
-		healthBar.percent = (PlayState.health * 50);
+		healthBar.percent = (Math.min(PlayState.health, 2) * 50);
 
 		var iconLerp = 1 - Main.framerateAdjust(0.15 / Math.max(iconBeat, 1));
 		// iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.initialWidth, iconP1.width, iconLerp)));

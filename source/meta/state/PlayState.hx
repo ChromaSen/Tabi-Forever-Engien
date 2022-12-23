@@ -40,6 +40,8 @@ import openfl.filters.ShaderFilter;
 import openfl.media.Sound;
 import openfl.utils.Assets;
 import sys.io.File;
+// tabi imports
+import tabi.*;
 
 using StringTools;
 
@@ -50,6 +52,8 @@ import meta.data.dependency.Discord;
 class PlayState extends MusicBeatState
 {
 	public static var startTimer:FlxTimer;
+
+	public static var instance:PlayState;
 
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
@@ -114,7 +118,6 @@ class PlayState extends MusicBeatState
 	var inCutscene:Bool = false;
 
 	var canPause:Bool = true;
-	var vignette:FlxSprite;
 
 	var previousFrameTime:Int = 0;
 	var lastReportedPlayheadPosition:Int = 0;
@@ -183,9 +186,24 @@ class PlayState extends MusicBeatState
 		PlayState.SONG.validScore = true;
 	}
 
+	private var songEvents:SongEvents = null;
+
 	// at the beginning of the playstate
 	override public function create()
 	{
+		instance = this;
+
+		switch (SONG.song.toLowerCase().replace(' ', '-'))
+		{
+			case 'last-chance':
+				songEvents = new LastChance();
+			case 'genocide':
+				songEvents = new Genocide();
+		}
+
+		if (songEvents != null)
+			songEvents.create(false);
+
 		super.create();
 
 		resetStatics();
@@ -241,14 +259,6 @@ class PlayState extends MusicBeatState
 
 		stageBuild = new Stage(curStage);
 		add(stageBuild);
-
-		vignette = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/' + curStage + '/vignette'));
-		vignette.antialiasing = false;
-		vignette.updateHitbox();
-		vignette.screenCenter();
-		vignette.cameras = [camHUD];
-		vignette.alpha = 0;
-		add(vignette);
 
 		// set up characters here too
 		gf = new Character();
@@ -425,6 +435,9 @@ class PlayState extends MusicBeatState
 			var shader:GraphicsShader = new GraphicsShader("", File.getContent("./assets/shaders/vhs.frag"));
 			FlxG.camera.setFilters([new ShaderFilter(shader)]);
 		 */
+
+		if (songEvents != null)
+			songEvents.create(true);
 	}
 
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey>
@@ -547,6 +560,8 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
 
+		instance = null;
+
 		super.destroy();
 	}
 
@@ -556,12 +571,20 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		if (songEvents != null)
+			songEvents.update(elapsed, false);
+
 		stageBuild.stageUpdateConstant(elapsed, boyfriend, gf, dadOpponent);
 
 		super.update(elapsed);
 
-		if (health > 2)
-			health = 2;
+		var maxHealth = 2;
+
+		if (isGenocide)
+			maxHealth = 4;
+
+		if (health > maxHealth)
+			health = maxHealth;
 
 		// dialogue checks
 		if (dialogueBox != null && dialogueBox.alive)
@@ -751,6 +774,9 @@ class PlayState extends MusicBeatState
 			if (Init.trueSettings.get('Controller Mode'))
 				controllerInput();
 		}
+
+		if (songEvents != null)
+			songEvents.update(elapsed, true);
 	}
 
 	// maybe theres a better place to put this, idk -saw
@@ -1452,7 +1478,9 @@ class PlayState extends MusicBeatState
 		var healthAdd:Float = (healthBase * (ratingMultiplier / 100));
 
 		if (healthAdd >= 0)
-			health += healthAdd / 6;
+		{
+			health += healthAdd / (isGenocide ? 6 : 2);
+		}
 		else
 			health += healthAdd;
 	}
@@ -1544,6 +1572,9 @@ class PlayState extends MusicBeatState
 		if (songMusic.time >= Conductor.songPosition + 20 || songMusic.time <= Conductor.songPosition - 20)
 			resyncVocals();
 		//*/
+
+		if (songEvents != null)
+			songEvents.stepHit(curStep);
 	}
 
 	private function charactersDance(curBeat:Int)
@@ -1609,31 +1640,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (curSong == 'Last Chance')
-		{
-			switch (curBeat)
-			{
-				case 1:
-					FlxTween.tween(FlxG.camera, {zoom: 0.8}, 10);
-				case 96:
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-					defaultCamZoom = 0.7;
-					uiHUD.iconBeat = 2;
-				case 160:
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-					defaultCamZoom = 0.6;
-				case 224:
-					FlxTween.tween(FlxG.camera, {zoom: 0.8}, 10);
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-					uiHUD.iconBeat = 1;
-				case 256:
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-
-				case 321:
-					FlxTween.tween(vignette, {alpha: 0.5}, 20, {ease: FlxEase.circOut});
-			}
-		}
-
 		uiHUD.beatHit(curBeat);
 
 		//
@@ -1672,6 +1678,9 @@ class PlayState extends MusicBeatState
 			for (hud in allUIs)
 				hud.zoom += 0.03;
 		}
+
+		if (songEvents != null)
+			songEvents.beatHit(curBeat);
 	}
 
 	//

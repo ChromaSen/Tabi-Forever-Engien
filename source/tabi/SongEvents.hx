@@ -1,17 +1,22 @@
 package tabi;
 
 // internal structure for song events
-class SongEvents
+abstract class SongEvents
 {
 	@:keep
-	function create(post:Bool):Void {}
+	public function create(post:Bool):Void {}
 
 	@:keep
-	function update(elapsed:Float, post:Bool):Void {}
+	public function update(elapsed:Float, post:Bool):Void {}
 
 	@:keep
-	function beatHit(beat:Int):Void {}
+	public function beatHit(beat:Int):Void {}
 
 	@:keep
-	function stepHit(step:Int):Void {}
+	public function stepHit(step:Int):Void {}
+
+	// internal constructor
+
+	@:keep
+	public function new() {}
 }
