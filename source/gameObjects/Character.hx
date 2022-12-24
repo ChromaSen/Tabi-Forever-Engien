@@ -176,8 +176,8 @@ class Character extends FNFSprite
 				flipX = true;
 
 				characterData.offsetY = 70;
-				characterData.camOffsetX = 200;
-				characterData.camOffsetY = -100;
+				characterData.camOffsetX = 150;
+				characterData.camOffsetY = -50;
 
 			case 'tabi':
 				// DAD ANIMATION LOADING CODE
@@ -203,8 +203,8 @@ class Character extends FNFSprite
 				animation.addByPrefix('singLEFT', 'MadTabiLeft', 24);
 
 				playAnim('idle');
-				characterData.camOffsetY = 100;
-				characterData.camOffsetX = 300;
+				characterData.camOffsetY = -50;
+				characterData.camOffsetX = 120;
 			/*
 				case 'bf-og':
 					frames = Paths.getSparrowAtlas('characters/og/BOYFRIEND');

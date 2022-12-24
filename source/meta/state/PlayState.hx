@@ -102,6 +102,8 @@ class PlayState extends MusicBeatState
 	public static var health:Float = 1; // mario
 	public static var combo:Int = 0;
 
+	public static var zoomHit:Bool = false;
+
 	public static var misses:Int = 0;
 
 	public static var deaths:Int = 0;
@@ -1634,6 +1636,13 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		if ((curBeat % 4 == 0 && FlxG.camera.zoom < 1.35 && zoomHit) && (!Init.trueSettings.get('Reduced Movements')))
+		{
+			FlxG.camera.zoom += 0.015;
+			camHUD.zoom += 0.05;
+			for (hud in strumHUD)
+				hud.zoom += 0.05;
+		}
 
 		uiHUD.beatHit(curBeat);
 

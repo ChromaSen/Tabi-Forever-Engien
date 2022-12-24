@@ -158,7 +158,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				var normal_stage:FNFSprite = new FNFSprite(-510, 230).loadGraphic(Paths.image('backgrounds/' + curStage + '/normal_stage'));
 				add(normal_stage);
 
-				sumtable = new FNFSprite(-510, 230).loadGraphic(Paths.image('backgrounds/' + curStage + '/sumtable'));
+				sumtable = new FNFSprite(-510, 150).loadGraphic(Paths.image('backgrounds/' + curStage + '/sumtable'));
 				foreground.add(sumtable);
 			default:
 				PlayState.defaultCamZoom = 0.9;
