@@ -195,6 +195,8 @@ class PlayState extends MusicBeatState
 
 		switch (SONG.song.toLowerCase().replace(' ', '-'))
 		{
+			case 'my-battle':
+				songEvents = new MyBattle();
 			case 'last-chance':
 				songEvents = new LastChance();
 			case 'genocide':

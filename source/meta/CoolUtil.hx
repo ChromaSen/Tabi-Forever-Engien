@@ -103,6 +103,14 @@ class CoolUtil
 		return dumbArray;
 	}
 
+	public static function formatAccuracy(value:Float, dec:Int = 2):String
+	{
+		var str = Std.string(value), ind;
+		if ((ind = str.indexOf('.')) == -1)
+			return str + ('.').rpad('0', dec + 1);
+		return '${str.substr(0, ind)}.${str.substr(ind + 1, dec)}';
+	}
+
 	public static function browserLoad(site:String)
 	{
 		#if linux
