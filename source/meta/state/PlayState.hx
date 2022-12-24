@@ -40,10 +40,10 @@ import openfl.filters.ShaderFilter;
 import openfl.media.Sound;
 import openfl.utils.Assets;
 import sys.io.File;
-// tabi imports
 import tabi.*;
 
 using StringTools;
+// tabi imports
 
 #if desktop
 import meta.data.dependency.Discord;
@@ -1634,22 +1634,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (curSong == 'My Battle')
-		{
-			switch (curBeat)
-			{
-				case 32:
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-				case 96:
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-					defaultCamZoom = 0.7;
-				case 160:
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-					defaultCamZoom = 0.6;
-				case 224:
-					FlxG.camera.flash(FlxColor.WHITE, 0.5, false);
-			}
-		}
 
 		uiHUD.beatHit(curBeat);
 
