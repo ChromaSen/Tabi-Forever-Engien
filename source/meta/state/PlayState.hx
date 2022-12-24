@@ -1055,6 +1055,9 @@ class PlayState extends MusicBeatState
 			if (!coolNote.isSustainNote)
 				destroyNote(characterStrums, coolNote);
 			//
+
+			if (songEvents != null && coolNote.mustPress)
+				songEvents.goodNoteHit(coolNote, character);
 		}
 	}
 
@@ -1163,6 +1166,12 @@ class PlayState extends MusicBeatState
 					notesPressedAutoplay.push(daNote);
 				}
 				goodNoteHit(daNote, char, strumline, canDisplayJudgement);
+
+				if (!daNote.mustPress)
+				{
+					if (songEvents != null)
+						songEvents.opponentNoteHit(daNote, char);
+				}
 			}
 			//
 		}
@@ -1479,7 +1488,7 @@ class PlayState extends MusicBeatState
 
 		if (healthAdd >= 0)
 		{
-			health += healthAdd / (isGenocide ? 6 : 2);
+			health += healthAdd / (isGenocide ? 0.85 : 6);
 		}
 		else
 			health += healthAdd;

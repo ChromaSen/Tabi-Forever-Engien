@@ -100,7 +100,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 		switch (curStage)
 		{
 			case 'genocide':
-				PlayState.defaultCamZoom = 0.6;
+				PlayState.defaultCamZoom = 0.8;
 				bars = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/tabi/bars'));
 				bars.antialiasing = false;
 				bars.updateHitbox();
