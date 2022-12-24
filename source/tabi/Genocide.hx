@@ -1,7 +1,11 @@
 package tabi;
 
+<<<<<<< Updated upstream
 import flixel.FlxG;
 import flixel.FlxSprite;
+=======
+import flixel.addons.effects.FlxTrail;
+>>>>>>> Stashed changes
 import flixel.math.FlxMath;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -22,8 +26,15 @@ class Genocide extends SongEvents
 	{
 		if (post)
 		{
+<<<<<<< Updated upstream
 			perlinNoise = new Perlin();
 
+=======
+
+			var tabiTrail = new FlxTrail(PlayState.dadOpponent, null, 2, 16, 0.6, 0.9);
+			PlayState.instance.add(tabiTrail);
+			
+>>>>>>> Stashed changes
 			PlayState.health = 2;
 
 			PlayState.instance.isGenocide = true;

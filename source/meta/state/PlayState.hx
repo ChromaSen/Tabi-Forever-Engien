@@ -758,7 +758,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('fnf_loss_sfx' + GameOverSubstate.stageSuffix));
 
 				#if DISCORD_RPC
-				Discord.changePresence("Game Over - " + songDetails, detailsSub, iconRPC);
+				Discord.changePresence("Game Over - " + "???" /*detailsSub, iconRPC*/);
 				#end
 			}
 
