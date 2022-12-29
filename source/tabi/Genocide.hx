@@ -1,4 +1,5 @@
 package tabi;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.effects.FlxTrail;
@@ -90,13 +91,21 @@ class Genocide extends SongEvents
 		}
 	}
 
-	override public function beatHit(curBeat:Int){
+	override public function beatHit(curBeat:Int)
+	{
 		switch (curBeat)
 		{
-			case 416:FlxTween.tween(FlxG.camera, {zoom: 1.4}, 2);
-			case 424:PlayState.zoomHit=true;
-			case 456:FlxTween.tween(FlxG.camera, {zoom: 1.1}, 4.2);	
-			case 488:PlayState.zoomHit=false; FlxTween.tween(FlxG.camera, {zoom: 1.6}, 4.5);	
+			case 416:
+				FlxTween.tween(FlxG.camera, {zoom: 1.4}, 2);
+			case 424:
+				PlayState.zoomHit = true;
+			case 456:
+				FlxTween.tween(FlxG.camera, {zoom: 1.1}, 4.2);
+			case 488:
+				{
+					PlayState.zoomHit = false;
+					FlxTween.tween(FlxG.camera, {zoom: 1.6}, 4.5);
+				}
 		}
 	}
 }

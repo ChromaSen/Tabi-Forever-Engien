@@ -105,7 +105,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				bars.antialiasing = false;
 				bars.updateHitbox();
 				bars.screenCenter();
-				bars.cameras = [PlayState.camGame];
+				bars.cameras = [PlayState.barHUD];
 				add(bars);
 
 				var genocideBG:FNFSprite = new FNFSprite(-600, 300).loadGraphic(Paths.image('backgrounds/' + curStage + '/youhavebeendestroyed'));

@@ -43,8 +43,8 @@ import sys.io.File;
 import tabi.*;
 
 using StringTools;
-// tabi imports
 
+// tabi imports
 #if desktop
 import meta.data.dependency.Discord;
 #end
@@ -353,7 +353,7 @@ class PlayState extends MusicBeatState
 
 		//
 		var placement = (FlxG.width / 2);
-		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, false, 4, Init.trueSettings.get('Downscroll'));
+		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, true, 4, Init.trueSettings.get('Downscroll'));
 		dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
@@ -1175,6 +1175,9 @@ class PlayState extends MusicBeatState
 				{
 					if (songEvents != null)
 						songEvents.opponentNoteHit(daNote, char);
+
+					if (daNote.visible && !daNote.isSustainNote && FlxG.random.bool(Timings.trueAccuracy * 95.5))
+						createSplash(daNote, strumline);
 				}
 			}
 			//
@@ -1299,10 +1302,8 @@ class PlayState extends MusicBeatState
 		if (baseRating == "sick")
 			// create the note splash if you hit a sick
 			createSplash(coolNote, strumline);
-		else
-			// if it isn't a sick, and you had a sick combo, then it becomes not sick :(
-			if (allSicks)
-				allSicks = false;
+		else if (allSicks)
+			allSicks = false;
 
 		displayRating(baseRating, timing);
 		Timings.updateAccuracy(Timings.judgementsMap.get(baseRating)[3]);
@@ -1317,7 +1318,7 @@ class PlayState extends MusicBeatState
 	{
 		// play animation in existing notesplashes
 		var noteSplashRandom:String = (Std.string((FlxG.random.int(0, 1) + 1)));
-		if (strumline.splashNotes != null)
+		if (strumline.splashNotes != null && strumline.splashNotes.members[coolNote.noteData] != null)
 			strumline.splashNotes.members[coolNote.noteData].playAnim('anim' + noteSplashRandom, true);
 	}
 
@@ -1413,11 +1414,7 @@ class PlayState extends MusicBeatState
 		if (baseRating != null)
 		{
 			if (Timings.judgementsMap.get(baseRating)[3] > 0)
-			{
-				if (combo < 0)
-					combo = 0;
-				combo += 1;
-			}
+				combo = Std.int(Math.max(1, combo + 1));
 			else
 				missNoteCheck(true, direction, character, false, true);
 		}

@@ -133,6 +133,7 @@ class MainMenuState extends MusicBeatState
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Forever Engine Legacy v" + Main.gameVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		FlxText.scaleText(versionShit);
 		add(versionShit);
 
 		//
