@@ -13,6 +13,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.dependency.Discord;
+import shaders.BlurShader;
 
 using StringTools;
 
@@ -31,6 +32,8 @@ class MainMenuState extends MusicBeatState
 
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
 	var canSnap:Array<Float> = [];
+
+	var blur:BlurShader;
 
 	// the create 'state'
 	override function create()
@@ -60,6 +63,7 @@ class MainMenuState extends MusicBeatState
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = true;
+		bg.shader = new BlurShader();
 		add(bg);
 
 		magenta = new FlxSprite(-85).loadGraphic(Paths.image('menus/base/menuDesat'));
