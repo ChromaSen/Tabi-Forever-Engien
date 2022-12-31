@@ -134,12 +134,14 @@ class FlxSoundTray extends Sprite
 				active = false;
 
 				// Save sound preferences
+				#if (flixel >= "5.0.0")
 				if (FlxG.save.isBound)
 				{
 					FlxG.save.data.mute = FlxG.sound.muted;
 					FlxG.save.data.volume = FlxG.sound.volume;
 					FlxG.save.flush();
 				}
+				#end
 			}
 		}
 	}
