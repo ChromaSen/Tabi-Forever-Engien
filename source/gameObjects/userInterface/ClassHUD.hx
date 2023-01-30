@@ -27,6 +27,8 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 {
 	// set up variables and stuff here
 	var scoreBar:FlxText;
+	var scoreBG:FlxSprite;
+
 	var scoreLast:Float = -1;
 
 	// fnf mods
@@ -85,15 +87,18 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 
 		scoreBar = new FlxText(FlxG.width / 2, Math.floor(healthBarBG.y + 40), 0, scoreDisplay);
 		scoreBar.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
-		scoreBar.setBorderStyle(OUTLINE, FlxColor.BLACK, 1.5);
+
+		scoreBG = new FlxSprite(scoreBar.x, scoreBar.y).makeGraphic(Std.int(scoreBar.width), Std.int(scoreBar.height), FlxColor.fromRGBFloat(0, 0, 0, 0.6));
+
 		updateScoreText();
 		// scoreBar.scrollFactor.set();
 		scoreBar.antialiasing = true;
+		FlxText.scaleText(scoreBar);
+		add(scoreBG);
 		add(scoreBar);
 
 		cornerMark = new FlxText(0, 0, 0, engineDisplay);
 		cornerMark.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
-		cornerMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
 		cornerMark.setPosition(FlxG.width - (cornerMark.width + 5), 5);
 		cornerMark.antialiasing = true;
 		add(cornerMark);
@@ -176,7 +181,12 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 			scoreBar.text += divider + 'Rank: ' + Std.string(Timings.returnScoreRating().toUpperCase());
 		}
 		scoreBar.text += '\n';
+
+		scoreBar.updateHitbox();
 		scoreBar.x = Math.floor((FlxG.width / 2) - (scoreBar.width / 2));
+
+		scoreBG.setGraphicSize(Std.int(scoreBar.width), Std.int(scoreBar.height));
+		scoreBG.x = Math.floor((FlxG.width / 2) - (scoreBG.width / 2));
 
 		// update counter
 		if (Init.trueSettings.get('Counter') != 'None')

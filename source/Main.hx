@@ -64,6 +64,7 @@ class Main extends Sprite
 
 	// most of these variables are just from the base game!
 	// be sure to mess around with these if you'd like.
+	public static var instance:Main;
 
 	public static function main():Void
 	{
@@ -74,6 +75,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		instance = this;
 
 		/**
 			ok so, haxe html5 CANNOT do 120 fps. it just cannot.
@@ -125,7 +128,7 @@ class Main extends Sprite
 		// test initialising the player settings
 		PlayerSettings.init();
 
-		infoCounter = new Overlay(4, 10);
+		infoCounter = new Overlay(5, 10, 2);
 		addChild(infoCounter);
 	}
 

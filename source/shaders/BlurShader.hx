@@ -5,13 +5,15 @@ import flixel.graphics.tile.FlxGraphicsShader;
 class BlurShader extends FlxGraphicsShader
 {
 	@:glFragmentSource('
-        // 16x acceleration of https://www.shadertoy.com/view/4tSyzy
-        // by applying gaussian at intermediate MIPmap level.
+        #pragma header
+
+        uniform sampler2D channel0;
+        uniform vec2 channelResolution0;
+        uniform vec2 resolution;
         
         const int samples = 90;
-        const int LOD = 2;         // gaussian done on MIPmap at scale LOD
-        const int sLOD = 1 << LOD; // tile size = 2^LOD
-        
+        const int LOD = 2;
+        const int sLOD = 1 << LOD;
         const float sigma = float(samples) * .25;
         
         float gaussian(vec2 i) 
@@ -33,9 +35,14 @@ class BlurShader extends FlxGraphicsShader
             return O / O.a;
         }
         
-        void mainImage(out vec4 O, vec2 U) 
+        void main() 
         {
-            O = blur(iChannel0, U/iResolution.xy, 1./iChannelResolution[0].xy);
+            vec2 uv = gl_FragCoord.xy / resolution.xy;
+            gl_FragColor = blur(channel0, uv, 1.0 / channelResolution0.xy);
         }
     ')
+	public function new()
+	{
+		super();
+	}
 }

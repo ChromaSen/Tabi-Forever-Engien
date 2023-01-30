@@ -1,6 +1,8 @@
 package meta;
 
+import flixel.FlxObject;
 import flixel.FlxG;
+import flixel.util.FlxAxes;
 import lime.utils.Assets;
 import meta.state.PlayState;
 
@@ -105,10 +107,27 @@ class CoolUtil
 
 	public static function formatAccuracy(value:Float, dec:Int = 2):String
 	{
-		var str = Std.string(value), ind;
-		if ((ind = str.indexOf('.')) == -1)
-			return str + ('.').rpad('0', dec + 1);
-		return '${str.substr(0, ind)}.${str.substr(ind + 1, dec)}';
+		var str = Std.string(value);
+		if (str.indexOf(".") == -1)
+		{
+			str += ".";
+			for (i in 0...dec)
+			{
+				str += '0';
+			}
+		}
+		return str.split('.')[0] + '.' + str.split('.')[1].rpad("0", 2);
+	}
+
+	public static function centerObjectWithObject(target:FlxObject, source:FlxObject, axes:FlxAxes = XY)
+	{
+		if (axes.x)
+			target.x = source.x + (source.width / 2) - (target.width / 2);
+
+		if (axes.y)
+			target.y = source.y + (source.height / 2) - (target.height / 2);
+
+		return target;
 	}
 
 	public static function browserLoad(site:String)
