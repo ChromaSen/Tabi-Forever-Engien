@@ -27,14 +27,16 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 {
 	// set up variables and stuff here
 	var scoreBar:FlxText;
-	var scoreBG:FlxSprite;
-
 	var scoreLast:Float = -1;
 
 	// fnf mods
 	var scoreDisplay:String = 'beep bop bo skdkdkdbebedeoop brrapadop';
 
 	var cornerMark:FlxText; // engine mark at the upper right corner
+	var centerMark:FlxText; // song display name and difficulty at the center
+
+	public var autoplayMark:FlxText; // autoplay indicator at the center
+	public var autoplaySine:Float = 0;
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -43,8 +45,6 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
-
-	public var iconBeat:Int = 1;
 
 	private var stupidHealth:Float = 0;
 
@@ -87,21 +87,25 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 
 		scoreBar = new FlxText(FlxG.width / 2, Math.floor(healthBarBG.y + 40), 0, scoreDisplay);
 		scoreBar.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
-
-		scoreBG = new FlxSprite(scoreBar.x, scoreBar.y).makeGraphic(Std.int(scoreBar.width), Std.int(scoreBar.height), FlxColor.fromRGBFloat(0, 0, 0, 0.6));
-
+		scoreBar.setBorderStyle(OUTLINE, FlxColor.BLACK, 1.5);
 		updateScoreText();
 		// scoreBar.scrollFactor.set();
 		scoreBar.antialiasing = true;
-		FlxText.scaleText(scoreBar);
-		add(scoreBG);
 		add(scoreBar);
 
 		cornerMark = new FlxText(0, 0, 0, engineDisplay);
 		cornerMark.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
+		cornerMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
 		cornerMark.setPosition(FlxG.width - (cornerMark.width + 5), 5);
 		cornerMark.antialiasing = true;
 		add(cornerMark);
+
+		centerMark = new FlxText(0, (Init.trueSettings.get('Downscroll') ? FlxG.height - 40 : 10), 0, '- ${infoDisplay + " [" + diffDisplay}] -');
+		centerMark.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE);
+		centerMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
+		centerMark.screenCenter(X);
+		centerMark.antialiasing = true;
+		add(centerMark);
 
 		// counter
 		if (Init.trueSettings.get('Counter') != 'None')
@@ -127,7 +131,22 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		}
 		updateScoreText();
 
+		autoplayMark = new FlxText(-5, (Init.trueSettings.get('Downscroll') ? centerMark.y - 60 : centerMark.y + 60), FlxG.width - 800, '[AUTOPLAY]\n', 32);
+		autoplayMark.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
+		autoplayMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
+		autoplayMark.screenCenter(X);
+		autoplayMark.visible = PlayState.boyfriendStrums.autoplay;
+
 		// repositioning for it to not be covered by the receptors
+		if (Init.trueSettings.get('Centered Notefield'))
+		{
+			if (Init.trueSettings.get('Downscroll'))
+				autoplayMark.y = autoplayMark.y - 125;
+			else
+				autoplayMark.y = autoplayMark.y + 125;
+		}
+
+		add(autoplayMark);
 	}
 
 	var counterTextSize:Int = 18;
@@ -140,9 +159,9 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 	override public function update(elapsed:Float)
 	{
 		// pain, this is like the 7th attempt
-		healthBar.percent = (Math.min(PlayState.health, 2) * 50);
+		healthBar.percent = (PlayState.health * 50);
 
-		var iconLerp = 1 - Main.framerateAdjust(0.15 / Math.max(iconBeat, 1));
+		var iconLerp = 1 - Main.framerateAdjust(0.15);
 		// iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.initialWidth, iconP1.width, iconLerp)));
 		// iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.initialWidth, iconP2.width, iconLerp)));
 
@@ -160,6 +179,12 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 
 		iconP1.updateAnim(healthBar.percent);
 		iconP2.updateAnim(100 - healthBar.percent);
+
+		if (autoplayMark.visible)
+		{
+			autoplaySine += 180 * (elapsed / 4);
+			autoplayMark.alpha = 1 - Math.sin((Math.PI * autoplaySine) / 80);
+		}
 	}
 
 	private final divider:String = " • ";
@@ -176,17 +201,12 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		var displayAccuracy:Bool = Init.trueSettings.get('Display Accuracy');
 		if (displayAccuracy)
 		{
-			scoreBar.text += divider + 'Accuracy: ' + CoolUtil.formatAccuracy(Math.floor(Timings.getAccuracy() * 100) / 100) + '%' + comboDisplay;
+			scoreBar.text += divider + 'Accuracy: ' + Std.string(Math.floor(Timings.getAccuracy() * 100) / 100) + '%' + comboDisplay;
 			scoreBar.text += divider + 'Combo Breaks: ' + Std.string(PlayState.misses);
 			scoreBar.text += divider + 'Rank: ' + Std.string(Timings.returnScoreRating().toUpperCase());
 		}
 		scoreBar.text += '\n';
-
-		scoreBar.updateHitbox();
 		scoreBar.x = Math.floor((FlxG.width / 2) - (scoreBar.width / 2));
-
-		scoreBG.setGraphicSize(Std.int(scoreBar.width), Std.int(scoreBar.height));
-		scoreBG.x = Math.floor((FlxG.width / 2) - (scoreBG.width / 2));
 
 		// update counter
 		if (Init.trueSettings.get('Counter') != 'None')
@@ -203,18 +223,15 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		PlayState.updateRPC(false);
 	}
 
-	public function beatHit(beat:Int = 0)
+	public function beatHit()
 	{
 		if (!Init.trueSettings.get('Reduced Movements'))
 		{
-			if (beat % iconBeat == 0)
-			{
-				iconP1.setGraphicSize(Std.int(iconP1.width + 30));
-				iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+			iconP1.setGraphicSize(Std.int(iconP1.width + 30));
+			iconP2.setGraphicSize(Std.int(iconP2.width + 30));
 
-				iconP1.updateHitbox();
-				iconP2.updateHitbox();
-			}
+			iconP1.updateHitbox();
+			iconP2.updateHitbox();
 		}
 		//
 	}

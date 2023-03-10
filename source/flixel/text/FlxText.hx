@@ -200,7 +200,7 @@ class FlxText extends FlxSprite
 		textField.text = Text;
 		fieldWidth = FieldWidth;
 		textField.embedFonts = EmbeddedFont;
-		textField.sharpness = 400;
+		textField.sharpness = 100;
 		textField.height = (Text.length <= 0) ? 1 : 10;
 
 		allowCollisions = NONE;
@@ -209,25 +209,6 @@ class FlxText extends FlxSprite
 		drawFrame();
 
 		shadowOffset = FlxPoint.get(1, 1);
-	}
-
-	public static function scaleText(text:FlxText)
-	{
-		if (text != null)
-		{
-			text.size = Math.floor(text.size * 4);
-
-			if (text.borderStyle != null && text.borderStyle != NONE)
-				text.borderSize *= 4;
-
-			#if (flixel >= "5.0.0")
-			text.scale /= 4;
-			#else
-			text.scale.set(text.scale.x / 4, text.scale.y / 4);
-			#end
-
-			text.updateHitbox();
-		}
 	}
 
 	/**

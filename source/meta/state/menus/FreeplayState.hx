@@ -32,12 +32,9 @@ class FreeplayState extends MusicBeatState
 	var songs:Array<SongMetadata> = [];
 
 	var selector:FlxText;
-
-	static var curSelected:Int = 0;
-
+	var curSelected:Int = 0;
 	var curSongPlaying:Int = -1;
-
-	static var curDifficulty:Int = 1;
+	var curDifficulty:Int = 1;
 
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -135,7 +132,6 @@ class FreeplayState extends MusicBeatState
 
 		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
-		FlxText.scaleText(scoreText);
 
 		scoreBG = new FlxSprite(scoreText.x - scoreText.width, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
 		scoreBG.alpha = 0.6;
@@ -145,7 +141,6 @@ class FreeplayState extends MusicBeatState
 		diffText.alignment = CENTER;
 		diffText.font = scoreText.font;
 		diffText.x = scoreBG.getGraphicMidpoint().x;
-		FlxText.scaleText(diffText);
 		add(diffText);
 
 		add(scoreText);
@@ -250,13 +245,7 @@ class FreeplayState extends MusicBeatState
 		}
 
 		// Adhere the position of all the things (I'm sorry it was just so ugly before I had to fix it Shubs)
-
-		var lastText:String = scoreText.text;
-
 		scoreText.text = "PERSONAL BEST:" + lerpScore;
-		if (lastText != scoreText.text)
-			scoreText.updateHitbox();
-
 		scoreText.x = FlxG.width - scoreText.width - 5;
 		scoreBG.width = scoreText.width + 8;
 		scoreBG.x = FlxG.width - scoreBG.width;
@@ -295,7 +284,6 @@ class FreeplayState extends MusicBeatState
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 
 		diffText.text = '< ' + existingDifficulties[curSelected][curDifficulty] + ' >';
-		diffText.updateHitbox();
 		lastDifficulty = existingDifficulties[curSelected][curDifficulty];
 	}
 

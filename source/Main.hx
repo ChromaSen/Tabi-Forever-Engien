@@ -54,17 +54,47 @@ class Main extends Sprite
 		[ [songs to use], [characters in songs], [color of week], name of week ]
 	**/
 	public static var gameWeeks:Array<Dynamic> = [
+		[['Tutorial'], ['gf'], [FlxColor.fromRGB(129, 100, 223)], 'Funky Beginnings'],
 		[
-			['My-Battle', 'Last-Chance', 'Genocide'],
-			['tabi', 'tabi', 'tabi-crazy'],
+			['Bopeebo', 'Fresh', 'Dadbattle'],
+			['dad', 'dad', 'dad'],
 			[FlxColor.fromRGB(129, 100, 223)],
-			'vs. TABI'
-		]
+			'vs. DADDY DEAREST'
+		],
+		[
+			['Spookeez', 'South', 'Monster'],
+			['spooky', 'spooky', 'monster'],
+			[FlxColor.fromRGB(30, 45, 60)],
+			'Spooky Month'
+		],
+		[
+			['Pico', 'Philly-Nice', 'Blammed'],
+			['pico'],
+			[FlxColor.fromRGB(111, 19, 60)],
+			'vs. Pico'
+		],
+		[
+			['Satin-Panties', 'High', 'Milf'],
+			['mom'],
+			[FlxColor.fromRGB(203, 113, 170)],
+			'MOMMY MUST MURDER'
+		],
+		[
+			['Cocoa', 'Eggnog', 'Winter-Horrorland'],
+			['parents-christmas', 'parents-christmas', 'monster-christmas'],
+			[FlxColor.fromRGB(141, 165, 206)],
+			'RED SNOW'
+		],
+		[
+			['Senpai', 'Roses', 'Thorns'],
+			['senpai', 'senpai', 'spirit'],
+			[FlxColor.fromRGB(206, 106, 169)],
+			"hating simulator ft. moawling"
+		],
 	];
 
 	// most of these variables are just from the base game!
 	// be sure to mess around with these if you'd like.
-	public static var instance:Main;
 
 	public static function main():Void
 	{
@@ -75,8 +105,6 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-
-		instance = this;
 
 		/**
 			ok so, haxe html5 CANNOT do 120 fps. it just cannot.
@@ -114,7 +142,7 @@ class Main extends Sprite
 		// here we set up the base game
 		var gameCreate:FlxGame;
 		gameCreate = new FlxGame(gameWidth, gameHeight, mainClassState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash);
-		addChild(gameCreate); // and create it afterwardss
+		addChild(gameCreate); // and create it afterwards
 
 		// default game FPS settings, I'll probably comment over them later.
 		// addChild(new FPS(10, 3, 0xFFFFFF));
@@ -128,7 +156,7 @@ class Main extends Sprite
 		// test initialising the player settings
 		PlayerSettings.init();
 
-		infoCounter = new Overlay(5, 10, 2);
+		infoCounter = new Overlay(0, 0);
 		addChild(infoCounter);
 	}
 
