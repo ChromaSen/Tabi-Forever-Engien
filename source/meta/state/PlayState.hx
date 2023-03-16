@@ -841,6 +841,21 @@ class PlayState extends MusicBeatState
 
 				strumline.allNotes.forEachAlive(function(daNote:Note)
 				{
+					// check where the note is and make sure it is either active or inactive
+					if (!daNote.exists)
+						return;
+
+					if (!daNote.isOnScreen())
+					{
+						daNote.active = false;
+						daNote.visible = false;
+					}
+					else
+					{
+						daNote.visible = true;
+						daNote.active = true;
+					}
+
 					var roundedSpeed = FlxMath.roundDecimal(daNote.noteSpeed, 2);
 					var receptorPosY:Float = strumline.receptors.members[Math.floor(daNote.noteData)].y + Note.swagWidth / 6;
 					var psuedoY:Float = (downscrollMultiplier * -((Conductor.songPosition - daNote.strumTime) * (0.45 * roundedSpeed)));
@@ -909,18 +924,7 @@ class PlayState extends MusicBeatState
 					// hell breaks loose here, we're using nested scripts!
 					mainControls(daNote, strumline.character, strumline, strumline.autoplay);
 
-					// check where the note is and make sure it is either active or inactive
-					if (daNote.y > FlxG.height)
-					{
-						daNote.active = false;
-						daNote.visible = false;
-					}
-					else
-					{
-						daNote.visible = true;
-						daNote.active = true;
-					}
-
+					/*
 					if (!daNote.tooLate && daNote.strumTime < Conductor.songPosition - (Timings.msThreshold) && !daNote.wasGoodHit)
 					{
 						if ((!daNote.tooLate) && (daNote.mustPress))
@@ -961,7 +965,7 @@ class PlayState extends MusicBeatState
 								}
 							}
 						}
-					}
+					}*/
 
 					// if the note is off screen (above)
 					if ((((!Init.trueSettings.get('Downscroll')) && (daNote.y < -daNote.height))
@@ -1044,6 +1048,11 @@ class PlayState extends MusicBeatState
 					if (coolNote.childrenNotes.length > 0)
 						Timings.notesHit++;
 					healthCall(Timings.judgementsMap.get(foundRating)[3]);
+
+					for (sustain in coolNote.childrenNotes)
+					{
+						sustain.parentWasHit = true;
+					}
 				}
 				else if (coolNote.isSustainNote)
 				{
@@ -1189,16 +1198,19 @@ class PlayState extends MusicBeatState
 			// check if anything is held
 			if (holdControls.contains(true))
 			{
+				var traceOnce:Bool = false;
 				// check notes that are alive
 				strumline.allNotes.forEachAlive(function(coolNote:Note)
 				{
-					if ((coolNote.parentNote != null && coolNote.parentNote.wasGoodHit)
+					if (coolNote.parentWasHit
 						&& coolNote.canBeHit
 						&& coolNote.mustPress
 						&& !coolNote.tooLate
 						&& coolNote.isSustainNote
 						&& holdControls[coolNote.noteData])
+					{
 						goodNoteHit(coolNote, char, strumline);
+					}
 				});
 			}
 		}

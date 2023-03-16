@@ -81,6 +81,8 @@ class Note extends FNFSprite
 			parentNote = null;
 	}
 
+	public var parentWasHit:Bool = false;
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
