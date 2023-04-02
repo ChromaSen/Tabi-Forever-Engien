@@ -64,6 +64,7 @@ class Main extends Sprite
 
 	// most of these variables are just from the base game!
 	// be sure to mess around with these if you'd like.
+	public static var instance:Main;
 
 	public static function main():Void
 	{
@@ -74,6 +75,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		instance = this;
 
 		/**
 			ok so, haxe html5 CANNOT do 120 fps. it just cannot.
@@ -111,7 +114,7 @@ class Main extends Sprite
 		// here we set up the base game
 		var gameCreate:FlxGame;
 		gameCreate = new FlxGame(gameWidth, gameHeight, mainClassState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash);
-		addChild(gameCreate); // and create it afterwardss
+		addChild(gameCreate); // and create it afterwards
 
 		// default game FPS settings, I'll probably comment over them later.
 		// addChild(new FPS(10, 3, 0xFFFFFF));
@@ -125,7 +128,7 @@ class Main extends Sprite
 		// test initialising the player settings
 		PlayerSettings.init();
 
-		infoCounter = new Overlay(4, 10);
+		infoCounter = new Overlay(5, 10, 2);
 		addChild(infoCounter);
 	}
 

@@ -1,5 +1,6 @@
 package meta;
 
+import flixel.FlxG;
 import haxe.Timer;
 import openfl.events.Event;
 import openfl.system.System;
@@ -14,6 +15,8 @@ import openfl.text.TextFormat;
 **/
 class Overlay extends TextField
 {
+	private var outlines:Array<TextField> = [];
+
 	var times:Array<Float> = [];
 	var memPeak:UInt = 0;
 
@@ -22,7 +25,7 @@ class Overlay extends TextField
 	static var displayMemory = true;
 	static var displayExtra = true;
 
-	public function new(x:Float, y:Float)
+	public function new(x:Float, y:Float, borderSize:Float = 0)
 	{
 		super();
 
@@ -32,8 +35,28 @@ class Overlay extends TextField
 		autoSize = LEFT;
 		selectable = false;
 
-		defaultTextFormat = new TextFormat(Paths.font("vcr.ttf"), 12, 0xFFFFFF);
+		defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 14, 0xD6E1E9);
 		text = "";
+
+		if (borderSize > 0)
+		{
+			var iterations:Int = Std.int(borderSize);
+			var delta:Float = borderSize / iterations;
+
+			for (i in 0...iterations)
+			{
+				var offset:Float = -delta * i;
+				for (dx in [-delta, 0, delta])
+				{
+					for (dy in [-delta, 0, delta])
+					{
+						if (dx != 0 || dy != 0)
+							addOutline(offset + dx, offset + dy);
+					}
+				}
+			}
+		}
+
 
 		addEventListener(Event.ENTER_FRAME, update);
 	}
@@ -68,9 +91,32 @@ class Overlay extends TextField
 		if (visible)
 		{
 			text = '' // set up the text itself
-				+ (displayFps ? times.length + " FPS\n" : '') // Framerate
-			#if !neko + (displayExtra ? Main.mainClassState + "\n" : '') #end // Current Game State
-			+ (displayMemory ? '${getInterval(mem)} / ${getInterval(memPeak)}\n' : ''); // Current and Total Memory Usage
+				+ (displayFps ? "FPS: " + times.length + "\n" : '') // Framerate
+				+ (displayMemory ? 'MEM: ${getInterval(mem)} / ${getInterval(memPeak)}\n' : '') // Current and Total Memory Usage
+			#if !neko + (displayExtra ? Main.mainClassState + "\n" : ''); #end // Current Game State
+
+			for (textOutline in outlines)
+			{
+				if (textOutline != null)
+					textOutline.text = this.text;
+			}
+
+			if (displayFps || displayMemory)
+			{
+				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0xA4ADB4, true), text.indexOf("FPS:"), text.indexOf("FPS:") + 4);
+				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0xA4ADB4, true), text.indexOf("MEM:"), text.indexOf("MEM:") + 4);
+
+				for (textOutline in outlines)
+				{
+					if (textOutline != null)
+					{
+						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0x000000, true), text.indexOf("FPS:"),
+							text.indexOf("FPS:") + 4);
+						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0x000000, true), text.indexOf("MEM:"),
+							text.indexOf("MEM:") + 4);
+					}
+				}
+			}
 		}
 	}
 
@@ -79,5 +125,20 @@ class Overlay extends TextField
 		displayFps = shouldDisplayFps;
 		displayExtra = shouldDisplayExtra;
 		displayMemory = shouldDisplayMemory;
+	}
+
+	function addOutline(dx:Float, dy:Float):Void
+	{
+		var textOutline:TextField = new TextField();
+		textOutline.x = this.x + dx;
+		textOutline.y = this.y + dy;
+		textOutline.autoSize = LEFT;
+		textOutline.selectable = false;
+		textOutline.mouseEnabled = false;
+		textOutline.defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 14, 0xFF000000);
+		textOutline.text = '';
+
+		outlines.push(textOutline);
+		Main.instance.addChild(textOutline);
 	}
 }
