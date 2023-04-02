@@ -176,7 +176,7 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		var displayAccuracy:Bool = Init.trueSettings.get('Display Accuracy');
 		if (displayAccuracy)
 		{
-			scoreBar.text += divider + 'Accuracy: ' + CoolUtil.formatAccuracy(Math.floor(Timings.getAccuracy() * 100) / 100) + '%' + comboDisplay;
+			scoreBar.text += divider + 'Accuracy: ' + Std.string(Math.floor(Timings.getAccuracy() * 100) / 100) + '%' + comboDisplay;
 			scoreBar.text += divider + 'Combo Breaks: ' + Std.string(PlayState.misses);
 			scoreBar.text += divider + 'Rank: ' + Std.string(Timings.returnScoreRating().toUpperCase());
 		}

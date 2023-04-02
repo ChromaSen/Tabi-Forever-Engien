@@ -17,7 +17,7 @@ class Genocide extends SongEvents
 	var lastHealthY:Float = 0;
 
 	var perlinNoise:Perlin;
-	var vignette:FlxSprite;
+	var darkSpr:FlxSprite;
 
 	override public function create(post:Bool)
 	{
@@ -35,17 +35,6 @@ class Genocide extends SongEvents
 				lastHealthX = PlayState.uiHUD.healthBar.x;
 				lastHealthY = PlayState.uiHUD.healthBar.y;
 			}
-		}
-
-		if (post)
-		{
-			vignette = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/' + PlayState.curStage + '/vignette'));
-			vignette.antialiasing = false;
-			vignette.updateHitbox();
-			vignette.screenCenter();
-			vignette.cameras = [PlayState.camHUD];
-			vignette.alpha = 0;
-			PlayState.instance.add(vignette);
 		}
 	}
 
@@ -72,8 +61,6 @@ class Genocide extends SongEvents
 				PlayState.uiHUD.healthBar.x += FlxG.random.float(5, 20);
 
 				PlayState.uiHUD.healthBarBG.setPosition(PlayState.uiHUD.healthBar.x - 4, PlayState.uiHUD.healthBar.y - 4);
-
-				vignette.alpha = FlxMath.remapToRange(PlayState.health, 0, 4, 1, 0);
 			}
 		}
 	}

@@ -21,8 +21,7 @@ using StringTools;
 class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;
-
-	static var curDifficulty:Int = 1;
+	var curDifficulty:Int = 1;
 
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
 
@@ -38,7 +37,7 @@ class StoryMenuState extends MusicBeatState
 
 	var txtWeekTitle:FlxText;
 
-	static var curWeek:Int = 0;
+	var curWeek:Int = 0;
 
 	var txtTracklist:FlxText;
 

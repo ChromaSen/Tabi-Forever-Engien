@@ -32,12 +32,9 @@ class FreeplayState extends MusicBeatState
 	var songs:Array<SongMetadata> = [];
 
 	var selector:FlxText;
-
-	static var curSelected:Int = 0;
-
+	var curSelected:Int = 0;
 	var curSongPlaying:Int = -1;
-
-	static var curDifficulty:Int = 1;
+	var curDifficulty:Int = 1;
 
 	var scoreText:FlxText;
 	var diffText:FlxText;

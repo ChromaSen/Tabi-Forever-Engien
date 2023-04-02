@@ -1,7 +1,7 @@
 package meta;
 
-import flixel.FlxObject;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.util.FlxAxes;
 import lime.utils.Assets;
 import meta.state.PlayState;

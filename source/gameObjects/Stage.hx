@@ -121,23 +121,21 @@ class Stage extends FlxTypedGroup<FlxBasic>
 
 				add(genocideBG);
 
-				var fire1:FNFSprite = new FNFSprite(-600, 400);
+				var fire1:FNFSprite = new FNFSprite(-600, 600);
 				fire1.frames = Paths.getSparrowAtlas('backgrounds/' + curStage + '/newfireglow');
 				fire1.animation.addByPrefix('idle', "FireStage", 24);
 				fire1.animation.play('idle');
 				fire1.scrollFactor.set(0.9, 0.9);
-				fire1.scale.set(1.5, 1.5);
-				fire1.updateHitbox();
-
+				fire1.scale.set(2.5);
+				fire1.flipX = true;
 				add(fire1);
 
-				var fire2:FNFSprite = new FNFSprite(fire1.x + fire1.width - 80, 400);
+				var fire2:FNFSprite = new FNFSprite(-600, 600);
 				fire2.frames = Paths.getSparrowAtlas('backgrounds/' + curStage + '/newfireglow');
 				fire2.animation.addByPrefix('idle', "FireStage", 24);
 				fire2.animation.play('idle');
 				fire2.scrollFactor.set(0.9, 0.9);
-				fire2.scale.set(1.5, 1.5);
-				fire2.updateHitbox();
+				fire2.scale.set(2.5);
 				fire2.flipX = true;
 				add(fire2);
 
