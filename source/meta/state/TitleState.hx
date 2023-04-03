@@ -56,7 +56,7 @@ class TitleState extends MusicBeatState
 			Discord.changePresence('TITLE SCREEN', 'Main Menu');
 			#end
 
-			ForeverTools.resetMenuMusic(true);
+			ForeverTools.resetMenuMusic(false);
 			initialized = true;
 		}
 
@@ -83,10 +83,24 @@ class TitleState extends MusicBeatState
 		new FlxTimer().start(2, appearText);
 	}
 
+	public var proceed:Bool = false;
+
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
+
+		if (proceed && controls.ACCEPT)
+		{
+			proceed = false;
+
+			FlxG.sound.play(Paths.sound('scrollMenu'));
+
+			new FlxTimer().start(1.5, function(tmr:FlxTimer)
+			{
+				Main.switchState(this, new MainMenuState());
+			});
+		}
 
 		super.update(elapsed);
 	}
@@ -107,6 +121,7 @@ class TitleState extends MusicBeatState
 		else if (nameList.length <= 0)
 		{
 			title.active = true;
+			proceed = true;
 			FlxTween.tween(title, {alpha: 1.0}, 3.5);
 		}
 		else

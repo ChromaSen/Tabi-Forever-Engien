@@ -18,10 +18,10 @@ class ForeverTools
 		// make sure the music is playing
 		if (((FlxG.sound.music != null) && (!FlxG.sound.music.playing)) || (FlxG.sound.music == null))
 		{
-			var song = (Init.trueSettings.get("Custom Titlescreen") ? Paths.music('tragicMenu') : Paths.music('tragicMenu'));
-			FlxG.sound.playMusic(song, (resetVolume) ? 0 : 0.7);
+			var song =  Paths.music('tragicMenu');
+			FlxG.sound.playMusic(song, 1.0);
 			if (resetVolume)
-				FlxG.sound.music.fadeIn(4, 0, 0.7);
+				FlxG.sound.music.fadeIn(4, 0, 1.0);
 			// placeholder bpm
 			Conductor.changeBPM(102);
 		}
