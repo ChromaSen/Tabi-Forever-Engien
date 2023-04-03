@@ -5,7 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import meta.MusicBeat.MusicBeatState;
-import meta.state.menus.MainMenuState;
+import meta.state.TitleState;
 
 class DisclaimerState extends MusicBeatState
 {
@@ -38,7 +38,7 @@ class DisclaimerState extends MusicBeatState
 
 				FlxG.camera.fade(0x00000000, 2.5, true, function()
 				{
-					Main.switchState(this, new MainMenuState());
+					Main.switchState(this, new TitleState());
 				});
 			}
 		}
