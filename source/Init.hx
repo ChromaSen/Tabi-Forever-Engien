@@ -171,12 +171,6 @@ class Init extends FlxState
 			"Fixes the judgements to the camera instead of to the world itself, making them easier to read.",
 			NOT_FORCED
 		],
-		'Simply Judgements' => [
-			false,
-			Checkmark,
-			"Simplifies the judgement animations, displaying only one judgement / rating sprite at a time.",
-			NOT_FORCED
-		],
 	];
 
 	public static var trueSettings:Map<String, Dynamic> = [];

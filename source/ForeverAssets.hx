@@ -40,6 +40,7 @@ class ForeverAssets
 			default:
 				newSprite.alpha = 1;
 				newSprite.screenCenter();
+				newSprite.x -= 110;
 				newSprite.x += (43 * scoreInt) + 20;
 				newSprite.y += 60;
 
@@ -61,12 +62,10 @@ class ForeverAssets
 			newSprite.setGraphicSize(Std.int(newSprite.width * 0.5));
 		}
 		newSprite.updateHitbox();
-		if (!Init.trueSettings.get('Simply Judgements'))
-		{
-			newSprite.acceleration.y = FlxG.random.int(200, 300);
-			newSprite.velocity.y = -FlxG.random.int(140, 160);
-			newSprite.velocity.x = FlxG.random.float(-5, 5);
-		}
+
+		newSprite.acceleration.y = FlxG.random.int(200, 300);
+		newSprite.velocity.y = -FlxG.random.int(140, 160);
+		newSprite.velocity.x = FlxG.random.float(-5, 5);
 
 		return newSprite;
 	}
@@ -88,14 +87,11 @@ class ForeverAssets
 			default:
 				rating.alpha = 1;
 				rating.screenCenter();
-				rating.x = (FlxG.width * 0.55) - 40;
+				rating.x -= 130;
 				rating.y -= 60;
-				if (!Init.trueSettings.get('Simply Judgements'))
-				{
-					rating.acceleration.y = 550;
-					rating.velocity.y = -FlxG.random.int(140, 175);
-					rating.velocity.x = -FlxG.random.int(0, 10);
-				}
+				rating.acceleration.y = 550;
+				rating.velocity.y = -FlxG.random.int(140, 175);
+				rating.velocity.x = -FlxG.random.int(0, 10);
 				rating.animation.add('base', [
 					Std.int((Timings.judgementsMap.get(asset)[0] * 2) + (perfectSick ? 0 : 2) + (timing == 'late' ? 1 : 0))
 				], 24, false);

@@ -87,7 +87,6 @@ class OptionsMenuState extends MusicBeatState
 					['', null],
 					["UI Skin", getFromOption],
 					['Fixed Judgements', getFromOption],
-					['Simply Judgements', getFromOption],
 					['Counter', getFromOption],
 					['', null],
 					['Notes', null],

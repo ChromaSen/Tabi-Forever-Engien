@@ -40,11 +40,11 @@ import openfl.filters.ShaderFilter;
 import openfl.media.Sound;
 import openfl.utils.Assets;
 import sys.io.File;
-// tabi imports
 import tabi.*;
 
 using StringTools;
 
+// tabi imports
 #if desktop
 import meta.data.dependency.Discord;
 #end
@@ -1343,37 +1343,24 @@ class PlayState extends MusicBeatState
 			// numScore.loadGraphic(Paths.image('UI/' + pixelModifier + 'num' + stringArray[scoreInt]));
 			var numScore = ForeverAssets.generateCombo('combo', stringArray[scoreInt], (!negative ? allSicks : false), assetModifier, changeableSkin, 'UI',
 				negative, createdColor, scoreInt);
-			add(numScore);
-			// hardcoded lmao
-			if (!Init.trueSettings.get('Simply Judgements'))
-			{
+			if (!cache)
 				add(numScore);
-				FlxTween.tween(numScore, {alpha: 0}, 0.2, {
-					onComplete: function(tween:FlxTween)
-					{
-						numScore.kill();
-					},
-					startDelay: Conductor.crochet * 0.002
-				});
-			}
-			else
-			{
-				add(numScore);
-				// centers combo
-				numScore.y += 10;
-				numScore.x -= 95;
-				numScore.x -= ((comboString.length - 1) * 22);
-				lastCombo.push(numScore);
-				FlxTween.tween(numScore, {y: numScore.y + 20}, 0.1, {type: FlxTweenType.BACKWARD, ease: FlxEase.circOut});
-			}
-			// hardcoded lmao
-			if (Init.trueSettings.get('Fixed Judgements'))
-			{
-				if (!cache)
-					numScore.cameras = [camHUD];
-				numScore.y += 50;
-			}
+
+			numScore.y += 10;
+			numScore.x -= 95;
+			numScore.x -= ((comboString.length - 1) * 22);
+			lastCombo.push(numScore);
+			numScore.cameras = [camHUD];
+			numScore.y += 50;
 			numScore.x += 100;
+
+			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
+				onComplete: function(tween:FlxTween)
+				{
+					numScore.kill();
+				},
+				startDelay: Conductor.crochet * 0.00125
+			});
 		}
 	}
 
@@ -1427,52 +1414,37 @@ class PlayState extends MusicBeatState
 			"oh but if the rating isn't sick why not just reset it"
 			because miss judgements can pop, and they dont mess with your sick combo
 		 */
+
 		var rating = ForeverAssets.generateRating('$daRating', (daRating == 'sick' ? allSicks : false), timing, assetModifier, changeableSkin, 'UI');
-		add(rating);
-
-		if (!Init.trueSettings.get('Simply Judgements'))
+		if (lastRating != null)
 		{
-			add(rating);
+			FlxTween.cancelTweensOf(lastRating);
 
-			FlxTween.tween(rating, {alpha: 0}, 0.2, {
-				onComplete: function(tween:FlxTween)
-				{
-					rating.kill();
-				},
-				startDelay: Conductor.crochet * 0.00125
-			});
+			lastRating.kill();
+			lastRating.destroy();
+
+			lastRating = null;
 		}
-		else
-		{
-			if (lastRating != null)
+
+			lastRating = rating;
+
+		if (!cache)
+			add(lastRating);
+
+		FlxTween.tween(lastRating, {alpha: 0}, 0.2, {
+			onComplete: function(tween:FlxTween)
 			{
 				lastRating.kill();
-			}
-			add(rating);
-			lastRating = rating;
-			FlxTween.tween(rating, {y: rating.y + 20}, 0.2, {type: FlxTweenType.BACKWARD, ease: FlxEase.circOut});
-			FlxTween.tween(rating, {"scale.x": 0, "scale.y": 0}, 0.1, {
-				onComplete: function(tween:FlxTween)
-				{
-					rating.kill();
-				},
-				startDelay: Conductor.crochet * 0.00125
-			});
-		}
-		// */
+			},
+			startDelay: Conductor.crochet * 0.00125
+		});
 
 		if (!cache)
 		{
-			if (Init.trueSettings.get('Fixed Judgements'))
-			{
-				// bound to camera
-				rating.cameras = [camHUD];
-				rating.screenCenter();
-			}
+			lastRating.cameras = [camHUD];
 
 			// return the actual rating to the array of judgements
 			Timings.gottenJudgements.set(daRating, Timings.gottenJudgements.get(daRating) + 1);
-
 			// set new smallest rating
 			if (Timings.smallestRating != daRating)
 			{
@@ -1566,14 +1538,14 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals():Void
 	{
-		trace('resyncing vocal time ${vocals.time}');
 		songMusic.pause();
 		vocals.pause();
+
 		Conductor.songPosition = songMusic.time;
 		vocals.time = Conductor.songPosition;
+
 		songMusic.play();
 		vocals.play();
-		trace('new vocal time ${Conductor.songPosition}');
 	}
 
 	override function stepHit()
@@ -1607,7 +1579,9 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0) && (!Init.trueSettings.get('Reduced Movements')))
+		if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0)
+			&& (!Init.trueSettings.get('Reduced Movements'))
+			&& (boyfriendStrums.allNotes.members.length > 2 || dadStrums.allNotes.members.length > 2))
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.05;

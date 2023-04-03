@@ -40,7 +40,7 @@ class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
 
-	public static var nameList:Array<String> = ['TEXT1', 'A Friday Night Funkin\' Mod'];
+	public static var nameList:Array<String> = ['Tabi Team Presents', 'A Friday Night Funkin\' Mod'];
 
 	public var textDisplay:FlxText;
 	public var title:FlxSprite;
@@ -134,7 +134,7 @@ class TitleState extends MusicBeatState
 				ease: FlxEase.quartInOut,
 				onComplete: function(twn:FlxTween)
 				{
-					new FlxTimer().start(5, appearText);
+					new FlxTimer().start(3.5, appearText);
 				}
 			});
 		}
