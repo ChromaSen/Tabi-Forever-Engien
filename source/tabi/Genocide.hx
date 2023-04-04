@@ -2,12 +2,13 @@ package tabi;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.addons.effects.FlxTrail;
 import flixel.math.FlxMath;
-import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
-import meta.state.PlayState;
+import flixel.tweens.FlxTween;
 import gameObjects.Character;
 import gameObjects.userInterface.notes.Note;
+import meta.state.PlayState;
 import tabi.utils.Perlin;
 
 class Genocide extends SongEvents
@@ -24,6 +25,8 @@ class Genocide extends SongEvents
 		{
 			perlinNoise = new Perlin();
 
+			var tabiTrail = new FlxTrail(PlayState.dadOpponent, null, 2, 16, 0.6, 0.9);
+			PlayState.instance.add(tabiTrail);
 			PlayState.health = 2;
 
 			PlayState.instance.isGenocide = true;
@@ -85,6 +88,24 @@ class Genocide extends SongEvents
 				if (PlayState.health <= 0)
 					PlayState.health = 2.5;
 			}
+		}
+	}
+
+	override public function beatHit(curBeat:Int)
+	{
+		switch (curBeat)
+		{
+			case 416:
+				FlxTween.tween(FlxG.camera, {zoom: 1.4}, 2);
+			case 424:
+				PlayState.zoomHit = true;
+			case 456:
+				FlxTween.tween(FlxG.camera, {zoom: 1.1}, 4.2);
+			case 488:
+				{
+					PlayState.zoomHit = false;
+					FlxTween.tween(FlxG.camera, {zoom: 1.6}, 4.5);
+				}
 		}
 	}
 }

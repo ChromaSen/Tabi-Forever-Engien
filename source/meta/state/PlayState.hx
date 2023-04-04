@@ -102,6 +102,8 @@ class PlayState extends MusicBeatState
 	public static var health:Float = 1; // mario
 	public static var combo:Int = 0;
 
+	public static var zoomHit:Bool = false;
+
 	public static var misses:Int = 0;
 
 	public static var deaths:Int = 0;
@@ -561,6 +563,8 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
+
+		zoomHit = false;
 
 		instance = null;
 
@@ -1579,7 +1583,7 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0)
+		if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0 && zoomHit)
 			&& (!Init.trueSettings.get('Reduced Movements'))
 			&& (boyfriendStrums.allNotes.members.length > 2 || dadStrums.allNotes.members.length > 2))
 		{

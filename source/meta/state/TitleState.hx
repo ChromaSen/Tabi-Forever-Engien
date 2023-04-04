@@ -40,7 +40,7 @@ class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
 
-	public static var nameList:Array<String> = ['Tabi Team Presents', 'A Friday Night Funkin\' Mod'];
+	public static var nameList:Array<String> = ['Cougar MacDowall presents', 'A Friday Night Funkin\' Mod'];
 
 	public var textDisplay:FlxText;
 	public var title:FlxSprite;
@@ -98,7 +98,7 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(1.5, function(tmr:FlxTimer)
 			{
-				Main.switchState(this, new MainMenuState());
+				Main.switchState(this, new NewMainMenuState());
 			});
 		}
 
