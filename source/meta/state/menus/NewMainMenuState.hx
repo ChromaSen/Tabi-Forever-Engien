@@ -27,23 +27,25 @@ class NewMainMenuState extends MusicBeatState
 	{
 		super.create();
 
+		FlxG.mouse.visible = true;
+
 		camFollow = new FlxObject(0, 0, 1, 1);
 
 		board = new FlxSprite().loadGraphic(Paths.image(menuPath + 'board'));
 		board.screenCenter();
+		board.y += 120;
 		add(board);
 
 		camFollow.screenCenter();
         
 		FlxG.camera.follow(camFollow, LOCKON, 1.0);
+		FlxG.camera.zoom = 0.6;
 	}
 
 	public override function update(elapsed:Float)
 	{
-		var lerp:Float = FlxMath.bound(elapsed, 0, 1);
-        
-		camFollow.setPosition(FlxMath.lerp(camFollow.x, FlxMath.remapToRange(FlxG.mouse.screenX, 0, FlxG.width, board.x, board.width), lerp),
-			FlxMath.lerp(camFollow.y, FlxMath.remapToRange(FlxG.mouse.screenY, 0, FlxG.height, board.y, board.height), lerp));
+		camFollow.setPosition(FlxMath.remapToRange(FlxG.mouse.screenX, 0, FlxG.width, (FlxG.width / 2) + 16, (FlxG.width / 2) - 16), 
+			FlxMath.remapToRange(FlxG.mouse.screenY, 0, FlxG.height, (FlxG.height / 2) + 16, (FlxG.height / 2) - 16));
 
 		super.update(elapsed);
 	}
