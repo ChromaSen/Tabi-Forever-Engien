@@ -25,7 +25,11 @@ class NewMainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		FlxG.camera.zoom = 0.6;
+
 		super.create();
+
+		ForeverTools.resetMenuMusic();
 
 		FlxG.mouse.visible = true;
 
@@ -39,13 +43,15 @@ class NewMainMenuState extends MusicBeatState
 		camFollow.screenCenter();
         
 		FlxG.camera.follow(camFollow, LOCKON, 1.0);
-		FlxG.camera.zoom = 0.6;
 	}
 
 	public override function update(elapsed:Float)
 	{
-		camFollow.setPosition(FlxMath.remapToRange(FlxG.mouse.screenX, 0, FlxG.width, (FlxG.width / 2) + 16, (FlxG.width / 2) - 16), 
-			FlxMath.remapToRange(FlxG.mouse.screenY, 0, FlxG.height, (FlxG.height / 2) + 16, (FlxG.height / 2) - 16));
+		camFollow.setPosition(FlxMath.lerp(camFollow.x, FlxMath.remapToRange(FlxG.mouse.screenX, 0, FlxG.width, (FlxG.width / 2) + 16, (FlxG.width / 2) - 16), 3.5 * elapsed), 
+			FlxMath.lerp(camFollow.y, FlxMath.remapToRange(FlxG.mouse.screenY, 0, FlxG.height, (FlxG.height / 2) + 16, (FlxG.height / 2) - 16), 3.5 * elapsed));
+
+		if (FlxG.keys.justPressed.SEVEN)
+			Main.switchState(this, new meta.state.menus.MainMenuState());
 
 		super.update(elapsed);
 	}

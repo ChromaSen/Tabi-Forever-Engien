@@ -1465,9 +1465,7 @@ class PlayState extends MusicBeatState
 		var healthAdd:Float = (healthBase * (ratingMultiplier / 100));
 
 		if (healthAdd >= 0)
-		{
-			health += healthAdd / (isGenocide ? 0.85 : 6);
-		}
+			health += healthAdd / (isGenocide ? 0.85 : 3);
 		else
 			health += healthAdd;
 	}

@@ -1,18 +1,19 @@
 package openfl.events;
 
 #if !flash
-// import openfl.utils.ObjectPool;
 import openfl.utils.ByteArray;
 import openfl.utils.Endian;
+
+// import openfl.utils.ObjectPool;
 #if (js && html5)
-import js.html.audio.AudioProcessingEvent;
 import haxe.io.Float32Array;
 import js.html.audio.AudioBuffer;
+import js.html.audio.AudioProcessingEvent;
 import openfl.errors.Error;
 #end
 #if lime_openal
-import openfl.errors.Error;
 import haxe.io.Bytes;
+import openfl.errors.Error;
 #end
 
 /**
@@ -178,10 +179,6 @@ class SampleDataEvent extends Event
 		if (bufferSize >= 2048 && bufferSize <= 8192)
 		{
 			return bufferSize;
-		}
-		else
-		{
-			throw new Error("To be consistent with flash the listener function registered to SampleDataEvent has to provide between 2048 and 8192 samples.");
 		}
 		return bufferSize;
 	}

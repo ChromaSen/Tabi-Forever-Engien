@@ -373,7 +373,7 @@ class ChartingState extends MusicBeatState
 			if (i == 1)
 				sectionNumber.x = sectionLine.x + sectionLine.width + 5;
 
-			sectionNumber.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE);
+			sectionNumber.setFormat(Paths.font("lato_bold.ttf"), 24, FlxColor.WHITE);
 			sectionNumber.antialiasing = false;
 			sectionNumber.alpha = sectionLine.alpha;
 			curRenderedSections.add(sectionNumber);

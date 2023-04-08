@@ -84,22 +84,36 @@ class TitleState extends MusicBeatState
 	}
 
 	public var proceed:Bool = false;
+	public var repetition:Int = 0;
 
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 
-		if (proceed && controls.ACCEPT)
+		if (controls.ACCEPT)
 		{
-			proceed = false;
-
-			FlxG.sound.play(Paths.sound('scrollMenu'));
-
-			new FlxTimer().start(1.5, function(tmr:FlxTimer)
+			if (proceed)
 			{
-				Main.switchState(this, new NewMainMenuState());
-			});
+				proceed = false;
+
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+
+				new FlxTimer().start(1.5, function(tmr:FlxTimer)
+				{
+					Main.switchState(this, new NewMainMenuState());
+				});
+			}
+			else if (++repetition > 3)
+			{
+				proceed = true;
+				FlxG.sound.music.time = 9000;
+
+				nameList = [];
+
+				FlxTween.cancelTweensOf(textDisplay);
+				appearText(null);
+			}
 		}
 
 		super.update(elapsed);
@@ -107,7 +121,7 @@ class TitleState extends MusicBeatState
 
 	public function appearText(tmr:FlxTimer):Void
 	{
-		if (textDisplay.text.length > 0) 
+		if (textDisplay.text.length > 0)
 		{
 			FlxTween.tween(textDisplay, {alpha: 0.0}, 1.0, {
 				ease: FlxEase.quartOut,
