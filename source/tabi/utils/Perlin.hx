@@ -1,5 +1,7 @@
 package tabi.utils;
 
+import haxe.ds.Vector;
+
 // for blammed shit
 class Perlin
 {
@@ -20,8 +22,8 @@ class Perlin
 		115, 121, 50, 45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156, 180
 	];
 
-	private var perm:Array<Int>;
-	private var gradP:Array<Gradient>;
+	private var perm:Vector<Int>;
+	private var gradP:Vector<Gradient>;
 
 	private function fade(t:Float):Float
 	{
@@ -35,29 +37,18 @@ class Perlin
 
 	public function new(?seed:Int)
 	{
-		perm = new Array<Int>();
-		gradP = new Array<Gradient>();
-		for (i in 0...512)
-		{
-			perm.push(0);
-			gradP.push(null);
-		}
+		perm = new Vector<Int>(512);
+		gradP = new Vector<Gradient>(512);
 
 		if (seed == null)
 			seed = Std.int(Math.random() * 65536);
-
 		seed %= 65536;
 		if (seed < 256)
 			seed |= seed << 8;
 
-		var v;
 		for (i in 0...256)
 		{
-			if (i & 1 == 1)
-				v = P[i] ^ (seed & 255);
-			else
-				v = P[i] ^ ((seed >> 8) & 255);
-
+			var v = calculateV(seed, i);
 			perm[i] = perm[i + 256] = v;
 			gradP[i] = gradP[i + 256] = GRAD3[v % 12];
 		}
@@ -74,16 +65,14 @@ class Perlin
 		X = X & 255;
 		Y = Y & 255;
 
-		var n00:Float = gradP[X + perm[Y]].dot2(x, y);
-		var n01:Float = gradP[X + perm[Y + 1]].dot2(x, y - 1);
-		var n10:Float = gradP[X + 1 + perm[Y]].dot2(x - 1, y);
-		var n11:Float = gradP[X + 1 + perm[Y + 1]].dot2(x - 1, y - 1);
+		var n00:Float = calculateDot2(X, Y, x, y);
+		var n01:Float = calculateDot2(X, Y + 1, x, y - 1);
+		var n10:Float = calculateDot2(X + 1, Y, x - 1, y);
+		var n11:Float = calculateDot2(X + 1, Y + 1, x - 1, y - 1);
 
 		var u = fade(x);
 
-		var result = lerp(lerp(n00, n10, u), lerp(n01, n11, u), fade(y));
-
-		return result / (Math.sqrt(2) * 0.5);
+		return lerp(lerp(n00, n10, u), lerp(n01, n11, u), fade(y)) / (Math.sqrt(2) * 0.5);
 	}
 
 	public function noise3d(x:Float, y:Float, z:Float):Float
@@ -114,6 +103,21 @@ class Perlin
 		var result = lerp(lerp(lerp(n000, n100, u), lerp(n001, n101, u), w), lerp(lerp(n010, n110, u), lerp(n011, n111, u), w), v);
 
 		return result / (Math.sqrt(3) * 0.5);
+	}
+
+	inline function calculateV(seed:Int, i:Int):Int
+	{
+		var v:Int;
+		if (i & 1 == 1)
+			v = P[i] ^ (seed & 255);
+		else
+			v = P[i] ^ ((seed >> 8) & 255);
+		return v;
+	}
+
+	inline function calculateDot2(X:Int, Y:Int, x:Float, y:Float):Float
+	{
+		return gradP[X + perm[Y]].dot2(x, y);
 	}
 }
 
