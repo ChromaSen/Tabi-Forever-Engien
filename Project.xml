@@ -82,6 +82,11 @@
 	<section unless="debug">
 		<!--Disables the flixel debugger.-->
 		<haxedef name="FLX_NO_DEBUG"/>
+		<!--
+			Automatically removes unused code during compilation
+			MARK EVERYTHING THAT IS A DYNAMIC OR USES REFLECT AS @:keep ELSE THIS WILL BREAK
+		-->
+		<haxeflag name="-dce" value="full"/>
 	</section>
 
 	<section if="release">
