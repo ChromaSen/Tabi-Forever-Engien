@@ -62,6 +62,11 @@ echo Press any key to install hxcpp-debug-server.
 pause >nul
 haxelib install hxcpp-debug-server
 TIMEOUT 4 >nul
+echo Press any key to install yaml and tjson dependencies.
+pause >nul
+haxelib install tjson
+haxelib install yaml
+TIMEOUT 4 >nul
 echo Press any key to continue with the installation of VSCommunity and its dependencies.
 pause >nul
 cls
