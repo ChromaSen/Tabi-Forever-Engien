@@ -20,6 +20,7 @@ class NewMainMenuState extends MusicBeatState
 	public static final menuPath:String = 'menus/main/';
 
 	public var board:FlxSprite;
+	public var strings:FlxSprite;
 
 	public var camFollow:FlxObject;
 
@@ -39,6 +40,11 @@ class NewMainMenuState extends MusicBeatState
 		board.screenCenter();
 		board.y += 120;
 		add(board);
+
+		strings = new FlxSprite().loadGraphic(Paths.image(menuPath + 'strings'));
+		strings.screenCenter();
+		strings.y += 120;
+		add(strings);
 
 		camFollow.screenCenter();
         
