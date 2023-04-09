@@ -532,7 +532,7 @@ class Shader
 		}
 	}
 
-	@:noCompletion private function __processGLData(source:String, storageType:String):Void
+	@:keep @:noCompletion private function __processGLData(source:String, storageType:String):Void
 	{
 		var lastMatch = 0, position, regex, name, type;
 
@@ -575,7 +575,7 @@ class Shader
 
 				@:keep Reflect.setField(__data, name, input);
 			}
-			@:keep else if (!Reflect.hasField(__data, name) || Reflect.field(__data, name) == null)
+			else if (!Reflect.hasField(__data, name) || Reflect.field(__data, name) == null)
 			{
 				var parameterType:ShaderParameterType = switch (type)
 				{
