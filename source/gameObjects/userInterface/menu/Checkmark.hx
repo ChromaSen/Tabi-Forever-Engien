@@ -9,7 +9,7 @@ class Checkmark extends FNFSprite
 	public function new(x:Float, y:Float)
 	{
 		super(x, y);
-		animOffsets = new Map<String, Array<Dynamic>>();
+		@:keep animOffsets = new Map<String, Array<Dynamic>>();
 	}
 
 	override public function update(elapsed:Float)

@@ -13,6 +13,7 @@ import flixel.util.FlxTimer;
 import meta.data.dependency.FNFSprite;
 import meta.data.font.Alphabet;
 
+@:keep
 typedef PortraitDataDef =
 {
 	var name:String;
@@ -29,6 +30,7 @@ typedef PortraitDataDef =
 	var soundPath:Null<String>;
 }
 
+@:keep
 typedef DialogueDataDef =
 {
 	var events:Array<Array<Dynamic>>;
@@ -41,6 +43,7 @@ typedef DialogueDataDef =
 	var scale:Null<Int>;
 }
 
+@:keep
 typedef BoxDataDef =
 {
 	var position:Null<Array<Int>>;
@@ -234,14 +237,14 @@ class DialogueBox extends FlxSpriteGroup
 			box.frames = Paths.getSparrowAtlas('dialogue/boxes/$curBox/$curBox');
 
 			// get the states sectioon
-			var curStateData = Reflect.field(boxData.states, curBoxState);
+			@:keep var curStateData = Reflect.field(boxData.states, curBoxState);
 
 			if (curStateData == null)
 				return;
 
 			// default and open animations
-			var defaultAnim:Array<Dynamic> = Reflect.field(curStateData, "default");
-			var openAnim:Array<Dynamic> = Reflect.field(curStateData, "open");
+			@:keep var defaultAnim:Array<Dynamic> = Reflect.field(curStateData, "default");
+			@:keep var openAnim:Array<Dynamic> = Reflect.field(curStateData, "open");
 
 			// make sure theres atleast a offset if things are null
 			if (defaultAnim[1] == null)
@@ -328,9 +331,9 @@ class DialogueBox extends FlxSpriteGroup
 					loop = portraitData.loop;
 
 				// loop through the expressions and add the to the list of expressions
-				for (n in Reflect.fields(portraitData.expressions))
+				@:keep for (n in Reflect.fields(portraitData.expressions))
 				{
-					var curAnim = Reflect.field(portraitData.expressions, n);
+					@:keep var curAnim = Reflect.field(portraitData.expressions, n);
 					var animName = n;
 
 					portrait.animation.addByPrefix(animName, curAnim, 24, loop);
@@ -427,6 +430,7 @@ class DialogueBox extends FlxSpriteGroup
 		portrait.animation.play(curExpression);
 	}
 
+	@:keep
 	function runEvent(eventArray:Array<Dynamic>)
 	{
 		var event = eventArray[0];
@@ -434,7 +438,7 @@ class DialogueBox extends FlxSpriteGroup
 		switch (event)
 		{
 			case "image":
-				var _sprite:Dynamic = eventArray[1];
+				@:keep var _sprite:Dynamic = eventArray[1];
 				var _x = eventArray[2];
 				var _y = eventArray[3];
 				var _scaleX = eventArray[4];

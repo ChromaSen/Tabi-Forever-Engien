@@ -43,6 +43,7 @@ class Init extends FlxState
 	public static var FORCED = 'forced';
 	public static var NOT_FORCED = 'not forced';
 
+	@:keep
 	public static var gameSettings:Map<String, Dynamic> = [
 		'Downscroll' => [
 			false,
@@ -172,10 +173,12 @@ class Init extends FlxState
 			NOT_FORCED
 		],
 	];
-
+	
+	@:keep
 	public static var trueSettings:Map<String, Dynamic> = [];
 	public static var settingsDescriptions:Map<String, String> = [];
 
+	@:keep
 	public static var gameControls:Map<String, Dynamic> = [
 		'UP' => [[FlxKey.UP, W], 2],
 		'DOWN' => [[FlxKey.DOWN, S], 1],
@@ -264,7 +267,8 @@ class Init extends FlxState
 		// NEW SYSTEM, INSTEAD OF REPLACING THE WHOLE THING I REPLACE EXISTING KEYS
 		// THAT WAY IT DOESNT HAVE TO BE DELETED IF THERE ARE SETTINGS CHANGES
 		if (FlxG.save.data.settings != null)
-		{
+		{	
+			@:keep
 			var settingsMap:Map<String, Dynamic> = FlxG.save.data.settings;
 			for (singularSetting in settingsMap.keys())
 				if (gameSettings.get(singularSetting) != null && gameSettings.get(singularSetting)[3] != FORCED)

@@ -261,6 +261,7 @@ class Paths
 	inline static public function songJson(song:String, secondSong:String, ?library:String)
 		return getPath('songs/${song.toLowerCase()}/${secondSong.toLowerCase()}.json', TEXT, library);
 
+	@:keep
 	static public function sound(key:String, ?library:String):Dynamic
 	{
 		var sound:Sound = returnSound('sounds', key, library);
@@ -272,6 +273,7 @@ class Paths
 		return sound(key + FlxG.random.int(min, max), library);
 	}
 
+	@:keep
 	inline static public function music(key:String, ?library:String):Dynamic
 	{
 		var file:Sound = returnSound('music', key, library);

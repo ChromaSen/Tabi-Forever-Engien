@@ -1,5 +1,6 @@
 package meta.data;
 
+@:keep
 typedef SwagSection =
 {
 	var sectionNotes:Array<Dynamic>;
@@ -13,7 +14,7 @@ typedef SwagSection =
 
 class Section
 {
-	public var sectionNotes:Array<Dynamic> = [];
+	@:keep public var sectionNotes:Array<Dynamic> = [];
 
 	public var lengthInSteps:Int = 16;
 	public var typeOfSection:Int = 0;

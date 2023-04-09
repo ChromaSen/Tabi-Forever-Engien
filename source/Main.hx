@@ -1,30 +1,23 @@
 package;
 
-import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxGame;
-import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.util.FlxColor;
-import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
 import lime.app.Application;
-import meta.*;
 import meta.data.PlayerSettings;
 import meta.data.dependency.Discord;
 import meta.data.dependency.FNFTransition;
-import meta.data.dependency.FNFUIState;
-import openfl.Assets;
 import openfl.Lib;
-import openfl.display.FPS;
 import openfl.display.Sprite;
-import openfl.events.Event;
 import openfl.events.UncaughtErrorEvent;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
+import meta.Overlay;
 
 // Here we actually import the states and metadata, and just the metadata.
 // It's nice to have modularity so that we don't have ALL elements loaded at the same time.
@@ -53,6 +46,7 @@ class Main extends Sprite
 		Enough of that, here's how it works
 		[ [songs to use], [characters in songs], [color of week], name of week ]
 	**/
+	@:keep
 	public static var gameWeeks:Array<Dynamic> = [
 		[
 			['My-Battle', 'Last-Chance', 'Genocide'],

@@ -7,7 +7,7 @@ class MenuCharacter extends FlxSprite
 {
 	public var character:String = '';
 
-	var curCharacterMap:Map<String, Array<Dynamic>> = [
+	@:keep var curCharacterMap:Map<String, Array<Dynamic>> = [
 		// the format is currently
 		// name of character => id in atlas, fps, loop, scale, offsetx, offsety
 		'bf' => ["BF idle dance white", 24, true, 0.9, 100, 100],

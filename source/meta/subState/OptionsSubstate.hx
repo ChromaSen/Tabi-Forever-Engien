@@ -166,7 +166,7 @@ class OptionsSubstate extends MusicBeatSubState
 		add(otherKeys);
 	}
 
-	private function getStringKey(arrayThingy:Dynamic):String
+	@:keep private function getStringKey(arrayThingy:Dynamic):String
 	{
 		var keyString:String = 'none';
 		if (arrayThingy != null)

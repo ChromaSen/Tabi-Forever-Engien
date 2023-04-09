@@ -153,7 +153,7 @@ class Shader
 
 		This property is not available on the Flash target.
 	**/
-	@SuppressWarnings("checkstyle:Dynamic") public var glProgram(default, null):GLProgram;
+	@:keep @SuppressWarnings("checkstyle:Dynamic") public var glProgram(default, null):GLProgram;
 
 	/**
 		Get or set the vertex source used when compiling with GLSL.
@@ -285,36 +285,6 @@ class Shader
 		}
 	}
 
-	// private function __clone ():Shader {
-	// var classType = Type.getClass (this);
-	// var shader = Type.createInstance (classType, []);
-	// for (input in __inputBitmapData) {
-	// 	if (input.input != null) {
-	// 		var field = Reflect.field (shader.data, input.name);
-	// 		field.channels = input.channels;
-	// 		field.height = input.height;
-	// 		field.input = input.input;
-	// 		field.smoothing = input.smoothing;
-	// 		field.width = input.width;
-	// 	}
-	// }
-	// for (param in __paramBool) {
-	// 	if (param.value != null) {
-	// 		Reflect.field (shader.data, param.name).value = param.value.copy ();
-	// 	}
-	// }
-	// for (param in __paramFloat) {
-	// 	if (param.value != null) {
-	// 		Reflect.field (shader.data, param.name).value = param.value.copy ();
-	// 	}
-	// }
-	// for (param in __paramInt) {
-	// 	if (param.value != null) {
-	// 		Reflect.field (shader.data, param.name).value = param.value.copy ();
-	// 	}
-	// }
-	// return shader;
-	// }
 	@:noCompletion private function __createGLShader(source:String, type:Int):GLShader
 	{
 		var gl = __context.gl;
@@ -603,10 +573,9 @@ class Shader
 					default:
 				}
 
-				Reflect.setField(__data, name, input);
-				// if (__isGenerated) Reflect.setField(this, name, input);
+				@:keep Reflect.setField(__data, name, input);
 			}
-			else if (!Reflect.hasField(__data, name) || Reflect.field(__data, name) == null)
+			@:keep else if (!Reflect.hasField(__data, name) || Reflect.field(__data, name) == null)
 			{
 				var parameterType:ShaderParameterType = switch (type)
 				{
@@ -669,8 +638,7 @@ class Shader
 							__hasColorTransform = parameter;
 						}
 
-						Reflect.setField(__data, name, parameter);
-					// if (__isGenerated) Reflect.setField(this, name, parameter);
+						@:keep Reflect.setField(__data, name, parameter);
 
 					case INT, INT2, INT3, INT4:
 						var parameter = new ShaderParameter<Int>();
@@ -681,8 +649,7 @@ class Shader
 						parameter.__isUniform = isUniform;
 						parameter.__length = length;
 						__paramInt.push(parameter);
-						Reflect.setField(__data, name, parameter);
-					// if (__isGenerated) Reflect.setField(this, name, parameter);
+						@:keep Reflect.setField(__data, name, parameter);
 
 					default:
 						var parameter = new ShaderParameter<Float>();
@@ -713,8 +680,7 @@ class Shader
 							}
 						}
 
-						Reflect.setField(__data, name, parameter);
-						// if (__isGenerated) Reflect.setField(this, name, parameter);
+						@:keep Reflect.setField(__data, name, parameter);
 				}
 			}
 

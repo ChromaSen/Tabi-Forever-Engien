@@ -21,7 +21,7 @@ import meta.subState.OptionsSubstate;
 **/
 class OptionsMenuState extends MusicBeatState
 {
-	private var categoryMap:Map<String, Dynamic>;
+	@:keep private var categoryMap:Map<String, Dynamic>;
 	private var activeSubgroup:FlxTypedGroup<Alphabet>;
 	private var attachments:FlxTypedGroup<FlxBasic>;
 
@@ -135,7 +135,7 @@ class OptionsMenuState extends MusicBeatState
 		loadSubgroup('main');
 	}
 
-	private var currentAttachmentMap:Map<Alphabet, Dynamic>;
+	@:keep private var currentAttachmentMap:Map<Alphabet, Dynamic>;
 
 	function loadSubgroup(subgroupName:String)
 	{
@@ -373,9 +373,9 @@ class OptionsMenuState extends MusicBeatState
 		return newGroup;
 	}
 
-	private function returnExtrasMap(alphabetGroup:FlxTypedGroup<Alphabet>):Map<Alphabet, Dynamic>
+	@:keep private function returnExtrasMap(alphabetGroup:FlxTypedGroup<Alphabet>):Map<Alphabet, Dynamic>
 	{
-		var extrasMap:Map<Alphabet, Dynamic> = new Map<Alphabet, Dynamic>();
+		@:keep var extrasMap:Map<Alphabet, Dynamic> = new Map<Alphabet, Dynamic>();
 		for (letter in alphabetGroup)
 		{
 			if (Init.gameSettings.get(letter.text) != null)

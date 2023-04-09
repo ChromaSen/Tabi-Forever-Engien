@@ -60,6 +60,8 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
+	<haxelib name="yaml"/>
+	<haxelib name="tjson"/>
 	<haxelib name="flixel"/>
 	<haxelib name="polymod"/>
 	<haxelib name="flixel-ui"/>

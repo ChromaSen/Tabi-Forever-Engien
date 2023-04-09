@@ -463,7 +463,7 @@ class PlayState extends MusicBeatState
 		return copiedArray;
 	}
 
-	var keysArray:Array<Dynamic>;
+	@:keep var keysArray:Array<Dynamic>;
 
 	public function onKeyPress(event:KeyboardEvent):Void
 	{

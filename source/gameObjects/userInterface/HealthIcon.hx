@@ -48,7 +48,7 @@ class HealthIcon extends FlxSprite
 		scrollFactor.set();
 	}
 
-	public dynamic function updateAnim(health:Float)
+	@:keep public dynamic function updateAnim(health:Float)
 	{
 		if (health < 20)
 			animation.curAnim.curFrame = 1;

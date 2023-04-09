@@ -781,7 +781,7 @@ class Sound extends EventDispatcher
 		@:privateAccess __sampleData.getSamples(event);
 	}
 
-	override public function removeEventListener(type:String, listener:Dynamic->Void, useCapture:Bool = false):Void
+	@:keep override public function removeEventListener(type:String, listener:Dynamic->Void, useCapture:Bool = false):Void
 	{
 		super.removeEventListener(type, listener, useCapture);
 		if (type == SampleDataEvent.SAMPLE_DATA && __processor != null)
@@ -838,7 +838,7 @@ class Sound extends EventDispatcher
 		return 44100;
 	}
 
-	override public function removeEventListener(type:String, listener:Dynamic->Void, useCapture:Bool = false):Void
+	@:keep override public function removeEventListener(type:String, listener:Dynamic->Void, useCapture:Bool = false):Void
 	{
 		super.removeEventListener(type, listener, useCapture);
 		if (type == SampleDataEvent.SAMPLE_DATA && __ALAudioContext != null)

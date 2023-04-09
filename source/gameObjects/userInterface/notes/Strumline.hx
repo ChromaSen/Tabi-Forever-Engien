@@ -33,7 +33,7 @@ class UIStaticArrow extends FlxSprite
 
 		uh hey you're cute ;)
 	 */
-	public var animOffsets:Map<String, Array<Dynamic>>;
+	@:keep public var animOffsets:Map<String, Array<Dynamic>>;
 	public var babyArrowType:Int = 0;
 	public var canFinishAnimation:Bool = true;
 
@@ -50,7 +50,7 @@ class UIStaticArrow extends FlxSprite
 	{
 		// this extension is just going to rely a lot on preexisting code as I wanna try to write an extension before I do options and stuff
 		super(x, y);
-		animOffsets = new Map<String, Array<Dynamic>>();
+		@:keep animOffsets = new Map<String, Array<Dynamic>>();
 
 		this.babyArrowType = babyArrowType;
 
