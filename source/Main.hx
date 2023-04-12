@@ -136,7 +136,8 @@ class Main extends Sprite
 	 */
 	public static var lastState:FlxState;
 
-	public static function switchState(curState:FlxState, target:FlxState)
+	@:keep
+	public static function switchState(curState:FlxState, target:FlxState):Void
 	{
 		// Custom made Trans in
 		mainClassState = Type.getClass(target);
@@ -147,7 +148,8 @@ class Main extends Sprite
 			{
 				FlxG.switchState(target);
 			};
-			return trace('changed state');
+			trace('changed state');
+			return;
 		}
 		FlxTransitionableState.skipNextTransIn = false;
 		// load the state
