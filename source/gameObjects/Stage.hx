@@ -55,6 +55,14 @@ class Stage extends FlxTypedGroup<FlxBasic>
 
 	public var foreground:FlxTypedGroup<FlxBasic>;
 
+	//
+	public var main_overlay:FlxSprite;
+	public var main_bg:FlxSprite;
+
+	//
+	public var broken_door:FlxSprite;
+	public var eye:FlxSprite;
+
 	public function new(curStage)
 	{
 		super();
@@ -67,23 +75,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
 			// custom stage stuffs will come with forever charts
 			switch (CoolUtil.spaceToDash(PlayState.SONG.song.toLowerCase()))
 			{
-				case 'spookeez' | 'south' | 'monster':
-					curStage = 'spooky';
-				case 'pico' | 'blammed' | 'philly-nice':
-					curStage = 'philly';
-				case 'milf' | 'satin-panties' | 'high':
-					curStage = 'highway';
-				case 'cocoa' | 'eggnog':
-					curStage = 'mall';
-				case 'winter-horrorland':
-					curStage = 'mallEvil';
-				case 'senpai' | 'roses':
-					curStage = 'school';
-				case 'thorns':
-					curStage = 'schoolEvil';
-
 				case 'my-battle' | 'last-chance':
-					curStage = 'tabi';
+					curStage = 'idfk';
 				case 'genocide':
 					curStage = 'genocide';
 				default:
@@ -99,6 +92,27 @@ class Stage extends FlxTypedGroup<FlxBasic>
 		//
 		switch (curStage)
 		{
+
+			case 'idfk':
+				PlayState.defaultCamZoom=1.1;
+
+
+				/*
+				main_overlay = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/idfk/MAIN_overlay'));
+				main_overlay.antialiasing=false;
+				main_overlay.updateHitbox();
+				main_overlay.screenCenter();
+				main_overlay.cameras=[PlayState.camHUD];
+					add(main_overlay);
+				It's not transparent, fuck
+				*/
+			
+				main_bg=new FlxSprite(0,0);
+				main_bg.frames=Paths.getSparrowAtlas('backgrounds/idfk/Main_BG');
+				main_bg.animation.addByPrefix('idle', 'MAIN BG образец', 24);
+				main_bg.animation.play('idle',true);
+
+				add(main_bg);
 			case 'genocide':
 				PlayState.defaultCamZoom = 0.8;
 				bars = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/tabi/bars'));
@@ -247,6 +261,12 @@ class Stage extends FlxTypedGroup<FlxBasic>
 					gf.y = 840;
 					dad.x = 0;
 					dad.y = 600;
+				case 'dd':
+					gf.visible=false;
+					boyfriend.x=120;
+					boyfriend.y=315;
+					dad.x=700;
+					dad.y=237;
 			}
 		}
 	}

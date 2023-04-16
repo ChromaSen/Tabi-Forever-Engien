@@ -113,6 +113,38 @@ class Character extends FNFSprite
 
 				playAnim('idle');
 
+			case 'dd':
+				// DAD ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('characters/DD_assets');
+				frames = tex;
+				animation.addByPrefix('idle', 'DD IDLE', 24, false);
+				animation.addByPrefix('singUP', 'DD Up pose', 24);
+				animation.addByPrefix('singRIGHT', 'DD Right pose', 24);
+				animation.addByPrefix('singDOWN', 'DD Down pose', 24);
+				animation.addByPrefix('singLEFT', 'DD Left pose', 24);
+
+				playAnim('idle');
+				characterData.camOffsetX=-370;
+				characterData.camOffsetY=-40;
+			case 'tabi-true':
+				tex = Paths.getSparrowAtlas('characters/TABI_assets');
+				frames = tex;
+				animation.addByPrefix('idle', 'TABI IDLE', 24, false);
+				animation.addByPrefix('singUP', 'TABI UP', 24);
+				animation.addByPrefix('singRIGHT', 'TABI RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'TABI DOWN', 24);
+				animation.addByPrefix('singLEFT', 'TABI LEFT', 24);
+				animation.addByPrefix('singUPmiss', 'MISS TABI UP', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'MISS TABI LEFT', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'MISS TABI RIGHT', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'MISS TABI DOWN', 24, false);
+
+				playAnim('idle');
+
+				flipX=true;
+
+				characterData.camOffsetX=-365;
+				characterData.camOffsetY =-110;
 			case 'bf':
 				frames = Paths.getSparrowAtlas('characters/BOYFRIEND');
 

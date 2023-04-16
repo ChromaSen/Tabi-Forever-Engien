@@ -638,6 +638,14 @@ class PlayState extends MusicBeatState
 					boyfriendStrums.autoplay = !boyfriendStrums.autoplay;
 					PlayState.SONG.validScore = false;
 				}
+				if ((FlxG.keys.justPressed.EIGHT) && (!startingSong))
+				{
+					resetMusic();
+					if (FlxG.keys.pressed.SHIFT)
+						Main.switchState(this, new AnimationDebug(dadOpponent.curCharacter));
+					else
+						Main.switchState(this, new AnimationDebug(boyfriend.curCharacter));
+				}
 			}
 
 			///*
