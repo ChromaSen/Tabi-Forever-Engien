@@ -1,5 +1,6 @@
 package meta.state.menus;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -17,8 +18,11 @@ import meta.data.dependency.Discord;
 
 class NewMainMenuState extends MusicBeatState
 {
+	public static var camHUD:FlxCamera;
+	
 	public static final menuPath:String = 'menus/main/';
 
+	var vignette:FlxSprite;
 	public var board:FlxSprite;
 	public var strings:FlxSprite;
 	public var menuItem:FlxSprite;
@@ -36,21 +40,26 @@ class NewMainMenuState extends MusicBeatState
 
 		ForeverTools.resetMenuMusic();
 
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
+
+		FlxG.cameras.add(camHUD, false);
+
 		FlxG.mouse.visible = true;
 
 		camFollow = new FlxObject(0, 0, 1, 1);
+
+		vignette=new FlxSprite().loadGraphic(Paths.image("backgrounds/genocide/vignette"));
+		vignette.screenCenter();
+		vignette.cameras=[camHUD];
+		vignette.alpha=0.68;
+		add(vignette);
 
 		board = new FlxSprite().loadGraphic(Paths.image(menuPath + 'board'));
 		board.screenCenter();
 		board.x=-451;
 		board.y=-275;
 		add(board);
-
-		strings = new FlxSprite().loadGraphic(Paths.image(menuPath + 'strings'));
-		strings.screenCenter();
-		strings.x=-451;
-		strings.y=-275;
-		add(strings);
 
 		for (i in 0...menuItemsSprite.length){
 			menuItem=new FlxSprite().loadGraphic(Paths.image('menus/main/menu/' + menuItemsSprite[i]));
@@ -80,6 +89,11 @@ class NewMainMenuState extends MusicBeatState
 		for (menu in menuItems){
 			add(menu);
 		}
+		strings = new FlxSprite().loadGraphic(Paths.image(menuPath + 'strings'));
+		strings.screenCenter();
+		strings.x = -451;
+		strings.y = -275;
+		add(strings);
 
 
 		camFollow.screenCenter();
