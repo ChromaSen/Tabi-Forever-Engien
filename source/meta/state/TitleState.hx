@@ -80,6 +80,8 @@ class TitleState extends MusicBeatState
 		title.screenCenter();
 		add(title);
 
+		Conductor.changeBPM(50);
+
 		new FlxTimer().start(2, appearText);
 	}
 

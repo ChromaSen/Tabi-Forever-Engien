@@ -13,6 +13,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import gameObjects.userInterface.menu.MainMenuItem;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.dependency.Discord;
 
@@ -20,16 +21,17 @@ class NewMainMenuState extends MusicBeatState
 {
 	public static var camHUD:FlxCamera;
 
-	public static final menuPath:String = 'menus/main/';
+	public static final menuPath:String = 'menus/main/menu/';
 
 	public var vignette:FlxSprite;
 
 	public var board:FlxSprite;
 	public var strings:FlxSprite;
-	public var menuItem:FlxSprite;
 
-	private var menuItems:Array<FlxSprite> = [];
-	private var menuItemsSprite:Array<String> = ["OPTIONS", "CHAP1", "FREEPLAY", "EASY", "NORMAL", "HARD", "LoveWeek", "newknife"];
+	private var menuItems:Array<MainMenuItem> = [];
+	private var menuItemsSprite:Array<String> = ["OPTIONS", "chap1", "freeplay", "easy", "normal", "hard", "LoveWeek", "newknife"];
+
+	private var curSelected:Int = -1;
 
 	public var camFollow:FlxObject;
 
@@ -64,32 +66,57 @@ class NewMainMenuState extends MusicBeatState
 
 		for (i in 0...menuItemsSprite.length)
 		{
-			menuItem = new FlxSprite().loadGraphic(Paths.image('menus/main/menu/' + menuItemsSprite[i]));
+			var menuItem:MainMenuItem = new MainMenuItem(menuPath + menuItemsSprite[i]);
 			menuItem.screenCenter();
+			menuItem.ID = i;
+			menuItem.paused = true;
+			if (menuItem.animationList.length > 0)
+			{
+				menuItem.width = menuItem.width * 0.5;
+				menuItem.height = menuItem.height * 0.5;
+			}
+			menuItem.playAnimation("idle");
+
+			menuItem.onAway = function()
+			{
+				trace('away ${menuItem.ID}');
+				menuItem.playAnimation("idle");
+			};
+
+			menuItem.onClick = function()
+			{
+				trace('click ${menuItem.ID}');
+				menuItem.playAnimation("select");
+			};
+
+			menuItem.onOverlap = function()
+			{
+				trace('overlap ${menuItem.ID}');
+				menuItem.playAnimation("hover");
+			}
+
 			switch (menuItemsSprite[i])
 			{
-				case "OPTIONS":
+				case "options":
 					menuItem.setPosition(-326, 130);
-				case "CHAP1":
+				case "chap1":
 					menuItem.setPosition(-440.5, -268.5);
-				case "FREEPLAY":
+				case "freeplay":
 					menuItem.setPosition(18.5, 427.5);
-				case "EASY":
+				case "easy":
 					menuItem.setPosition(99.5, -187);
-				case "NORMAL":
+				case "normal":
 					menuItem.setPosition(376.5, -194);
-				case "HARD":
+				case "hard":
 					menuItem.setPosition(609, -170);
 				case "LoveWeek":
 					menuItem.setPosition(920, 444);
 				case "newknife":
 					menuItem.setPosition(996.5, 11.5);
 			}
+			add(menuItem);
 			menuItems.push(menuItem);
 		}
-
-		for (menu in menuItems)
-			add(menu);
 
 		strings = new FlxSprite().loadGraphic(Paths.image(menuPath + 'strings'));
 		strings.screenCenter();
@@ -127,9 +154,30 @@ class NewMainMenuState extends MusicBeatState
 
 		// using modulo for choppy easing
 		_total += elapsed;
+		vignette.alpha = 0.5 + (Math.sin(_total) * 0.7);
+		
+		for (i in 0...menuItems.length)
+		{
+			if (curSelected != i)
+			{
+				if (FlxG.mouse.overlaps(menuItems[i]))
+				{
+					if (menuItems[i].onOverlap != null)
+					{
+						curSelected = i;
+						menuItems[i].onOverlap();
+					}
 
-		if (Math.floor(_total / 200) % 300 == 0)
-			vignette.alpha = Math.sin(_total) * 0.7;
+					if (FlxG.mouse.justPressed && menuItems[i].onClick != null)
+						menuItems[i].onClick();
+				}
+			}
+			else if (curSelected != -1 && !FlxG.mouse.overlaps(menuItems[i]))
+			{
+				menuItems[i].onAway();
+				curSelected = -1;
+			}
+		}
 
 		if (FlxG.keys.justPressed.SEVEN)
 			Main.switchState(this, new meta.state.menus.MainMenuState());
