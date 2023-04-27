@@ -100,7 +100,6 @@
 			Automatically removes unused code during compilation
 			MARK EVERYTHING THAT IS A DYNAMIC OR USES REFLECT AS @:keep ELSE THIS WILL BREAK
 		-->
-		<haxeflag name="-dce" value="full"/>
 
 		<!-- Disables tracing. -->
 		<haxedef name="no_traces" />
