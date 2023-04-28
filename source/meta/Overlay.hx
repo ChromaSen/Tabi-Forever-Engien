@@ -35,7 +35,7 @@ class Overlay extends TextField
 		autoSize = LEFT;
 		selectable = false;
 
-		defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 14, 0xD6E1E9);
+		defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 10, 0xD6E1E9);
 		text = "";
 
 		if (borderSize > 0)
@@ -58,7 +58,8 @@ class Overlay extends TextField
 		}
 
 
-		addEventListener(Event.ENTER_FRAME, update);
+		var timer:Timer = new Timer(1000);
+		timer.run = update;
 	}
 
 	static final intervalArray:Array<String> = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -77,13 +78,10 @@ class Overlay extends TextField
 		return size + " " + intervalArray[data];
 	}
 
-	function update(_:Event)
-	{
-		var now:Float = Timer.stamp();
-		times.push(now);
-		while (times[0] < now - 1)
-			times.shift();
+	private var _lastTime:Float = 0; 
 
+	private function update()
+	{
 		var mem = System.totalMemory;
 		if (mem > memPeak)
 			memPeak = mem;
@@ -91,9 +89,11 @@ class Overlay extends TextField
 		if (visible)
 		{
 			text = '' // set up the text itself
-				+ (displayFps ? "FPS: " + times.length + "\n" : '') // Framerate
+				+ (displayFps ? "FPS: " + Math.floor(1 / (Timer.stamp() - _lastTime)) + "\n" : '') // Framerate
 				+ (displayMemory ? 'MEM: ${getInterval(mem)} / ${getInterval(memPeak)}\n' : '') // Current and Total Memory Usage
 			#if !neko + (displayExtra ? Main.mainClassState + "\n" : ''); #end // Current Game State
+
+			_lastTime = Timer.stamp();
 
 			for (textOutline in outlines)
 			{
@@ -103,16 +103,16 @@ class Overlay extends TextField
 
 			if (displayFps || displayMemory)
 			{
-				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0xA4ADB4, true), text.indexOf("FPS:"), text.indexOf("FPS:") + 4);
-				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0xA4ADB4, true), text.indexOf("MEM:"), text.indexOf("MEM:") + 4);
+				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0xA4ADB4, true), text.indexOf("FPS:"), text.indexOf("FPS:") + 4);
+				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0xA4ADB4, true), text.indexOf("MEM:"), text.indexOf("MEM:") + 4);
 
 				for (textOutline in outlines)
 				{
 					if (textOutline != null)
 					{
-						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0x000000, true), text.indexOf("FPS:"),
+						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0x000000, true), text.indexOf("FPS:"),
 							text.indexOf("FPS:") + 4);
-						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 14, 0x000000, true), text.indexOf("MEM:"),
+						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0x000000, true), text.indexOf("MEM:"),
 							text.indexOf("MEM:") + 4);
 					}
 				}
@@ -135,7 +135,7 @@ class Overlay extends TextField
 		textOutline.autoSize = LEFT;
 		textOutline.selectable = false;
 		textOutline.mouseEnabled = false;
-		textOutline.defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 14, 0xFF000000);
+		textOutline.defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 10, 0xFF000000);
 		textOutline.text = '';
 
 		outlines.push(textOutline);

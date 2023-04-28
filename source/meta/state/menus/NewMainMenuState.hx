@@ -21,7 +21,8 @@ class NewMainMenuState extends MusicBeatState
 {
 	public static var camHUD:FlxCamera;
 
-	public static final menuPath:String = 'menus/main/menu/';
+	public static final menuPath:String = 'menus/main/';
+	public static final itemPath:String = 'menus/main/menu/';
 
 	public var vignette:FlxSprite;
 
@@ -29,7 +30,7 @@ class NewMainMenuState extends MusicBeatState
 	public var strings:FlxSprite;
 
 	private var menuItems:Array<MainMenuItem> = [];
-	private var menuItemsSprite:Array<String> = ["OPTIONS", "chap1", "freeplay", "easy", "normal", "hard", "LoveWeek", "newknife"];
+	private var menuItemsSprite:Array<String> = ["chap1", "freeplay", "easy", "normal", "hard"];
 
 	private var curSelected:Int = -1;
 
@@ -66,33 +67,33 @@ class NewMainMenuState extends MusicBeatState
 
 		for (i in 0...menuItemsSprite.length)
 		{
-			var menuItem:MainMenuItem = new MainMenuItem(menuPath + menuItemsSprite[i]);
-			menuItem.screenCenter();
+			var menuItem:MainMenuItem = new MainMenuItem();
+			menuItem.frames = Paths.getSparrowAtlas(itemPath + menuItemsSprite[i]);
+			trace(itemPath + menuItemsSprite[i]);
 			menuItem.ID = i;
-			menuItem.paused = true;
-			if (menuItem.animationList.length > 0)
-			{
-				menuItem.width = menuItem.width * 0.5;
-				menuItem.height = menuItem.height * 0.5;
-			}
-			menuItem.playAnimation("idle");
+
+			menuItem.animation.addByPrefix("idle", "idle", 1, false);
+			menuItem.animation.addByPrefix("hover", "hover", 1, false);
+			menuItem.animation.addByPrefix("select", "select", 1, false);
+
+			menuItem.animation.play("idle");
+
+			menuItem.screenCenter();
 
 			menuItem.onAway = function()
 			{
-				trace('away ${menuItem.ID}');
-				menuItem.playAnimation("idle");
+				if (menuItem.animation.curAnim.name != 'select')
+					menuItem.animation.play("idle");
 			};
 
 			menuItem.onClick = function()
 			{
-				trace('click ${menuItem.ID}');
-				menuItem.playAnimation("select");
+				menuItem.animation.play("select");
 			};
 
 			menuItem.onOverlap = function()
 			{
-				trace('overlap ${menuItem.ID}');
-				menuItem.playAnimation("hover");
+				menuItem.animation.play("hover");
 			}
 
 			switch (menuItemsSprite[i])
@@ -129,8 +130,6 @@ class NewMainMenuState extends MusicBeatState
 		FlxG.camera.follow(camFollow, LOCKON, 1.0);
 	}
 
-	private var _total:Float = 0.0;
-
 	public override function update(elapsed:Float)
 	{
 		#if debug
@@ -152,24 +151,22 @@ class NewMainMenuState extends MusicBeatState
 			FlxMath.lerp(camFollow.y, FlxMath.remapToRange(FlxG.mouse.screenY, 0, FlxG.height, (FlxG.height / 2) + 16, (FlxG.height / 2) - 16),
 				3.5 * elapsed));
 
-		// using modulo for choppy easing
-		_total += elapsed;
-		vignette.alpha = 0.5 + (Math.sin(_total) * 0.7);
-		
 		for (i in 0...menuItems.length)
 		{
 			if (curSelected != i)
 			{
 				if (FlxG.mouse.overlaps(menuItems[i]))
 				{
+					if (curSelected != i && menuItems[curSelected]?.onAway != null)
+						menuItems[curSelected].onAway();
+
 					if (menuItems[i].onOverlap != null)
 					{
 						curSelected = i;
 						menuItems[i].onOverlap();
-					}
 
-					if (FlxG.mouse.justPressed && menuItems[i].onClick != null)
-						menuItems[i].onClick();
+						break;
+					}
 				}
 			}
 			else if (curSelected != -1 && !FlxG.mouse.overlaps(menuItems[i]))
@@ -178,6 +175,9 @@ class NewMainMenuState extends MusicBeatState
 				curSelected = -1;
 			}
 		}
+
+		if (FlxG.mouse.justPressed && menuItems[curSelected]?.onClick != null)
+			menuItems[curSelected].onClick();
 
 		if (FlxG.keys.justPressed.SEVEN)
 			Main.switchState(this, new meta.state.menus.MainMenuState());

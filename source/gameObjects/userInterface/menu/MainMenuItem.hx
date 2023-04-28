@@ -1,9 +1,8 @@
 package gameObjects.userInterface.menu;
 
-import flixel.FlxG;
-import tabi.display.AnimatedSprite;
+import flixel.FlxSprite;
 
-class MainMenuItem extends AnimatedSprite
+class MainMenuItem extends FlxSprite
 {
     public var onOverlap:Void->Void;
     public var onClick:Void->Void;

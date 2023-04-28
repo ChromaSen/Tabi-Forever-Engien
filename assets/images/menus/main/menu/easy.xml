@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="spritesheet.png">
+    <SubTexture name="hover" x="0" y="0" width="373" height="296"></SubTexture>
+    <SubTexture name="idle" x="0" y="298" width="373" height="296"></SubTexture>
+    <SubTexture name="select" x="375" y="0" width="373" height="296"></SubTexture>
+</TextureAtlas>
