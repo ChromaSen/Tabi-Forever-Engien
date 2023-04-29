@@ -70,7 +70,7 @@ class AnimationDebug extends FlxState
 		add(gridBG);
 
 		//change this to true if you wanna apply it on dad
-		isDad = false;
+		isDad = true;
 
 		if (isDad)
 		{

@@ -268,7 +268,7 @@ class PlayState extends MusicBeatState
 		gf = new Character();
 		gf.adjustPos = false;
 		gf.setCharacter(300, 100, stageBuild.returnGFtype(curStage));
-		gf.scrollFactor.set(0.95, 0.95);
+	//	gf.scrollFactor.set(0.95, 0.95);
 
 		dadOpponent = new Character().setCharacter(50, 850, SONG.player2);
 		boyfriend = new Boyfriend();

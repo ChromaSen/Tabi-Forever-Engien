@@ -76,7 +76,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 			switch (CoolUtil.spaceToDash(PlayState.SONG.song.toLowerCase()))
 			{
 				case 'my-battle' | 'last-chance':
-					curStage = 'idfk';
+					curStage = 'tabi';
 				case 'genocide':
 					curStage = 'genocide';
 				default:
@@ -252,8 +252,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 					boyfriend.y = 870;
 					gf.x = 430;
 					gf.y = 500;
-					dad.x = -100;
-					dad.y = 450;
+					dad.setPosition(0,450);
 				case 'tabi-crazy':
 					boyfriend.x = 950;
 					boyfriend.y = 900;

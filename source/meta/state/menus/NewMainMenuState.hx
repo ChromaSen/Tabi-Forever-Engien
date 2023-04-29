@@ -157,8 +157,14 @@ class NewMainMenuState extends MusicBeatState
 			{
 				if (FlxG.mouse.overlaps(menuItems[i]))
 				{
+
+					#if (haxe>="4.3.0")
 					if (curSelected != i && menuItems[curSelected]?.onAway != null)
 						menuItems[curSelected].onAway();
+					#else
+					if (curSelected != i && menuItems[curSelected]!=null&&menuItems[curSelected].onAway!=null)
+						menuItems[curSelected].onAway();
+					#end
 
 					if (menuItems[i].onOverlap != null)
 					{
@@ -175,9 +181,13 @@ class NewMainMenuState extends MusicBeatState
 				curSelected = -1;
 			}
 		}
-
+		#if (haxe>="4.3.0")
 		if (FlxG.mouse.justPressed && menuItems[curSelected]?.onClick != null)
 			menuItems[curSelected].onClick();
+		#else
+		if (FlxG.mouse.justPressed && menuItems[curSelected]!=null&&menuItems[curSelected].onClick!=null)
+			menuItems[curSelected].onClick();
+		#end
 
 		if (FlxG.keys.justPressed.SEVEN)
 			Main.switchState(this, new meta.state.menus.MainMenuState());

@@ -213,16 +213,18 @@ class Character extends FNFSprite
 
 			case 'tabi':
 				// DAD ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/TABI');
+				tex = Paths.getSparrowAtlas('characters/Annoyed_Tabi');
 				frames = tex;
-				animation.addByPrefix('idle', 'Tabi Idle', 24, false);
-				animation.addByPrefix('singUP', 'Tabi Up', 24);
-				animation.addByPrefix('singRIGHT', 'Tabi Right', 24);
-				animation.addByPrefix('singDOWN', 'Tabi Down', 24);
-				animation.addByPrefix('singLEFT', 'Tabi Left', 24);
+				animation.addByPrefix('idle', 'IdleMAD', 24, false);
+				animation.addByPrefix('singUP', 'upMAD', 24);
+				animation.addByPrefix('singRIGHT', 'RightMAD', 24);
+				animation.addByPrefix('singDOWN', 'DownMAD', 24);
+				animation.addByPrefix('singLEFT', 'LeftMAD', 24);
+
+				scale.set(0.75,0.75);
 
 				playAnim('idle');
-				characterData.camOffsetY = 100;
+				characterData.camOffsetY = 30;
 				characterData.camOffsetX = 100;
 			case 'tabi-crazy':
 				// DAD ANIMATION LOADING CODE
