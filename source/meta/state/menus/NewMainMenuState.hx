@@ -9,6 +9,7 @@ import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
+import flixel.math.FlxRect;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -93,7 +94,8 @@ class NewMainMenuState extends MusicBeatState
 
 			menuItem.onOverlap = function()
 			{
-				menuItem.animation.play("hover");
+				if (menuItem.animation.curAnim.name != 'select')
+					menuItem.animation.play("hover");
 			}
 
 			switch (menuItemsSprite[i])
@@ -116,6 +118,12 @@ class NewMainMenuState extends MusicBeatState
 					menuItem.setPosition(996.5, 11.5);
 			}
 			add(menuItem);
+
+			menuItem.hitbox = shrinkToCenter(menuItem.x, menuItem.y, menuItem.width, menuItem.height, 0.75);
+
+			add((new FlxSprite(menuItem.hitbox.x,
+				menuItem.hitbox.y)).makeGraphic(Math.floor(menuItem.hitbox.width), Math.floor(menuItem.hitbox.height), 0x77FFFFFF));
+
 			menuItems.push(menuItem);
 		}
 
@@ -153,12 +161,15 @@ class NewMainMenuState extends MusicBeatState
 
 		for (i in 0...menuItems.length)
 		{
+			var overlapCheck:Bool = (FlxG.mouse.x >= menuItems[i].hitbox.x && FlxG.mouse.x <= menuItems[i].hitbox.x + menuItems[i].hitbox.width);
+			overlapCheck = overlapCheck && (FlxG.mouse.y >= menuItems[i].hitbox.y && FlxG.mouse.y <= menuItems[i].hitbox.y + menuItems[i].hitbox.height);
+
 			if (curSelected != i)
 			{
-				if (FlxG.mouse.overlaps(menuItems[i]))
+				if (overlapCheck)
 				{
-
-					#if (haxe>="4.3.0")
+					trace(i);
+					#if ("haxe" >= "4.3.0")
 					if (curSelected != i && menuItems[curSelected]?.onAway != null)
 						menuItems[curSelected].onAway();
 					#else
@@ -175,23 +186,35 @@ class NewMainMenuState extends MusicBeatState
 					}
 				}
 			}
-			else if (curSelected != -1 && !FlxG.mouse.overlaps(menuItems[i]))
+			else if (curSelected != -1 && !overlapCheck)
 			{
 				menuItems[i].onAway();
 				curSelected = -1;
 			}
+			else if (!overlapCheck)
+			{
+				trace((FlxG.mouse.x >= menuItems[i].hitbox.x && FlxG.mouse.x <= menuItems[i].hitbox.x + menuItems[i].hitbox.width));
+				trace((FlxG.mouse.y >= menuItems[i].hitbox.y && FlxG.mouse.y <= menuItems[i].hitbox.y + menuItems[i].hitbox.height));
+			}
 		}
-		#if (haxe>="4.3.0")
+
 		if (FlxG.mouse.justPressed && menuItems[curSelected]?.onClick != null)
 			menuItems[curSelected].onClick();
-		#else
-		if (FlxG.mouse.justPressed && menuItems[curSelected]!=null&&menuItems[curSelected].onClick!=null)
-			menuItems[curSelected].onClick();
-		#end
 
 		if (FlxG.keys.justPressed.SEVEN)
 			Main.switchState(this, new meta.state.menus.MainMenuState());
 
 		super.update(elapsed);
+	}
+
+	private function shrinkToCenter(x:Float, y:Float, width:Float, height:Float, scale:Float):FlxRect
+	{
+		var newWidth:Float = Math.round(width * scale);
+		var newHeight:Float = Math.round(height * scale);
+
+		var newX:Float = x + (width - newWidth) / 2;
+		var newY:Float = y + (height - newHeight) / 2;
+
+		return FlxRect.get(newX, newY, newWidth, newHeight);
 	}
 }

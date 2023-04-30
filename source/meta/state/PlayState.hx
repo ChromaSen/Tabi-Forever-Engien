@@ -16,7 +16,6 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
 import flixel.math.FlxRect;
 import flixel.system.FlxAssets.FlxSoundAsset;
-import flixel.system.FlxSound;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxAxes;
@@ -27,6 +26,7 @@ import gameObjects.*;
 import gameObjects.userInterface.*;
 import gameObjects.userInterface.notes.*;
 import gameObjects.userInterface.notes.Strumline.UIStaticArrow;
+import haxe.Int64;
 import meta.*;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.*;
@@ -44,6 +44,11 @@ import tabi.*;
 
 using StringTools;
 
+#if ("flixel" >= "4.3.0")
+import flixel.sound.FlxSound;
+#else
+import flixel.system.FlxSound;
+#end
 // tabi imports
 #if desktop
 import meta.data.dependency.Discord;
@@ -1458,7 +1463,7 @@ class PlayState extends MusicBeatState
 			lastRating = null;
 		}
 
-			lastRating = rating;
+		lastRating = rating;
 
 		if (!cache)
 			add(lastRating);

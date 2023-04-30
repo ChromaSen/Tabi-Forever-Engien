@@ -6,7 +6,6 @@ import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
-import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -17,6 +16,11 @@ import meta.state.*;
 import meta.state.menus.*;
 import sys.thread.Mutex;
 import sys.thread.Thread;
+#if ("flixel" >= "4.3.0")
+import flixel.sound.FlxSound;
+#else
+import flixel.system.FlxSound;
+#end
 
 class PauseSubState extends MusicBeatSubState
 {

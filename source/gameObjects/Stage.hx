@@ -11,7 +11,6 @@ import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import gameObjects.background.*;
@@ -21,6 +20,11 @@ import meta.data.dependency.FNFSprite;
 import meta.state.PlayState;
 
 using StringTools;
+#if ("flixel" >= "4.3.0")
+import flixel.sound.FlxSound;
+#else
+import flixel.system.FlxSound;
+#end
 
 /**
 	This is the stage class. It sets up everything you need for stages in a more organised and clean manner than the

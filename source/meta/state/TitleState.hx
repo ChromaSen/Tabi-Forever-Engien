@@ -13,7 +13,6 @@ import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.system.FlxSound;
 import flixel.system.ui.FlxSoundTray;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -29,6 +28,11 @@ import meta.state.menus.*;
 import openfl.Assets;
 
 using StringTools;
+#if ("flixel" >= "4.3.0")
+import flixel.sound.FlxSound;
+#else
+import flixel.system.FlxSound;
+#end
 
 /**
 	I hate this state so much that I gave up after trying to rewrite it 3 times and just copy pasted the original code

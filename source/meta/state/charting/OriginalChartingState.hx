@@ -16,7 +16,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
@@ -38,6 +37,11 @@ import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 
 using StringTools;
+#if ("flixel" >= "4.3.0")
+import flixel.sound.FlxSound;
+#else
+import flixel.system.FlxSound;
+#end
 
 /**
 	In case you dont like the forever engine chart editor, here's the base game one instead.

@@ -1,10 +1,14 @@
 package;
 
 import flixel.FlxG;
-import flixel.system.FlxSound;
 import meta.data.*;
 import openfl.utils.Assets;
 import sys.FileSystem;
+#if ("flixel" >= "4.3.0")
+import flixel.sound.FlxSound;
+#else
+import flixel.system.FlxSound;
+#end
 
 /**
 	This class is used as an extension to many other forever engine stuffs, please don't delete it as it is not only exclusively used in forever engine
