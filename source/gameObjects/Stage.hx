@@ -63,6 +63,18 @@ class Stage extends FlxTypedGroup<FlxBasic>
 	public var broken_door:FlxSprite;
 	public var eye:FlxSprite;
 
+
+	//date
+	public var city:FlxSprite;
+	public var restaurant:FlxSprite;
+	public var lamp:FlxSprite;
+	public var fg:FlxSprite;
+
+	//alley
+	public var alley:FlxSprite;
+	public var fgalley:FlxSprite;
+	public var overlay:FlxSprite;
+
 	public function new(curStage)
 	{
 		super();
@@ -76,7 +88,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 			switch (CoolUtil.spaceToDash(PlayState.SONG.song.toLowerCase()))
 			{
 				case 'my-battle' | 'last-chance':
-					curStage = 'tabi';
+					curStage = 'alley';
 				case 'genocide':
 					curStage = 'genocide';
 				default:
@@ -92,6 +104,45 @@ class Stage extends FlxTypedGroup<FlxBasic>
 		//
 		switch (curStage)
 		{
+
+			case 'alley':
+
+				PlayState.defaultCamZoom=0.78;
+
+				alley=new FlxSprite().loadGraphic(Paths.image("backgrounds/alley/Alley"));
+				alley.antialiasing=false;
+				alley.screenCenter();
+				alley.scale.set(0.77,0.77);
+				add(alley);
+
+				fgalley = new FlxSprite().loadGraphic(Paths.image("backgrounds/alley/alley forground"));
+				fgalley.antialiasing = false;
+				fgalley.screenCenter();
+				fgalley.scale.set(0.77, 0.77);
+				add(fgalley);
+				
+			case 'date':
+				PlayState.defaultCamZoom=0.6;
+				city=new FlxSprite().loadGraphic(Paths.image("backgrounds/RESTAURANT/restruant city"));
+				city.antialiasing=false;
+				city.screenCenter();
+				add(city);
+
+				restaurant=new FlxSprite().loadGraphic(Paths.image("backgrounds/RESTAURANT/restruant stage"));
+				restaurant.antialiasing=false;
+				restaurant.screenCenter();
+				add(restaurant);
+
+				lamp=new FlxSprite().loadGraphic(Paths.image("backgrounds/RESTAURANT/restruant lamp"));
+
+				lamp.antialiasing=false;
+				lamp.screenCenter();
+				add(lamp);
+
+				fg=new FlxSprite().loadGraphic(Paths.image("backgrounds/RESTAURANT/restruant forground"));
+				fg.antialiasing=false;
+				fg.screenCenter();
+				foreground.add(fg);
 
 			case 'idfk':
 				PlayState.defaultCamZoom=1.1;
@@ -266,6 +317,19 @@ class Stage extends FlxTypedGroup<FlxBasic>
 					boyfriend.y=315;
 					dad.x=700;
 					dad.y=237;
+				case 'tabidate':
+					gf.visible=false;
+					boyfriend.setPosition(140,188);
+					dad.setPosition(665,278.2);
+				case 'tabi-skelet':
+					gf.visible=false;
+					dad.visible=false;
+					boyfriend.setPosition(180,95);
+					boyfriend.scale.set(0.9, 0.9);
+
+
+
+					
 			}
 		}
 	}

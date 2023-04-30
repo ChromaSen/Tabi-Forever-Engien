@@ -296,6 +296,13 @@ class PlayState extends MusicBeatState
 		if (curStage == 'highway')
 			add(stageBuild.limo);
 
+		if(curStage.toLowerCase()=='date')
+		{
+			add(boyfriend);
+			add(dadOpponent);
+		}
+
+
 		add(dadOpponent);
 		add(boyfriend);
 
@@ -357,6 +364,19 @@ class PlayState extends MusicBeatState
 		dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
+
+		if (curStage.toLowerCase()=='date')
+		{
+			boyfriendStrums = new Strumline(placement - (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false,
+				true, 4, Init.trueSettings.get('Downscroll'));
+			dadStrums = new Strumline(placement + (FlxG.width / 4), this, dadOpponent, false, true, false, 4, Init.trueSettings.get('Downscroll'));
+			dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
+		}
+
+		if(curStage.toLowerCase()=='alley')
+		{
+			dadStrums.visible=false;
+		}
 
 		strumLines.add(dadStrums);
 		strumLines.add(boyfriendStrums);

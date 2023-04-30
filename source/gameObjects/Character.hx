@@ -226,6 +226,50 @@ class Character extends FNFSprite
 				playAnim('idle');
 				characterData.camOffsetY = 30;
 				characterData.camOffsetX = 100;
+			case 'tabidate':
+				tex = Paths.getSparrowAtlas('characters/restaurant/tabidate');
+				frames = tex;
+				animation.addByPrefix('idle', 'tabi idle', 24, false);
+				animation.addByPrefix('singUP', 'tabi up', 24);
+				animation.addByPrefix('singRIGHT', 'tabi right', 24);
+				animation.addByPrefix('singDOWN', 'tabi down', 24);
+				animation.addByPrefix('singLEFT', 'tabi left', 24);
+				flipX=true;
+				characterData.camOffsetX = -295;
+				characterData.camOffsetY = -100;
+				
+				scale.set(1.3,1.3);
+				playAnim('idle');
+			case 'gfdate':
+				tex = Paths.getSparrowAtlas('characters/restaurant/gfdate');
+				frames = tex;
+				animation.addByPrefix('idle', 'gf idle', 24, false);
+				animation.addByPrefix('singUP', 'gf up', 24);
+				animation.addByPrefix('singRIGHT', 'gf right', 24);
+				animation.addByPrefix('singDOWN', 'gf down', 24);
+				animation.addByPrefix('singLEFT', 'gf left', 24);
+
+				scale.set(1.31,1.31);
+
+				characterData.camOffsetX = -300;
+				characterData.camOffsetY = -140;
+
+				playAnim('idle');
+			case 'tabi-skelet':
+				tex = Paths.getSparrowAtlas('characters/allety/skele_tabi');
+				frames = tex;
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24);
+				animation.addByPrefix('singRIGHT', 'left', 24);
+				animation.addByPrefix('singDOWN', 'down', 24);
+				animation.addByPrefix('singLEFT', 'right', 24);
+				animation.addByPrefix('cry', 'cry', 24, false);
+
+				flipX=true;
+				characterData.camOffsetX = -150;
+				characterData.camOffsetY = -50;
+
+				playAnim('idle');
 			case 'tabi-crazy':
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/MadTabi');
