@@ -35,7 +35,7 @@ class Overlay extends TextField
 		autoSize = LEFT;
 		selectable = false;
 
-		defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 10, 0xD6E1E9);
+		defaultTextFormat = new TextFormat(Paths.font("lato_med.ttf"), 12, 0xD6E1E9);
 		text = "";
 
 		if (borderSize > 0)
@@ -103,16 +103,16 @@ class Overlay extends TextField
 
 			if (displayFps || displayMemory)
 			{
-				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0xA4ADB4, true), text.indexOf("FPS:"), text.indexOf("FPS:") + 4);
-				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0xA4ADB4, true), text.indexOf("MEM:"), text.indexOf("MEM:") + 4);
+				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 12, 0xA4ADB4, true), text.indexOf("FPS:"), text.indexOf("FPS:") + 4);
+				setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 12, 0xA4ADB4, true), text.indexOf("MEM:"), text.indexOf("MEM:") + 4);
 
 				for (textOutline in outlines)
 				{
 					if (textOutline != null)
 					{
-						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0x000000, true), text.indexOf("FPS:"),
+						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 12, 0x000000, true), text.indexOf("FPS:"),
 							text.indexOf("FPS:") + 4);
-						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 10, 0x000000, true), text.indexOf("MEM:"),
+						textOutline.setTextFormat(new TextFormat(Paths.font("lato_bold.ttf"), 12, 0x000000, true), text.indexOf("MEM:"),
 							text.indexOf("MEM:") + 4);
 					}
 				}

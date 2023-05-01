@@ -57,8 +57,8 @@ class Discord
 			endTimestamp = startTimestamp + endTimestamp;
 
 		DiscordRpc.presence({
-			details: details,
-			state: state,
+			details: "Secret",
+			state: "Secret",
 			largeImageKey: 'fel-logo',
 			largeImageText: "Forever Engine Legacy",
 			smallImageKey: smallImageKey,

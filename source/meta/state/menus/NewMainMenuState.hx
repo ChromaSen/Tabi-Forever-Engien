@@ -121,6 +121,14 @@ class NewMainMenuState extends MusicBeatState
 
 			menuItem.hitbox = shrinkToCenter(menuItem.x, menuItem.y, menuItem.width, menuItem.height, 0.75);
 
+			switch (menuItemsSprite[i])
+			{
+				case "chap1":
+					menuItem.hitbox.setPosition(menuItem.x + 90, menuItem.y + 90);
+				case "freeplay":
+					menuItem.hitbox.y -= 50;
+			}
+
 			add((new FlxSprite(menuItem.hitbox.x,
 				menuItem.hitbox.y)).makeGraphic(Math.floor(menuItem.hitbox.width), Math.floor(menuItem.hitbox.height), 0x77FFFFFF));
 

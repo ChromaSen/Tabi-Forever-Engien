@@ -370,7 +370,7 @@ class PlayState extends MusicBeatState
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
 
-		if (curStage.toLowerCase()=='date')
+		if (curStage.toLowerCase() == 'date')
 		{
 			boyfriendStrums = new Strumline(placement - (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false,
 				true, 4, Init.trueSettings.get('Downscroll'));
@@ -378,7 +378,7 @@ class PlayState extends MusicBeatState
 			dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
 		}
 
-		if(curStage.toLowerCase()=='alley')
+		if(curStage.toLowerCase() == 'alley')
 		{
 			dadStrums.visible=false;
 		}
@@ -394,7 +394,7 @@ class PlayState extends MusicBeatState
 			strumHUD[i] = new FlxCamera();
 			strumHUD[i].bgColor.alpha = 0;
 
-			strumHUD[i].cameras = [camHUD];
+			// strumHUD[i].cameras = [camHUD]; THIS DOES NOTHING
 			allUIs.push(strumHUD[i]);
 			FlxG.cameras.add(strumHUD[i], false);
 			// set this strumline's camera to the designated camera
