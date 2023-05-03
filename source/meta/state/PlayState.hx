@@ -44,7 +44,7 @@ import tabi.*;
 
 using StringTools;
 
-#if ("flixel" >= "4.3.0")
+#if (flixel >= "5.3.0")
 import flixel.sound.FlxSound;
 #else
 import flixel.system.FlxSound;
