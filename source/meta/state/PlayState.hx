@@ -94,6 +94,8 @@ class PlayState extends MusicBeatState
 	private var camFollow:FlxObject;
 	private var camFollowPos:FlxObject;
 
+	private var controlCamera:Bool = false;
+
 	// Discord RPC variables
 	public static var songDetails:String = "";
 	public static var detailsSub:String = "";
