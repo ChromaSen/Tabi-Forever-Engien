@@ -54,7 +54,7 @@ class Genocide extends SongEvents
 		if (post)
 		{
 			if (PlayState.health >= 2)
-				PlayState.health -= elapsed / 6;
+				PlayState.health -= (elapsed / 6);
 
 			@:privateAccess
 			{
@@ -84,9 +84,13 @@ class Genocide extends SongEvents
 		{
 			if (PlayState.health * 100 >= 2.5)
 			{
-				PlayState.health -= 6.5 / 100;
-				if (PlayState.health <= 0)
-					PlayState.health = 2.5;
+				var healthLoss:Float = 6.5 / 100;
+				if (PlayState.storyDifficulty == 2)
+					healthLoss *= (1 + (PlayState.misses * 0.25));
+				if (PlayState.health - healthLoss <= 0.0)
+					PlayState.health = 2.5 / 100;
+				else
+					PlayState.health -= healthLoss;
 			}
 		}
 	}

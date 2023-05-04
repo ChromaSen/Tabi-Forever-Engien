@@ -47,6 +47,8 @@ class Note extends FNFSprite
 	public var parentNote:Note;
 	public var childrenNotes:Array<Note> = [];
 
+	public var opponentOffset:Float = 0.0;
+
 	public static var swagWidth:Float = 160 * 0.7;
 
 	// it has come to this.
@@ -64,6 +66,8 @@ class Note extends FNFSprite
 
 		// oh okay I know why this exists now
 		y -= 2000;
+
+		opponentOffset = FlxG.random.float(-3, 15) * FlxG.random.sign();
 
 		this.strumTime = strumTime;
 		this.noteData = noteData;

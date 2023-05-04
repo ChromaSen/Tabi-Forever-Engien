@@ -367,7 +367,7 @@ class PlayState extends MusicBeatState
 
 		//
 		var placement = (FlxG.width / 2);
-		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, false, 4, Init.trueSettings.get('Downscroll'));
+		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, SONG.player2.contains("tabi"), 4, Init.trueSettings.get('Downscroll'));
 		dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
@@ -380,9 +380,9 @@ class PlayState extends MusicBeatState
 			dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
 		}
 
-		if(curStage.toLowerCase() == 'alley')
+		if (curStage.toLowerCase() == 'alley')
 		{
-			dadStrums.visible=false;
+			dadStrums.visible = false;
 		}
 
 		strumLines.add(dadStrums);
@@ -891,6 +891,9 @@ class PlayState extends MusicBeatState
 						+ (Math.cos(flixel.math.FlxAngle.asRadians(daNote.noteDirection)) * psuedoX)
 						+ (Math.sin(flixel.math.FlxAngle.asRadians(daNote.noteDirection)) * psuedoY);
 
+					if (!daNote.mustPress && SONG.player2.contains("tabi"))
+						daNote.y -= daNote.opponentOffset;
+
 					// also set note rotation
 					daNote.angle = -daNote.noteDirection;
 
@@ -1212,6 +1215,9 @@ class PlayState extends MusicBeatState
 				{
 					if (songEvents != null)
 						songEvents.opponentNoteHit(daNote, char);
+
+					if (SONG.player2.contains("tabi") && !daNote.isSustainNote && FlxG.random.bool(87))
+						createSplash(daNote, strumline);
 				}
 			}
 			//

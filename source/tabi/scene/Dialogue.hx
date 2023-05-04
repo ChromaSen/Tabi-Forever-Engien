@@ -4,9 +4,10 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
-import meta.MusicBeat.MusicBeatSubState;
+import meta.state.PlayState;
 import sys.FileSystem;
 
 using StringTools;
@@ -17,7 +18,7 @@ import flixel.sound.FlxSound;
 import flixel.system.FlxSound;
 #end
 
-class Dialogue extends MusicBeatSubState
+class Dialogue extends FlxTypedGroup<FlxSprite>
 {
 	public var song:String = '';
 	public var dialogueList:Array<DialogueInfo> = [];
@@ -38,14 +39,20 @@ class Dialogue extends MusicBeatSubState
 
 		this.song = song;
 
-		switch (song) {}
+		this.camera = PlayState.dialogueHUD;
+
+		switch (song) 
+		{
+
+		}
 	}
 
 	private var finishedSpeech:Bool = false;
+	private var canControl:Bool = false;
 
 	override public function update(elapsed:Float)
 	{
-		if (controls.ACCEPT)
+		if (canControl && FlxG.keys.anyJustPressed([SPACE, ENTER]))
 		{
 			if (finishedSpeech)
 			{
