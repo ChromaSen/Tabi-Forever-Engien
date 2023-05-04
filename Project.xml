@@ -51,7 +51,7 @@
 
 	<!-- _____________________________ Custom Defines ____________________________ -->
 
-	<define name="DISCORD_RPC" if="desktop" unless="web || neko || hl"/>
+	<!--<define name="DISCORD_RPC" if="desktop" unless="web || neko || hl"/>-->
 
 	<!-- _____________________________ Path Settings _____________________________ -->
 	<!--
