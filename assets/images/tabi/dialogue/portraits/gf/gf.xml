@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Funkin Packer v0.0.2 https://neeeoo.github.io/funkin-packer/
+-->
+<TextureAtlas imagePath="gf.png" width="2381" height="316">
+	<SubTexture name="explosion" x="3" y="3" width="338" height="273" frameX="-5" frameY="-12" frameWidth="348" frameHeight="303"/>
+	<SubTexture name="talking" x="347" y="3" width="334" height="308" frameX="-18" frameY="-5" frameWidth="380" frameHeight="333"/>
+	<SubTexture name="hmm" x="687" y="3" width="332" height="309" frameX="-17" frameY="-11" frameWidth="379" frameHeight="333"/>
+	<SubTexture name="scared" x="1025" y="3" width="332" height="309" frameX="-17" frameY="-8" frameWidth="379" frameHeight="332"/>
+	<SubTexture name="worried" x="1363" y="3" width="334" height="309" frameX="-19" frameY="-5" frameWidth="380" frameHeight="333"/>
+	<SubTexture name="normal" x="1703" y="3" width="334" height="309" frameX="-27" frameY="-9" frameWidth="380" frameHeight="333"/>
+	<SubTexture name="letsgo" x="2043" y="3" width="335" height="310" frameX="-21" frameY="-8" frameWidth="380" frameHeight="334"/>
+</TextureAtlas>

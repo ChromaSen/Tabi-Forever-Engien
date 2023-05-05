@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Funkin Packer v0.0.2 https://neeeoo.github.io/funkin-packer/
+-->
+<TextureAtlas imagePath="tabi.png" width="2219" height="449">
+	<SubTexture name="justdie" x="3" y="3" width="340" height="378" frameX="-5" frameY="-13" frameWidth="350" frameHeight="407"/>
+	<SubTexture name="worried" x="349" y="3" width="309" height="412" frameX="-18" frameY="-13" frameWidth="340" frameHeight="448"/>
+	<SubTexture name="idle" x="664" y="3" width="303" height="415" frameX="-17" frameY="-6" frameWidth="330" frameHeight="450"/>
+	<SubTexture name="worried-crack" x="973" y="3" width="306" height="427" frameX="-5" frameY="-11" frameWidth="316" frameHeight="447"/>
+	<SubTexture name="mad-crack" x="1285" y="3" width="303" height="428" frameX="-5" frameY="-7" frameWidth="313" frameHeight="459"/>
+	<SubTexture name="idle-crack" x="1594" y="3" width="302" height="429" frameX="-5" frameY="-9" frameWidth="312" frameHeight="450"/>
+	<SubTexture name="mad" x="1902" y="3" width="314" height="443" frameX="-9" frameY="-7" frameWidth="330" frameHeight="450"/>
+</TextureAtlas>

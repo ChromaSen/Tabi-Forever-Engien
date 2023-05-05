@@ -1,0 +1,7 @@
+justdie
+worried
+idle
+worried-crack
+mad-crack
+idle-crack
+mad

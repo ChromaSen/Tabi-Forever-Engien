@@ -60,6 +60,8 @@ class Overlay extends TextField
 
 		var timer:Timer = new Timer(1000);
 		timer.run = update;
+
+		addEventListener(Event.ENTER_FRAME, onEnter);
 	}
 
 	static final intervalArray:Array<String> = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -79,6 +81,7 @@ class Overlay extends TextField
 	}
 
 	private var _lastTime:Float = 0; 
+	private var frameCount:Int = 0;
 
 	private function update()
 	{
@@ -89,11 +92,11 @@ class Overlay extends TextField
 		if (visible)
 		{
 			text = '' // set up the text itself
-				+ (displayFps ? "FPS: " + Math.floor(1 / (Timer.stamp() - _lastTime)) + "\n" : '') // Framerate
+				+ (displayFps ? "FPS: " + Math.min(frameCount, Init.trueSettings.get("Framerate Cap")) + "\n" : '') // Framerate
 				+ (displayMemory ? 'MEM: ${getInterval(mem)} / ${getInterval(memPeak)}\n' : '') // Current and Total Memory Usage
 			#if !neko + (displayExtra ? Main.mainClassState + "\n" : ''); #end // Current Game State
 
-			_lastTime = Timer.stamp();
+			_lastTime = openfl.Lib.getTimer();
 
 			for (textOutline in outlines)
 			{
@@ -118,6 +121,12 @@ class Overlay extends TextField
 				}
 			}
 		}
+	}
+
+	private function onEnter(_:Event)
+	{
+		frameCount = Math.floor(1 / (openfl.Lib.getTimer() - _lastTime) * 1000);
+		_lastTime = openfl.Lib.getTimer();
 	}
 
 	public static function updateDisplayInfo(shouldDisplayFps:Bool, shouldDisplayExtra:Bool, shouldDisplayMemory:Bool)

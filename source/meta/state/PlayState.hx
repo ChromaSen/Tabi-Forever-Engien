@@ -41,6 +41,7 @@ import openfl.media.Sound;
 import openfl.utils.Assets;
 import sys.io.File;
 import tabi.*;
+import tabi.scene.Dialogue;
 
 using StringTools;
 
@@ -431,7 +432,7 @@ class PlayState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		// call the funny intro cutscene depending on the song
-		if (!skipCutscenes())
+		if (isStoryMode)
 			songIntroCutscene();
 		else
 			startCountdown();
@@ -1875,13 +1876,14 @@ class PlayState extends MusicBeatState
 
 	var dialogueBox:DialogueBox;
 
+	private var dialogueTabi:Dialogue;
+
 	public function songIntroCutscene()
 	{
-		switch (curSong.toLowerCase())
+		trace(curSong);
+		switch (curSong.toLowerCase().replace(" ", "-"))
 		{
 			case "my-battle" | "last-chance" | "genocide":
-				callTextbox();
-			default:
 				callTextbox();
 		}
 		//
@@ -1889,19 +1891,12 @@ class PlayState extends MusicBeatState
 
 	function callTextbox()
 	{
-		var dialogPath = Paths.json(SONG.song.toLowerCase() + '/dialogue');
-		if (sys.FileSystem.exists(dialogPath))
-		{
-			startedCountdown = false;
+		startedCountdown = false;
 
-			dialogueBox = DialogueBox.createDialogue(sys.io.File.getContent(dialogPath));
-			dialogueBox.cameras = [dialogueHUD];
-			dialogueBox.whenDaFinish = startCountdown;
+		dialogueTabi = new Dialogue(curSong.toLowerCase().replace(" ", "-"));
+		dialogueTabi.finishCallback = startCountdown;
 
-			add(dialogueBox);
-		}
-		else
-			startCountdown();
+		add(dialogueBox);
 	}
 
 	public static function skipCutscenes():Bool

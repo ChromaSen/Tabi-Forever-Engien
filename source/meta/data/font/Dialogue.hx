@@ -7,7 +7,7 @@ import meta.data.font.Alphabet.AlphaCharacter;
 
 using StringTools;
 
-class Dialogue extends FlxSpriteGroup
+class DialogueText extends FlxSpriteGroup
 {
 	public var textSpeed:Float = 0.05;
 	public var textSize:Float = 1;
