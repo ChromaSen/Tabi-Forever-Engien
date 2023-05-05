@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.effects.FlxTrail;
 import flixel.math.FlxMath;
-import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import gameObjects.Character;
 import gameObjects.userInterface.notes.Note;
