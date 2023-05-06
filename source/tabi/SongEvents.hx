@@ -24,8 +24,6 @@ abstract class SongEvents
 	@:keep
 	public function opponentNoteHit(note:Note, char:Character):Void {}
 
-	// internal constructor
-
 	@:keep
 	public function new() {}
 }

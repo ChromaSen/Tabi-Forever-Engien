@@ -55,7 +55,6 @@ class TitleState extends MusicBeatState
 
 		if (!initialized)
 		{
-			///*
 			#if DISCORD_RPC
 			Discord.changePresence('TITLE SCREEN', 'Main Menu');
 			#end
@@ -86,11 +85,10 @@ class TitleState extends MusicBeatState
 
 		Conductor.changeBPM(50);
 
-		new FlxTimer().start(2, appearText);
+		new FlxTimer().start(1.5, appearText);
 	}
-
-	public var proceed:Bool = false;
-	public var repetition:Int = 0;
+	
+	var proceed:Bool = true;
 
 	override function update(elapsed:Float)
 	{
@@ -99,27 +97,14 @@ class TitleState extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
-			if (proceed)
+			proceed = false;
+
+			FlxG.sound.play(Paths.sound('scrollMenu'));
+
+			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				proceed = false;
-
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-
-				new FlxTimer().start(1.5, function(tmr:FlxTimer)
-				{
-					Main.switchState(this, new NewMainMenuState());
-				});
-			}
-			else if (++repetition > 3)
-			{
-				proceed = true;
-				FlxG.sound.music.time = 9000;
-
-				nameList = [];
-
-				FlxTween.cancelTweensOf(textDisplay);
-				appearText(null);
-			}
+				Main.switchState(this, new NewMainMenuState());
+			});
 		}
 
 		super.update(elapsed);

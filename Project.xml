@@ -91,6 +91,9 @@
 	<haxedef name="HXCPP_CHECK_POINTER"/>
 	<haxedef name="HXCPP_STACK_LINE"/>
 
+	<!--Fuck you Baltimore-->
+	<haxedef name="no-deprecation-warnings"/>
+
 	<!-- ______________________________ Release Defines _____________________________ -->
 
 	<section unless="debug">
@@ -100,6 +103,7 @@
 			Automatically removes unused code during compilation
 			MARK EVERYTHING THAT IS A DYNAMIC OR USES REFLECT AS @:keep ELSE THIS WILL BREAK
 		-->
+		<haxeflag name="-dce full"/>
 
 		<!-- Disables tracing. -->
 		<haxedef name="no_traces" />
@@ -111,6 +115,12 @@
 		<!--Prints stats for gc after a session.-->
 		<haxedef name="HXCPP_GC_SUMMARY" if="cpp"/>
 	</section>
+
+	<!-- ______________________________ Misc Defines _____________________________ -->
+
+	<error value="You're using an old Haxe version, use 4.2.5 or newer." if="{haxe &lt;= 4.2.4 }"/>
+	<error value="You're using an old Flixel version, use 5 or newer." if="{flixel &lt;= 4.11.0 }"/>
+	<error value="You're using an old Flixel-Addons version, update to 3 or greater" if="${flixel-addons &lt;= 2.11.0}"/>
 
 	<!-- _________________________________ Custom _______________________________ -->
 

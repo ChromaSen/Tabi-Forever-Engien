@@ -17,30 +17,21 @@ class DisclaimerState extends MusicBeatState
 		add(preload);
 
 		var text:FlxText = new FlxText(0, 0, FlxG.width * 0.8,
-			"DISCLAIMER:\nThe following content portrays themes of\nabuse, mental health, and other types that players may find disturbing. \n\nProceed with caution.\n\nPress SPACE to Continue.");
+			"DISCLAIMER:\nThe following content portrays themes of\nabuse, mental health, and other types of themes players may find disturbing. \n\nProceed with caution.\n\nPress SPACE or ENTER to Continue.");
 		text.alignment = CENTER;
 		text.setFormat(Paths.font("lato_bold.ttf"), 24, OUTLINE, 0xFF000000);
 		text.screenCenter();
 		add(text);
 	}
 
-	private var fade:Bool = false;
-
 	override function update(elapsed:Float)
 	{
-		if (FlxG.keys.justPressed.SPACE)
+		if (FlxG.keys.anyJustPressed([SPACE, ENTER]))
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 
-			if (!fade)
-			{
-				fade = true;
-
-				FlxG.camera.fade(0x00000000, 2.5, true, function()
-				{
-					Main.switchState(this, new TitleState());
-				});
-			}
+			FlxG.camera.fade(0x00000000, 2.5, true);
+			Main.switchState(this, new TitleState());
 		}
 
 		super.update(elapsed);
