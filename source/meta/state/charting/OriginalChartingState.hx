@@ -23,7 +23,7 @@ import flixel.util.FlxColor;
 import gameObjects.*;
 import gameObjects.userInterface.*;
 import gameObjects.userInterface.notes.*;
-import haxe.Json;
+import tjson.TJSON;
 import lime.utils.Assets;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.*;
@@ -1152,7 +1152,7 @@ class OriginalChartingState extends MusicBeatState
 
 	function autosaveSong():Void
 	{
-		FlxG.save.data.autosave = Json.stringify({
+		FlxG.save.data.autosave = TJSON.encode({
 			"song": _song
 		});
 		FlxG.save.flush();
@@ -1164,7 +1164,7 @@ class OriginalChartingState extends MusicBeatState
 			"song": _song
 		};
 
-		var data:String = Json.stringify(json);
+		var data:String = TJSON.encode(json);
 
 		if ((data != null) && (data.length > 0))
 		{

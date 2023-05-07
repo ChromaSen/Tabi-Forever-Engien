@@ -1,6 +1,5 @@
 package tabi.scene;
 
-import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
@@ -11,7 +10,6 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import meta.state.PlayState;
 import openfl.Assets;
-import sys.FileSystem;
 
 using StringTools;
 
@@ -101,21 +99,20 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		super.update(elapsed);
 	}
 
-	private function startDialogue():Void
+	private inline function startDialogue():Void
 	{
 		nextDialogue();
 	}
 
 	private function nextDialogue():Void
 	{
-		if (finishedSpeech)
-		{
+		/*if (finishedSpeech)
+		{*/
 			dialogueList.shift();
 
 			if (dialogueList.length == 0)
 				finishDialogue();
-		}
-		else {}
+		//}
 	}
 
 	private function finishDialogue():Void

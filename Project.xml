@@ -70,12 +70,12 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxelib name="yaml"/>
 	<haxelib name="tjson"/>
 	<haxelib name="flixel"/>
 	<haxelib name="polymod"/>
 	<haxelib name="flixel-ui"/>
 	<haxelib name="flixel-addons"/>
+	<haxelib name="ansi" if="linux || mac"/>
 	<haxelib name="discord_rpc" if="DISCORD_RPC"/>
 	<haxelib name="hxcpp-debug-server" if="debug"/>
 

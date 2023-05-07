@@ -119,7 +119,7 @@ class DialogueBox extends FlxSpriteGroup
 		trace("start");
 
 		// get dialog data from dialogue.json
-		dialogueData = haxe.Json.parse(daDialogue);
+		dialogueData = tjson.TJSON.parse(daDialogue);
 
 		dialogDataCheck();
 
@@ -233,7 +233,7 @@ class DialogueBox extends FlxSpriteGroup
 			var boxJson = Paths.file('images/dialogue/boxes/$curBox/$curBox.json');
 
 			// load the json and sprite
-			boxData = haxe.Json.parse(sys.io.File.getContent(boxJson));
+			boxData = tjson.TJSON.parse(sys.io.File.getContent(boxJson));
 			box.frames = Paths.getSparrowAtlas('dialogue/boxes/$curBox/$curBox');
 
 			// get the states sectioon
@@ -321,7 +321,7 @@ class DialogueBox extends FlxSpriteGroup
 				// load the json file
 				if (sys.FileSystem.exists(portraitJson))
 				{
-					portraitData = haxe.Json.parse(sys.io.File.getContent(portraitJson));
+					portraitData = tjson.TJSON.parse(sys.io.File.getContent(portraitJson));
 					portrait.frames = Paths.getSparrowAtlas('dialogue/portraits/$curCharacter/$curCharacter');
 				}
 

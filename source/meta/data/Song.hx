@@ -1,8 +1,6 @@
 package meta.data;
 
-import haxe.Json;
-import haxe.format.JsonParser;
-import lime.utils.Assets;
+import tjson.TJSON;
 import meta.data.Section.SwagSection;
 import sys.io.File;
 
@@ -54,7 +52,7 @@ class Song
 
 	public static function parseJSONshit(rawJson:String):SwagSong
 	{
-		var swagShit:SwagSong = cast Json.parse(rawJson).song;
+		var swagShit:SwagSong = cast TJSON.parse(rawJson).song;
 		swagShit.validScore = true;
 		return swagShit;
 	}
