@@ -6,3 +6,4 @@ tabi-true
 tabidate
 gfdate
 tabi-skelet
+tabi-gf-beach

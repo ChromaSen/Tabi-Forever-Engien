@@ -79,6 +79,10 @@ class Stage extends FlxTypedGroup<FlxBasic>
 	public var fgalley:FlxSprite;
 	public var overlay:FlxSprite;
 
+	//beach
+	public var beach_sea:FlxSprite;
+	public var sea:FlxSprite;
+
 	public function new(curStage)
 	{
 		super();
@@ -105,9 +109,25 @@ class Stage extends FlxTypedGroup<FlxBasic>
 		// to apply to foreground use foreground.add(); instead of add();
 		foreground = new FlxTypedGroup<FlxBasic>();
 
+		bars = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/bars'));
+		bars.antialiasing = false;
+		bars.updateHitbox();
+		bars.screenCenter();
+		bars.visible=false;
+		bars.cameras = [PlayState.barHUD];
+		add(bars);
+
 		//
 		switch (curStage)
 		{
+
+			case 'beach':
+				PlayState.defaultCamZoom=1.15;
+				bars.visible=true;
+				sea=new FlxSprite().loadGraphic(Paths.image("backgrounds/BEACH/anpther/sea"));
+				sea.antialiasing=false;
+				sea.screenCenter();
+				add(sea);
 
 			case 'alley':
 
@@ -170,12 +190,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				add(main_bg);
 			case 'genocide':
 				PlayState.defaultCamZoom = 0.8;
-				bars = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/tabi/bars'));
-				bars.antialiasing = false;
-				bars.updateHitbox();
-				bars.screenCenter();
-				bars.cameras = [PlayState.camGame];
-				add(bars);
+				bars.visible=true;
 
 				var genocideBG:FNFSprite = new FNFSprite(-600, 300).loadGraphic(Paths.image('backgrounds/' + curStage + '/youhavebeendestroyed'));
 				genocideBG.scale.set(0.95, 0.95);
@@ -217,12 +232,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				add(boombox);
 			case 'tabi':
 				PlayState.defaultCamZoom = 0.6;
-				bars = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/' + curStage + '/bars'));
-				bars.antialiasing = false;
-				bars.updateHitbox();
-				bars.screenCenter();
-				bars.cameras = [PlayState.barHUD];
-				add(bars);
+				bars.visible=true;
 
 				var normal_stage:FNFSprite = new FNFSprite(-510, 230).loadGraphic(Paths.image('backgrounds/' + curStage + '/normal_stage'));
 				add(normal_stage);
@@ -330,9 +340,10 @@ class Stage extends FlxTypedGroup<FlxBasic>
 					dad.visible=false;
 					boyfriend.setPosition(180,95);
 					boyfriend.scale.set(0.9, 0.9);
-
-
-
+				case 'tabi-gf-beach':
+					dad.visible=false;
+					gf.visible=false;
+					boyfriend.setPosition(250,170);
 					
 			}
 		}

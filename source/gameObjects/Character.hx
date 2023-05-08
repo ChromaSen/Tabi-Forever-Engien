@@ -270,6 +270,31 @@ class Character extends FNFSprite
 				characterData.camOffsetY = -50;
 
 				playAnim('idle');
+			case 'tabi-gf-beach':
+				frames = Paths.getSparrowAtlas('characters/beach/tabi_and_gf');
+
+				animation.addByPrefix('idle', 'Tabi Idle', 24, false);
+				animation.addByPrefix('singUP', 'Tabi Up gf0', 24, false);
+				animation.addByPrefix('singLEFT', 'Tabi Left gf0', 24, false);
+				animation.addByPrefix('singRIGHT', 'Tabi Right gf0', 24, false);
+				animation.addByPrefix('singDOWN', 'Tabi Down gf0', 24, false);
+				animation.addByPrefix('singUPmiss', 'Tabi Up miss', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'Tabi Left miss', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'Tabi Right miss', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'Tabi Down miss', 24, false);
+
+
+				animation.addByPrefix('singUP-alt', 'Tabi Up tabi', 24);
+				animation.addByPrefix('singRIGHT-alt', 'Tabi Right tabi', 24);
+				animation.addByPrefix('singDOWN-alt', 'Tabi Down tabi', 24);
+				animation.addByPrefix('singLEFT-alt', 'Tabi Left tabi', 24);
+
+				flipX=true;
+
+				playAnim('idle');
+
+				characterData.camOffsetX = -50;
+				characterData.camOffsetY = -40;
 			case 'tabi-crazy':
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/MadTabi');
