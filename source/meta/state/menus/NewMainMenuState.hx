@@ -19,12 +19,16 @@ import gameObjects.userInterface.menu.MainMenuItem;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.Song;
 import meta.data.dependency.Discord;
+import meta.subState.FreeplaySubstate;
 
 using StringTools;
 
 class NewMainMenuState extends MusicBeatState
 {
 	public static var camHUD:FlxCamera;
+	public static var freeplayHUD:FlxCamera;
+
+	public static var freeplayMenu:FreeplaySubstate;
 
 	public static final menuPath:String = 'menus/main/';
 	public static final itemPath:String = 'menus/main/menu/';
@@ -55,9 +59,21 @@ class NewMainMenuState extends MusicBeatState
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 
+		freeplayHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
+
 		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(freeplayHUD, false);
 
 		FlxG.mouse.visible = true;
+
+		// preload
+		freeplayMenu = new FreeplaySubstate();
+		freeplayMenu.camera = freeplayHUD;
+		openSubState(freeplayMenu);
+		freeplayMenu.exists = false;
+
+		persistentUpdate = true;
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 
@@ -77,7 +93,6 @@ class NewMainMenuState extends MusicBeatState
 		{
 			var menuItem:MainMenuItem = new MainMenuItem();
 			menuItem.frames = Paths.getSparrowAtlas(itemPath + menuItemsSprite[i]);
-			trace(itemPath + menuItemsSprite[i]);
 			menuItem.ID = i;
 
 			menuItem.animation.addByPrefix("idle", "idle", 1, false);
@@ -149,6 +164,10 @@ class NewMainMenuState extends MusicBeatState
 					{
 						FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 						clickSpriteWithOffset(menuItem);
+
+						persistentUpdate = false;
+
+						freeplayMenu.exists = true;
 					}
 				case "easy":
 					menuItem.setPosition(99.5, -187);
