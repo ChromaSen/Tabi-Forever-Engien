@@ -26,13 +26,14 @@ class FreeplaySubstate extends MusicBeatSubState
         {
             exists = false;
             this._parentState.persistentUpdate = true;
+            camera.visible = false;
 
             return;
         }
 
         if (camera != null && camera.x > 0)
         {
-            camera.x -= 700 * elapsed;
+            camera.x -= 3000 * elapsed;
         }
         else
             camera.x = 0;

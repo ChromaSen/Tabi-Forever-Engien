@@ -60,7 +60,8 @@ class NewMainMenuState extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 
 		freeplayHUD = new FlxCamera();
-		camHUD.bgColor.alpha = 0;
+		freeplayHUD.bgColor.alpha = 0;
+		freeplayHUD.visible = false;
 
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(freeplayHUD, false);
@@ -167,6 +168,8 @@ class NewMainMenuState extends MusicBeatState
 
 						persistentUpdate = false;
 
+						freeplayHUD.visible = true;
+						freeplayHUD.x = FlxG.width;
 						freeplayMenu.exists = true;
 					}
 				case "easy":
