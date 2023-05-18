@@ -50,6 +50,8 @@ class FreeplaySubstate extends MusicBeatSubState
                 songList.push(spr);
             }
 		}
+
+        changeSelection();
 	}
 
 	override function update(elapsed:Float)
@@ -74,12 +76,14 @@ class FreeplaySubstate extends MusicBeatSubState
 			}
 		}
 
-
-		if (FlxG.mouse.justPressed || controls.LEFT || controls.RIGHT) 
+		if (FlxG.mouse.justPressed || controls.LEFT_P || controls.RIGHT_P) 
         {
             var increment:Int = 0;
-            if (controls.LEFT || controls.RIGHT)
-                increment = controls.LEFT ? -1 : (controls.RIGHT ? 1 : 0);
+
+            if (controls.LEFT)
+                increment = -1;
+            else if (controls.RIGHT)
+                increment = 1;
             else if (FlxG.mouse.justPressed)
             {
                 for (spr in [arrowLeft, arrowRight])
@@ -115,7 +119,7 @@ class FreeplaySubstate extends MusicBeatSubState
     public function changeSelection(change:Int = 0)
     {
         if (change != 0)
-        {
+        {  
             if (songList[curSelected + change] == null || !FlxMath.inBounds(curSelected + change, 0, songList.length))
                 return;
 
@@ -126,6 +130,8 @@ class FreeplaySubstate extends MusicBeatSubState
 
 			FlxG.sound.play(Paths.sound("turnPage"));
         }
+        else
+			songList[curSelected].revive();
     }
 
 	private function overlapHelper(spr:FlxSprite):Bool
