@@ -649,8 +649,8 @@ class PlayState extends MusicBeatState
 			}
 
 			// make sure you're not cheating lol
-			if (!isStoryMode)
-			{
+			#if !debug if (!isStoryMode)
+			{ #end
 				// charting state (more on that later)
 				if ((FlxG.keys.justPressed.SEVEN) && (!startingSong))
 				{
@@ -674,7 +674,7 @@ class PlayState extends MusicBeatState
 					else
 						Main.switchState(this, new AnimationDebug(boyfriend.curCharacter));
 				}
-			}
+			#if !debug } #end
 
 			///*
 			if (startingSong)

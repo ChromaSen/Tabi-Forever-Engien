@@ -6,7 +6,8 @@ import ANSI;
 
 class Logs
 {
-    public static function trace(str:String, level:DebugLevel #if ansi,  color:ANSI.Attribute #end) {
+    //This is a glue fix for it to compile on windows, i'll make it work properly on windows later.
+    public static function trace(str:String, level:DebugLevel = INFO #if ansi,  color:ANSI.Attribute = DefaultForeground #else, color:Dynamic #end) {
         #if ansi Sys.print(ANSI.set(White)); #end
         Sys.println(prepareAnsiTrace(level) #if ansi + ANSI.set(color) #end + str);
         #if ansi Sys.print(ANSI.set(DefaultForeground)); #end
