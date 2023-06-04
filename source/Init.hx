@@ -247,7 +247,7 @@ class Init extends FlxState
 		FlxG.mouse.visible = false; // Hide mouse on start
 		FlxGraphic.defaultPersist = true; // make sure we control all of the memory
 
-		Logs.trace("Warning: You're fat", Logs.DebugLevel.WARNING, ANSI.Attribute.Red);
+		Logs.trace("Warning: You're fat", Logs.DebugLevel.WARNING, #if ansi ANSI.Attribute.Red #end);
 
 		gotoTitleScreen();
 	}

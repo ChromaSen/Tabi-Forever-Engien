@@ -7,13 +7,13 @@ import ANSI;
 class Logs
 {
     //This is a glue fix for it to compile on windows, i'll make it work properly on windows later.
-    public static function trace(str:String, level:DebugLevel = INFO #if ansi,  color:ANSI.Attribute = DefaultForeground #else, color:Dynamic #end) {
+    public static function trace(str:String, level:DebugLevel = INFO #if ansi,  color:ANSI.Attribute = DefaultForeground #else, ?color:Dynamic #end) {
         #if ansi Sys.print(ANSI.set(White)); #end
         Sys.println(prepareAnsiTrace(level) #if ansi + ANSI.set(color) #end + str);
         #if ansi Sys.print(ANSI.set(DefaultForeground)); #end
     }
 
-    #if ansi
+    
     private static function prepareAnsiTrace(level:DebugLevel = INFO) {
         /*TIME STUFF*/
         var time = Date.now();
@@ -24,16 +24,15 @@ class Logs
 
         /*LEVEL STUFF*/
         var lv:String = switch (level) {
-            case ERROR: ANSI.set(Red) + '  ERROR  ';
-            case WARNING: ANSI.set(Yellow) + '  WARNING  ';
-            case INFO: ANSI.set(Cyan) + '  INFORMATION  ';
+            case ERROR: #if ansi ANSI.set(Red) + #end '  ERROR  ';
+            case WARNING: #if ansi ANSI.set(Yellow) + #end '  WARNING  ';
+            case INFO: #if ansi ANSI.set(Cyan) + #end '  INFORMATION  ';
         }
 
-        var out:String = ANSI.set(Magenta) + '[  ${format[0]}:${format[1]}:${format[2]}  |' + lv + '] ';
+        var out:String = #if ansi ANSI.set(Magenta) + #end'[  ${format[0]}:${format[1]}:${format[2]}  |' + lv + '] ';
 
         return out;
     }
-    #end
 
     private static function formatTime(hour:String, minute:String, second:String):Array<String> {
         var arr:Array<String> = [hour, minute, second];

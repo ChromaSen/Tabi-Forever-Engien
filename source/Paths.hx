@@ -75,14 +75,14 @@ class Paths
 						openfl.Assets.cache.removeBitmapData(key);
 						FlxG.bitmap._cache.remove(key);
 					}
-					Logs.trace('src/Paths.hx:78: removed $key, ' + (isTexture ? 'is a texture' : 'is not a texture'), Logs.DebugLevel.INFO, ANSI.Attribute.Yellow);
+					Logs.trace('src/Paths.hx:78: removed $key, ' + (isTexture ? 'is a texture' : 'is not a texture'), Logs.DebugLevel.INFO, #if ansi ANSI.Attribute.Yellow #end);
 					obj.destroy();
 					currentTrackedAssets.remove(key);
 					counter++;
 				}
 			}
 		}
-		Logs.trace('src/Paths.hx:85: removed $counter assets', Logs.DebugLevel.INFO, ANSI.Attribute.Yellow);
+		Logs.trace('src/Paths.hx:85: removed $counter assets', Logs.DebugLevel.INFO, #if ansi ANSI.Attribute.Yellow#end);
 		// run the garbage collector for good measure lmfao
 		System.gc();
 	}
@@ -149,7 +149,7 @@ class Paths
 			localTrackedAssets.push(key);
 			return currentTrackedAssets.get(key);
 		}
-		Logs.trace('src/Paths.hx:152: $key returned null.', Logs.DebugLevel.WARNING, ANSI.Attribute.Red);
+		Logs.trace('src/Paths.hx:152: $key returned null.', Logs.DebugLevel.WARNING, #if ansi ANSI.Attribute.Red #end);
 		return null;
 	}
 
@@ -285,7 +285,7 @@ class Paths
 	{
 		var songKey:String = '${CoolUtil.swapSpaceDash(song.toLowerCase())}';
 		var voices = returnSound('songs/$songKey/song', 'Voices');
-		Logs.trace('src/Paths.hx:288: Tried Loading assets/songs/$songKey/song/Inst.ogg', INFO, ANSI.Attribute.Yellow);
+		Logs.trace('src/Paths.hx:288: Succesfully loaded assets/songs/$songKey/song/Inst.ogg', INFO, #if ansi ANSI.Attribute.Green #end);
 		return voices;
 	}
 
@@ -293,7 +293,7 @@ class Paths
 	{
 		var songKey:String = '${CoolUtil.swapSpaceDash(song.toLowerCase())}';
 		var inst = returnSound('songs/$songKey/song', 'Inst');
-		Logs.trace('src/Paths.hx:296: Tried Loading assets/songs/$songKey/song/Inst.ogg', INFO, ANSI.Attribute.Yellow);
+		Logs.trace('src/Paths.hx:296: Succesfully loaded assets/songs/$songKey/song/Inst.ogg', INFO, #if ansi ANSI.Attribute.Green #end);
 		return inst;
 	}
 
