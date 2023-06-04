@@ -75,14 +75,14 @@ class Paths
 						openfl.Assets.cache.removeBitmapData(key);
 						FlxG.bitmap._cache.remove(key);
 					}
-					trace('removed $key, ' + (isTexture ? 'is a texture' : 'is not a texture'));
+					Logs.trace('src/Paths.hx:78: removed $key, ' + (isTexture ? 'is a texture' : 'is not a texture'), Logs.DebugLevel.INFO, #if ansi ANSI.Attribute.Yellow #end);
 					obj.destroy();
 					currentTrackedAssets.remove(key);
 					counter++;
 				}
 			}
 		}
-		trace('removed $counter assets');
+		Logs.trace('src/Paths.hx:85: removed $counter assets', Logs.DebugLevel.INFO, #if ansi ANSI.Attribute.Yellow#end);
 		// run the garbage collector for good measure lmfao
 		System.gc();
 	}
@@ -149,7 +149,7 @@ class Paths
 			localTrackedAssets.push(key);
 			return currentTrackedAssets.get(key);
 		}
-		trace('$key returned null.');
+		Logs.trace('src/Paths.hx:152: $key returned null.', Logs.DebugLevel.WARNING, #if ansi ANSI.Attribute.Red #end);
 		return null;
 	}
 
@@ -260,7 +260,7 @@ class Paths
 	}
 
 	inline static public function songJson(song:String, secondSong:String, ?library:String)
-		return getPath('songs/${song.toLowerCase()}/${secondSong.toLowerCase()}.json', TEXT, library);
+		return getPath('songs/${song.toLowerCase()}/charts/${secondSong.toLowerCase()}.json', TEXT, library);
 
 	@:keep
 	static public function sound(key:String, ?library:String):Dynamic
@@ -283,15 +283,17 @@ class Paths
 
 	inline static public function voices(song:String):Any
 	{
-		var songKey:String = '${CoolUtil.swapSpaceDash(song.toLowerCase())}/Voices';
-		var voices = returnSound('songs', songKey);
+		var songKey:String = '${CoolUtil.swapSpaceDash(song.toLowerCase())}';
+		var voices = returnSound('songs/$songKey/song', 'Voices');
+		Logs.trace('src/Paths.hx:288: Succesfully loaded assets/songs/$songKey/song/Inst.ogg', INFO, #if ansi ANSI.Attribute.Green #end);
 		return voices;
 	}
 
 	inline static public function inst(song:String):Any
 	{
-		var songKey:String = '${CoolUtil.swapSpaceDash(song.toLowerCase())}/Inst';
-		var inst = returnSound('songs', songKey);
+		var songKey:String = '${CoolUtil.swapSpaceDash(song.toLowerCase())}';
+		var inst = returnSound('songs/$songKey/song', 'Inst');
+		Logs.trace('src/Paths.hx:296: Succesfully loaded assets/songs/$songKey/song/Inst.ogg', INFO, #if ansi ANSI.Attribute.Green #end);
 		return inst;
 	}
 
