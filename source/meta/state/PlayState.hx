@@ -1896,7 +1896,7 @@ class PlayState extends MusicBeatState
 		dialogueTabi = new Dialogue(curSong.toLowerCase().replace(" ", "-"));
 		dialogueTabi.finishCallback = startCountdown;
 
-		add(dialogueBox);
+		add(dialogueTabi);
 	}
 
 	public static function skipCutscenes():Bool

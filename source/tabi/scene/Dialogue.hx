@@ -22,27 +22,9 @@ import flixel.system.FlxSound;
 typedef DialogueInfo =
 {
 	var char:String;
-	var expression:String;
 	var frame:Int;
 	var text:String;
 	var speechRef:String;
-}
-
-enum abstract CharacterEffects(Int)
-{
-	var MINOR_SHAKE:CharacterEffects = 0;
-
-	@:from
-	static public function fromString(s:String)
-	{
-		return switch (s)
-		{
-			case "minor_shake":
-				MINOR_SHAKE;
-			case _:
-				null;
-		};
-	}
 }
 
 class Dialogue extends FlxTypedGroup<FlxSprite>
@@ -51,7 +33,7 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 	public var dialogueList:Array<DialogueInfo> = [];
 
 	public var backframe:FlxSprite;
-	public var bubble:FlxSprite;
+	public var dialogueFrame:FlxSprite;
 
 	public var characters:Map<String, FlxSprite> = [];
 	public var speech:FlxTypeText;
@@ -68,6 +50,14 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		this.camera = PlayState.dialogueHUD;
 
 		backframe = new FlxSprite();
+		backframe.antialiasing = !Init.trueSettings.get('Disable Antialiasing');
+		backframe.makeGraphic(FlxG.width, FlxG.height, FlxColor.PURPLE);
+		add(backframe);
+
+		dialogueFrame = new FlxSprite().makeGraphic(FlxG.width, Std.int(FlxG.height * 0.07), FlxColor.BLACK);
+		dialogueFrame.y = FlxG.height - dialogueFrame.height;
+		dialogueFrame.alpha = 0.6;
+		add(dialogueFrame);
 
 		trace('dialogue $song');
 
@@ -106,13 +96,20 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 
 	private function nextDialogue():Void
 	{
-		/*if (finishedSpeech)
-		{*/
+		if (finishedSpeech)
+		{
 			dialogueList.shift();
 
 			if (dialogueList.length == 0)
 				finishDialogue();
-		//}
+		}
+		else
+		{
+			if (currentSpeech?.playing)
+				currentSpeech.stop();
+
+			finishedSpeech = true;
+		}
 	}
 
 	private function finishDialogue():Void
@@ -123,6 +120,8 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 			{
 				new FlxTimer().start(1.0, function(tmr:FlxTimer)
 				{
+					kill();
+
 					if (finishCallback != null)
 						finishCallback();
 				});
@@ -145,6 +144,8 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		}
 
 		add(newChar);
+
+		trace('char $char');
 		characters.set(char, newChar);
 	}
 }

@@ -364,8 +364,6 @@ class AlphaCharacter extends FlxSprite
 		scale.set(textSize, textSize);
 		updateHitbox();
 
-		FlxG.log.add('the row' + row);
-
 		y = (110 - height);
 		y += row * 50;
 	}

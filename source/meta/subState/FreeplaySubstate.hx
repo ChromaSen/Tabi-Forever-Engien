@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import meta.MusicBeat.MusicBeatSubState;
 
@@ -139,8 +140,8 @@ class FreeplaySubstate extends MusicBeatSubState
 		var screenPosition:FlxPoint = spr.getScreenPosition();
 		var mousePosition:FlxPoint = FlxG.mouse.getScreenPosition(camera);
 
-		return (mousePosition.x >= screenPosition.x && mousePosition.x <= screenPosition.x + spr.width)
-			&& (mousePosition.y >= screenPosition.y && mousePosition.y <= screenPosition.y + spr.height);
+		return (mousePosition.x >= screenPosition.x - 20 && mousePosition.x <= screenPosition.x + spr.width + 40)
+			&& (mousePosition.y >= screenPosition.y - 20 && mousePosition.y <= screenPosition.y + spr.height + 40);
 	}
 }
 
