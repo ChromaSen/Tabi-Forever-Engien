@@ -30,7 +30,14 @@ typedef DialogueInfo =
 class Dialogue extends FlxTypedGroup<FlxSprite>
 {
 	public var song:String = '';
-	public var dialogueList:Array<DialogueInfo> = [];
+	public var dialogueList:Array<DialogueInfo> = [
+		{
+			char: 'bf',
+			frame: 0,
+			text: 'haha ass shit error missing file',
+			speechRef: 'speak-0'
+		}
+	];
 
 	public var backframe:FlxSprite;
 	public var dialogueFrame:FlxSprite;
@@ -58,6 +65,13 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		dialogueFrame.y = FlxG.height - dialogueFrame.height;
 		dialogueFrame.alpha = 0.6;
 		add(dialogueFrame);
+
+		speech = new FlxTypeText(0, 0, Math.floor(FlxG.width * 0.7), "", 16);
+		speech.screenCenter(X);
+		speech.y = dialogueFrame.y + (dialogueFrame.height / 2) - (speech.height  / 2);
+		speech.setFormat(Paths.font("lato_bold.ttf"), 22);
+		speech.alignment = CENTER;
+		add(speech);
 
 		trace('dialogue $song');
 
@@ -91,7 +105,8 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 
 	private inline function startDialogue():Void
 	{
-		nextDialogue();
+		speech.resetText(dialogueList[0].text);
+		speech.start(0.04, true);
 	}
 
 	private function nextDialogue():Void
@@ -99,14 +114,23 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		if (finishedSpeech)
 		{
 			dialogueList.shift();
-
+			
 			if (dialogueList.length == 0)
 				finishDialogue();
+			else
+			{
+				trace('dun dialogue');
+
+				speech.resetText(dialogueList[0].text);
+				speech.start(0.04, true);
+			}
 		}
 		else
 		{
 			if (currentSpeech?.playing)
 				currentSpeech.stop();
+
+			speech.skip();
 
 			finishedSpeech = true;
 		}

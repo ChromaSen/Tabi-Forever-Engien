@@ -100,7 +100,7 @@ class PauseSubState extends MusicBeatSubState
 
 		changeSelection();
 
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+		camera = PlayState.pauseHUD;
 	}
 
 	override function update(elapsed:Float)

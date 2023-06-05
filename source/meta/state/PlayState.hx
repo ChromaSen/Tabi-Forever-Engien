@@ -137,6 +137,7 @@ class PlayState extends MusicBeatState
 	public static var camHUD:FlxCamera;
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
+	public static var pauseHUD:FlxCamera;
 
 	public var camDisplaceX:Float = 0;
 	public var camDisplaceY:Float = 0; // might not use depending on result
@@ -276,7 +277,7 @@ class PlayState extends MusicBeatState
 		gf = new Character();
 		gf.adjustPos = false;
 		gf.setCharacter(300, 100, stageBuild.returnGFtype(curStage));
-	//	gf.scrollFactor.set(0.95, 0.95);
+		//	gf.scrollFactor.set(0.95, 0.95);
 
 		dadOpponent = new Character().setCharacter(50, 850, SONG.player2);
 		boyfriend = new Boyfriend();
@@ -304,12 +305,11 @@ class PlayState extends MusicBeatState
 		if (curStage == 'highway')
 			add(stageBuild.limo);
 
-		if(curStage.toLowerCase()=='date')
+		if (curStage.toLowerCase() == 'date')
 		{
 			add(boyfriend);
 			add(dadOpponent);
 		}
-
 
 		add(dadOpponent);
 		add(boyfriend);
@@ -368,7 +368,8 @@ class PlayState extends MusicBeatState
 
 		//
 		var placement = (FlxG.width / 2);
-		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, SONG.player2.contains("tabi"), 4, Init.trueSettings.get('Downscroll'));
+		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, SONG.player2.contains("tabi"), 4,
+			Init.trueSettings.get('Downscroll'));
 		dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
@@ -414,6 +415,10 @@ class PlayState extends MusicBeatState
 		dialogueHUD = new FlxCamera();
 		dialogueHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(dialogueHUD, false);
+
+		pauseHUD = new FlxCamera();
+		pauseHUD.bgColor.alpha = 0;
+		FlxG.cameras.add(pauseHUD, false);
 
 		//
 		keysArray = [
@@ -649,8 +654,10 @@ class PlayState extends MusicBeatState
 			}
 
 			// make sure you're not cheating lol
-			#if !debug if (!isStoryMode)
-			{ #end
+			#if !debug
+			if (!isStoryMode)
+			{
+			#end
 				// charting state (more on that later)
 				if ((FlxG.keys.justPressed.SEVEN) && (!startingSong))
 				{
@@ -674,7 +681,7 @@ class PlayState extends MusicBeatState
 					else
 						Main.switchState(this, new AnimationDebug(boyfriend.curCharacter));
 				}
-			#if !debug } #end
+			#if !debug} #end
 
 			///*
 			if (startingSong)
