@@ -10,6 +10,8 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import meta.state.PlayState;
 import openfl.Assets;
+import openfl.media.Sound;
+import tjson.TJSON;
 
 using StringTools;
 
@@ -29,6 +31,8 @@ typedef DialogueInfo =
 
 class Dialogue extends FlxTypedGroup<FlxSprite>
 {
+	private static var __soundCache:Map<String, Sound> = [];
+
 	public var song:String = '';
 	public var dialogueList:Array<DialogueInfo> = [
 		{
@@ -56,6 +60,9 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		this.song = song;
 		this.camera = PlayState.dialogueHUD;
 
+		currentSpeech = new FlxSound();
+		FlxG.sound.list.add(currentSpeech);
+
 		backframe = new FlxSprite();
 		backframe.antialiasing = !Init.trueSettings.get('Disable Antialiasing');
 		backframe.makeGraphic(FlxG.width, FlxG.height, FlxColor.PURPLE);
@@ -73,8 +80,6 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		speech.alignment = CENTER;
 		add(speech);
 
-		trace('dialogue $song');
-
 		switch (song)
 		{
 			case 'my-battle':
@@ -90,6 +95,13 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 			default:
 				trace(song);
 		}
+
+		if (Assets.exists(Paths.file('data/dialogue/$song.json'))) 
+		{
+			dialogueList = TJSON.parse(Paths.file('data/dialogue/$song.json'));
+		}
+		else
+			trace(song);
 	}
 
 	private var finishedSpeech:Bool = false;
@@ -103,6 +115,7 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		super.update(elapsed);
 	}
 
+	@:keep
 	private inline function startDialogue():Void
 	{
 		speech.resetText(dialogueList[0].text);
@@ -142,7 +155,7 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 			ease: FlxEase.quadOut,
 			onComplete: function(twn:FlxTween)
 			{
-				new FlxTimer().start(1.0, function(tmr:FlxTimer)
+				new FlxTimer().start(0.3, function(tmr:FlxTimer)
 				{
 					kill();
 
