@@ -132,7 +132,7 @@ class PlayState extends MusicBeatState
 	var previousFrameTime:Int = 0;
 	var lastReportedPlayheadPosition:Int = 0;
 	var songTime:Float = 0;
-
+	public var camOther:FlxCamera;
 	public static var barHUD:FlxCamera;
 	public static var camHUD:FlxCamera;
 	public static var camGame:FlxCamera;
@@ -176,7 +176,11 @@ class PlayState extends MusicBeatState
 	public static var lastRating:FlxSprite;
 	// stores the last combo objects in an array
 	public static var lastCombo:Array<FlxSprite>;
-
+	public static var addGf:Bool=true;
+	public var main_overlay:FlxSprite;
+	public var main_bg:FlxSprite;
+	public var broken_door:FlxSprite;
+	public var dark:FlxSprite;
 	function resetStatics()
 	{
 		// reset any values and variables that are static
@@ -233,8 +237,9 @@ class PlayState extends MusicBeatState
 
 		// create the hud camera (separate so the hud stays on screen)
 		camHUD = new FlxCamera();
+		camOther = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
-
+		camOther.bgColor.alpha = 0;
 		barHUD = new FlxCamera();
 		barHUD.bgColor.alpha = 0;
 
@@ -242,7 +247,7 @@ class PlayState extends MusicBeatState
 
 		FlxG.cameras.add(barHUD, false);
 		FlxG.cameras.add(camHUD, false);
-
+		FlxG.cameras.add(camOther, false);
 		allUIs.push(barHUD);
 		allUIs.push(camHUD);
 
@@ -273,6 +278,60 @@ class PlayState extends MusicBeatState
 		stageBuild = new Stage(curStage);
 		add(stageBuild);
 
+		switch(curStage){
+			case 'idfk':
+				defaultCamZoom = 1;
+					dadOpponent=new Character();
+				dadOpponent.setCharacter(665, 278.2,'gfscary');
+				add(dadOpponent);
+				remove(dadOpponent);
+
+				dadOpponent=new Character();
+				dadOpponent.setCharacter(665, 278.2,'dd');
+				add(dadOpponent);
+				remove(dadOpponent);
+				boyfriend = new Boyfriend();
+				boyfriend.setCharacter(150, 295, 'tabi-true');
+				add(boyfriend);
+				remove(boyfriend);
+				boyfriend = new Boyfriend();
+				boyfriend.setCharacter(260, 195, 'tabi-wtf');
+				add(boyfriend);
+				remove(boyfriend);
+				dark= new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+				dark.setGraphicSize(Std.int(FlxG.width * 5), Std.int(FlxG.height * 5));
+				dark.screenCenter();
+				dark.scrollFactor.set();
+				dark.alpha = 0;
+				dark.cameras = [camOther];
+				add(dark);
+					main_overlay = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/idfk/MAIN_overlay'));
+					main_overlay.antialiasing=false;
+					main_overlay.updateHitbox();
+					main_overlay.screenCenter();
+					main_overlay.cameras=[camOther];
+					main_overlay.alpha=0.6;
+						add(main_overlay);
+
+				main_bg = new FlxSprite(0, 0);
+				main_bg.frames = Paths.getSparrowAtlas('backgrounds/idfk/Main_BG');
+				main_bg.animation.addByPrefix('idle', 'MAIN BG образец', 24);
+				main_bg.animation.play('idle', true);
+				main_bg.alpha=0;
+				add(main_bg);
+
+				broken_door = new FlxSprite().loadGraphic(Paths.image("backgrounds/idfk/Broken_Door_BG"));
+				broken_door.antialiasing=false;
+				broken_door.screenCenter();
+				broken_door.scale.set(1.15,1.15);
+				add(broken_door);
+		}
+		
+		switch(curStage.toLowerCase()){
+			case 'beach'|'alley'|'date'|'idfk':
+				addGf=false;
+		}
+
 		// set up characters here too
 		gf = new Character();
 		gf.adjustPos = false;
@@ -299,7 +358,9 @@ class PlayState extends MusicBeatState
 			assetModifier = 'genocide';
 
 		// add characters
-		add(gf);
+		if(addGf){
+			add(gf);
+		}
 
 		// add limo cus dumb layering
 		if (curStage == 'highway')
@@ -335,7 +396,7 @@ class PlayState extends MusicBeatState
 		strumLines = new FlxTypedGroup<Strumline>();
 
 		// generate the song
-		generateSong(SONG.song);
+		//generateSong(SONG.song);
 
 		// set the camera position to the center of the stage
 		camPos.set(gf.x + (gf.frameWidth / 2), gf.y + (gf.frameHeight / 2));
@@ -374,7 +435,7 @@ class PlayState extends MusicBeatState
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
 
-		if (curStage.toLowerCase() == 'date')
+		if (curStage.toLowerCase() == 'date'||curStage.toLowerCase()=='idfk')
 		{
 			boyfriendStrums = new Strumline(placement - (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false,
 				true, 4, Init.trueSettings.get('Downscroll'));
@@ -389,6 +450,8 @@ class PlayState extends MusicBeatState
 
 		strumLines.add(dadStrums);
 		strumLines.add(boyfriendStrums);
+
+		generateSong(SONG.song);
 
 		// strumline camera setup
 		strumHUD = [];
@@ -437,9 +500,6 @@ class PlayState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		// call the funny intro cutscene depending on the song
-		if (isStoryMode)
-			songIntroCutscene();
-		else
 			startCountdown();
 
 		/**
@@ -1523,9 +1583,15 @@ class PlayState extends MusicBeatState
 	{
 		startingSong = false;
 
+		trace(curSong.toLowerCase());
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
 
+		if(curSong.toLowerCase()=='freaking-out-alone'){
+			FlxTween.tween(FlxG.camera,{zoom:1.3},9.5,{onComplete:function(sdfksdf:FlxTween){
+				defaultCamZoom=1;
+			}});
+		}
 		if (!paused)
 		{
 			songMusic.play();
@@ -1574,6 +1640,12 @@ class PlayState extends MusicBeatState
 		FlxG.sound.list.add(songMusic);
 		FlxG.sound.list.add(vocals);
 
+		if(curSong.toLowerCase()=='freaking-out-alone'){
+			camHUD.visible=false;
+			dadOpponent.visible=false;
+			dadStrums.visible=false;
+		}
+
 		// generate the chart
 		unspawnNotes = ChartLoader.generateChartType(SONG, determinedChartType);
 		// sometime my brain farts dont ask me why these functions were separated before
@@ -1607,10 +1679,76 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		//*/
 
+		if(curSong.toLowerCase()=='freaking-out-alone'){
+			switch(curStep){
+				case 250:
+					dark.alpha = 1;
+				case 260:
+					remove(broken_door);
+					camHUD.visible=true;
+					flash();
+					main_bg.alpha=1;
+					dark.alpha = 0;
+					boyfriend.setCharacter(660, 469, 'tabi-true');
+					dadOpponent.setPosition(660, 469);
+					boyfriend.setPosition(150, 395);
+					dadStrums.visible=true;
+					dadOpponent.visible=true;
+				case 508:
+					dark.alpha=1;
+					dadStrums.visible=false;
+				case 516:
+					dadStrums.visible = true;
+					dark.alpha = 0;
+					flash();
+					zoomHit=true;
+				case 773, 1287:
+					zoomHit=false;
+				case 901:
+					dark.alpha=1;
+					FlxTween.tween(dark,{alpha:0},11.3,{
+						onComplete:function(dfskjojklsdf:FlxTween){
+							dark.alpha=0;
+						}
+					});
+				case 1028:
+					FlxG.camera.flash(FlxColor.WHITE, 1.4);
+					zoomHit=true;
+				case 1414:
+					dark.alpha=1;
+					boyfriendStrums.visible=false;
+				case 1538:
+					boyfriendStrums.visible = true;
+				case 1540:
+					dark.alpha = 0;
+					flash();
+				case 1541:
+					dadOpponent.setCharacter(660, 469,'dd');
+					uiHUD.iconP2.updateIcon('dd');
+					dadOpponent.setPosition(660, 319);
+				case 1924:
+					flash();
+					zoomHit=true;
+				case 2181:
+					zoomHit=false;
+					dark.alpha=1;
+					FlxTween.tween(dark,{alpha:0},11.5,{onComplete:function(fjdsfj:FlxTween){
+						dark.alpha=0;
+					}});
+				case 2308:
+					flash();
+					zoomHit=true;
+				case 2821:
+					zoomHit=false;
+			}
+		}
 		if (songEvents != null)
 			songEvents.stepHit(curStep);
 	}
 
+	function flash(){
+		FlxG.camera.flash(FlxColor.WHITE, 1.4);
+	}
 	private function charactersDance(curBeat:Int)
 	{
 		if ((curBeat % gfSpeed == 0) && ((gf.animation.curAnim.name.startsWith("idle") || gf.animation.curAnim.name.startsWith("dance"))))
@@ -1630,14 +1768,13 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0 && zoomHit)
-			&& (!Init.trueSettings.get('Reduced Movements'))
+		if ((FlxG.camera.zoom < 1.35 && curBeat % 2 == 0 && zoomHit)
 			&& (boyfriendStrums.allNotes.members.length > 2 || dadStrums.allNotes.members.length > 2))
 		{
-			FlxG.camera.zoom += 0.015;
-			camHUD.zoom += 0.05;
+			FlxG.camera.zoom += 0.018;
+			camHUD.zoom += 0.08;
 			for (hud in strumHUD)
-				hud.zoom += 0.05;
+				hud.zoom += 0.08;
 		}
 
 		if (isGenocide)
@@ -1825,7 +1962,7 @@ class PlayState extends MusicBeatState
 				transOut = FlxTransitionableState.defaultTransOut;
 
 				// change to the menu state
-				Main.switchState(this, new StoryMenuState());
+				Main.switchState(this, new NewMainMenuState());
 
 				// save the week's score if the score is valid
 				if (SONG.validScore)

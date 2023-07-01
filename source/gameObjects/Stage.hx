@@ -96,9 +96,17 @@ class Stage extends FlxTypedGroup<FlxBasic>
 			switch (CoolUtil.spaceToDash(PlayState.SONG.song.toLowerCase()))
 			{
 				case 'my-battle' | 'last-chance':
-					curStage = 'tabi';
+					curStage = 'date';
 				case 'genocide':
 					curStage = 'genocide';
+				case 'embrace':
+					curStage='beach';
+				case 'last-memories':
+					curStage='date';
+				case 'judas-kiss':
+					curStage='alley';
+				case 'freaking-out-alone':
+					curStage='idfk';
 				default:
 					curStage = 'stage';
 			}
@@ -167,12 +175,12 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				fg.antialiasing=false;
 				fg.screenCenter();
 				foreground.add(fg);
-
+/*
 			case 'idfk':
-				PlayState.defaultCamZoom=1.1;
+				PlayState.defaultCamZoom=1;
 
 
-				/*
+				
 				main_overlay = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/idfk/MAIN_overlay'));
 				main_overlay.antialiasing=false;
 				main_overlay.updateHitbox();
@@ -180,7 +188,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				main_overlay.cameras=[PlayState.camHUD];
 					add(main_overlay);
 				It's not transparent, fuck
-				*/
+				
 			
 				main_bg=new FlxSprite(0,0);
 				main_bg.frames=Paths.getSparrowAtlas('backgrounds/idfk/Main_BG');
@@ -188,6 +196,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				main_bg.animation.play('idle',true);
 
 				add(main_bg);
+				*/
 			case 'genocide':
 				PlayState.defaultCamZoom = 0.8;
 				bars.visible=true;
@@ -299,18 +308,6 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				case 'gf':
 					char.setPosition(gf.x, gf.y);
 					gf.visible = false;
-				/*
-					if (isStoryMode)
-					{
-						camPos.x += 600;
-						tweenCamIn();
-				}*/
-				/*
-					case 'spirit':
-						var evilTrail = new FlxTrail(char, null, 4, 24, 0.3, 0.069);
-						evilTrail.changeValuesEnabled(false, false, false, false);
-						add(evilTrail);
-				 */
 
 				case 'tabi':
 					boyfriend.x = 1000;
@@ -326,23 +323,19 @@ class Stage extends FlxTypedGroup<FlxBasic>
 					dad.x = 0;
 					dad.y = 600;
 				case 'dd':
-					gf.visible=false;
 					boyfriend.x=120;
 					boyfriend.y=315;
 					dad.x=700;
 					dad.y=237;
 				case 'tabidate':
-					gf.visible=false;
-					boyfriend.setPosition(140,188);
+					boyfriend.setPosition(152.9,189);
 					dad.setPosition(665,278.2);
 				case 'tabi-skelet':
-					gf.visible=false;
 					dad.visible=false;
 					boyfriend.setPosition(180,95);
 					boyfriend.scale.set(0.9, 0.9);
 				case 'tabi-gf-beach':
 					dad.visible=false;
-					gf.visible=false;
 					boyfriend.setPosition(250,170);
 					
 			}
@@ -379,6 +372,12 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				boyfriend.y += 220;
 				gf.x += 180;
 				gf.y += 300;
+			case 'idfk':
+				dad.setPosition(660,469);
+				boyfriend.setPosition(150,395);
+		}
+		if(dad.curCharacter=='tabi-wtf'){
+			dad.setPosition(260, 195);
 		}
 	}
 

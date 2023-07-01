@@ -90,6 +90,9 @@ class ForeverAssets
 				rating.x -= 130;
 				rating.y -= 60;
 				rating.acceleration.y = 550;
+				if(PlayState.curStage=='idfk'){
+					rating.visible=false;
+				}
 				rating.velocity.y = -FlxG.random.int(140, 175);
 				rating.velocity.x = -FlxG.random.int(0, 10);
 				rating.animation.add('base', [

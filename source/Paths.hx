@@ -118,36 +118,29 @@ class Paths
 		localTrackedAssets = [];
 	}
 
-	public static function returnGraphic(key:String, ?library:String, ?textureCompression:Bool = false)
+	public static function returnGraphic(key:String, ?library:String)
 	{
 		var path = getPath('images/$key.png', IMAGE, library);
-		if (FileSystem.exists(path))
+		if (OpenFlAssets.exists(path, IMAGE))
 		{
-			if (!currentTrackedAssets.exists(key))
+			if (!currentTrackedAssets.exists(path))
 			{
-				var bitmap = BitmapData.fromFile(path);
+				var newBitmap:BitmapData = OpenFlAssets.getBitmapData(path);
 				var newGraphic:FlxGraphic;
-				if (textureCompression)
-				{
-					var texture = FlxG.stage.context3D.createTexture(bitmap.width, bitmap.height, BGRA, true, 0);
-					texture.uploadFromBitmapData(bitmap);
-					currentTrackedTextures.set(key, texture);
-					bitmap.dispose();
-					bitmap.disposeImage();
-					bitmap = null;
-					//trace('new texture $key, bitmap is $bitmap');
-					newGraphic = FlxGraphic.fromBitmapData(BitmapData.fromTexture(texture), false, key, false);
-				}
-				else
-				{
-					newGraphic = FlxGraphic.fromBitmapData(bitmap, false, key, false);
-					//god this trace is so fucking annoying
-					//trace('new bitmap $key, not textured');
-				}
-				currentTrackedAssets.set(key, newGraphic);
+
+				var newTexture:Texture = FlxG.stage.context3D.createTexture(newBitmap.width, newBitmap.height, BGRA, false);
+				newTexture.uploadFromBitmapData(newBitmap);
+				currentTrackedTextures.set(path, newTexture);
+				newBitmap.dispose();
+				newBitmap.disposeImage();
+				newBitmap = null;
+				newGraphic = FlxG.bitmap.add(BitmapData.fromTexture(newTexture), false, path);
+
+				newGraphic.persist = true;
+				currentTrackedAssets.set(path, newGraphic);
 			}
-			localTrackedAssets.push(key);
-			return currentTrackedAssets.get(key);
+			localTrackedAssets.push(path);
+			return currentTrackedAssets.get(path);
 		}
 		Logs.trace('src/Paths.hx:152: $key returned null.', Logs.DebugLevel.WARNING, #if ansi ANSI.Attribute.Red #end);
 		return null;
@@ -297,9 +290,9 @@ class Paths
 		return inst;
 	}
 
-	inline static public function image(key:String, ?library:String, ?textureCompression:Bool = false)
+	inline static public function image(key:String, ?library:String)
 	{
-		var returnAsset:FlxGraphic = returnGraphic(key, library, textureCompression);
+		var returnAsset:FlxGraphic = returnGraphic(key, library);
 		return returnAsset;
 	}
 

@@ -1,8 +1,10 @@
 package meta;
 
 import flixel.FlxG;
+import flixel.util.FlxColor;
 import lime.utils.Assets;
 import meta.state.PlayState;
+import openfl.display.BitmapData;
 
 using StringTools;
 
@@ -101,6 +103,42 @@ class CoolUtil
 			dumbArray.push(i);
 		}
 		return dumbArray;
+	}
+	public static function getDominantIconColor(char:String)
+	{
+
+		var iconBitmapData:BitmapData = BitmapData.fromFile('assets/images/icons/icon-$char.png');
+		var colorDict:Map<Int, Int> = new Map<Int, Int>();
+		for (x in 0...iconBitmapData.width)
+		{
+			for (y in 0...iconBitmapData.height)
+			{
+				var pixelColour:Int = iconBitmapData.getPixel32(x, y);
+				if (pixelColour != 0 && pixelColour != 0xFF000000)
+				{
+					if (colorDict.exists(pixelColour))
+					{
+						colorDict.set(pixelColour, colorDict.get(pixelColour) + 1);
+					}
+					else
+					{
+						colorDict.set(pixelColour, 1);
+					}
+				}
+			}
+		}
+		var mostFrequentColour:Int = 0;
+		var mostFrequentColourFrequency:Int = 0;
+		for (color in colorDict.keys())
+		{
+			if (colorDict.get(color) > mostFrequentColourFrequency)
+			{
+				mostFrequentColour = color;
+				mostFrequentColourFrequency = colorDict.get(color);
+			}
+		}
+		var dominantColour:FlxColor = FlxColor.fromInt(mostFrequentColour);
+		return dominantColour;
 	}
 
 	public static function formatAccuracy(value:Float, dec:Int = 2):String
