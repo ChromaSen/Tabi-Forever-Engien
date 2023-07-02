@@ -124,16 +124,16 @@ class Character extends FNFSprite
 				animation.addByPrefix('singLEFT', 'DD Left pose', 24);
 
 				playAnim('idle');
-				characterData.camOffsetX=-370;
-				characterData.camOffsetY=-40;
+				characterData.camOffsetX=-300;
+				characterData.camOffsetY=30;
 			case 'tabi-true':
 				tex = Paths.getSparrowAtlas('characters/TABI_assets');
 				frames = tex;
 				animation.addByPrefix('idle', 'TABI IDLE', 24, false);
 				animation.addByPrefix('singUP', 'TABI UP', 24);
-				animation.addByPrefix('singRIGHT', 'TABI RIGHT', 24);
+				animation.addByPrefix('singRIGHT', 'TABI LEFT', 24);
 				animation.addByPrefix('singDOWN', 'TABI DOWN', 24);
-				animation.addByPrefix('singLEFT', 'TABI LEFT', 24);
+				animation.addByPrefix('singLEFT', 'TABI RIGHT', 24);
 				animation.addByPrefix('singUPmiss', 'MISS TABI UP', 24, false);
 				animation.addByPrefix('singLEFTmiss', 'MISS TABI LEFT', 24, false);
 				animation.addByPrefix('singRIGHTmiss', 'MISS TABI RIGHT', 24, false);
@@ -143,8 +143,35 @@ class Character extends FNFSprite
 
 				flipX=true;
 
-				characterData.camOffsetX=-365;
-				characterData.camOffsetY =-110;
+				characterData.camOffsetX=-350;
+				characterData.camOffsetY =-50;
+			case 'tabi-wtf':
+				tex = Paths.getSparrowAtlas('characters/Mimick_TABI');
+				frames = tex;
+				animation.addByPrefix('idle', 'YANTA MIMICK IDLE', 24, false);
+				animation.addByPrefix('singUP', 'YANTA MIMICK UP', 24);
+				animation.addByPrefix('singRIGHT', 'YANTA MIMICK LEFT', 24);
+				animation.addByPrefix('singDOWN', 'YANTA MIMICK DOWN', 24);
+				animation.addByPrefix('singLEFT', 'YANTA MIMICK RIGHT', 24);
+
+				playAnim('idle');
+
+				flipX = true;
+
+				characterData.camOffsetX = -100;
+				characterData.camOffsetY = -100;
+			case 'gfscary':
+				tex = Paths.getSparrowAtlas('characters/gfscarydamn');
+				frames = tex;
+				animation.addByPrefix('idle', 'GF dancing beat', 24, false);
+				animation.addByPrefix('singUP', 'GF Up pose', 24);
+				animation.addByPrefix('singRIGHT', 'GF Right pose', 24);
+				animation.addByPrefix('singDOWN', 'GF Down pose', 24);
+				animation.addByPrefix('singLEFT', 'GF Left pose', 24);
+
+				playAnim('idle');
+				characterData.camOffsetX = -350;
+				characterData.camOffsetY = -55;
 			case 'bf':
 				frames = Paths.getSparrowAtlas('characters/BOYFRIEND');
 
@@ -230,10 +257,14 @@ class Character extends FNFSprite
 				tex = Paths.getSparrowAtlas('characters/restaurant/tabidate');
 				frames = tex;
 				animation.addByPrefix('idle', 'tabi idle', 24, false);
-				animation.addByPrefix('singUP', 'tabi up', 24);
-				animation.addByPrefix('singRIGHT', 'tabi right', 24);
-				animation.addByPrefix('singDOWN', 'tabi down', 24);
-				animation.addByPrefix('singLEFT', 'tabi left', 24);
+				animation.addByPrefix('singUP', 'tabi up0', 24);
+				animation.addByPrefix('singRIGHT', 'tabi left0', 24);
+				animation.addByPrefix('singDOWN', 'tabi down0', 24);
+				animation.addByPrefix('singLEFT', 'tabi right0', 24);
+				animation.addByPrefix('singUPmiss', 'MISS tabi up', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'MISS tabi right', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'MISS tabi left', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'MISS tabi down', 24, false);
 				flipX=true;
 				characterData.camOffsetX = -295;
 				characterData.camOffsetY = -100;

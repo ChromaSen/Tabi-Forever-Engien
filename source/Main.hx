@@ -8,6 +8,7 @@ import flixel.util.FlxColor;
 import haxe.CallStack;
 import haxe.io.Path;
 import lime.app.Application;
+import meta.Overlay;
 import meta.data.PlayerSettings;
 import meta.data.dependency.Discord;
 import meta.data.dependency.FNFTransition;
@@ -17,7 +18,6 @@ import openfl.events.UncaughtErrorEvent;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
-import meta.Overlay;
 
 // Here we actually import the states and metadata, and just the metadata.
 // It's nice to have modularity so that we don't have ALL elements loaded at the same time.
@@ -53,6 +53,12 @@ class Main extends Sprite
 			['tabi', 'tabi', 'tabi-crazy'],
 			[FlxColor.fromRGB(129, 100, 223)],
 			'vs. TABI'
+		],
+		[
+			['Final Memories', 'Embrace', 'Genocide'],
+			['gfdate', 'tabi', 'tabi-crazy'],
+			[FlxColor.fromRGB(129, 100, 223)],
+			'yeah'
 		]
 	];
 

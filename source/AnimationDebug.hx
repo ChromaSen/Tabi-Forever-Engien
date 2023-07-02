@@ -12,7 +12,7 @@ import flixel.util.FlxColor;
 import gameObjects.Boyfriend;
 import gameObjects.Character;
 import meta.*;
-import meta.state.menus.MainMenuState;
+import meta.state.menus.NewMainMenuState;
 
 //kudos to CCAnon!
 
@@ -70,7 +70,7 @@ class AnimationDebug extends FlxState
 		add(gridBG);
 
 		//change this to true if you wanna apply it on dad
-		isDad = true;
+		isDad = false;
 
 		if (isDad)
 		{
@@ -209,7 +209,7 @@ class AnimationDebug extends FlxState
 
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
-			Main.switchState(this, new MainMenuState());
+			Main.switchState(this, new NewMainMenuState());
 		}
 
 		if (curAnim < 0)
