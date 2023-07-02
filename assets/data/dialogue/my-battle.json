@@ -1,0 +1,68 @@
+[
+    {
+        "char": "gf",
+        "frame": 0,
+        "text": "Hey, boyfriend!",
+        "speechRef": "speak0"
+    },
+    {
+        "char": "bf",
+        "frame": 0,
+        "text": "Bops! Beepi!",
+        "speechRef": ""
+    },
+    {
+        "char": "gf",
+        "frame": 0,
+        "text": "I've got a surprise for you!",
+        "speechRef": "speak1"
+    },
+    {
+        "char": "bf",
+        "frame": 0,
+        "text": "Beep bop?",
+        "speechRef": ""
+    },
+    {
+        "char": "gf",
+        "frame": 0,
+        "text": "Ta-da! I've got an invitation from my father's friend! From what I heard, he's pretty cool!",
+        "speechRef": "speak2"
+    },
+    {
+        "char": "gf",
+        "frame": 0,
+        "text": "We haven't spoken in a year, and it seems like he wants to invite me for something important.",
+        "speechRef": "speak3"
+    },
+    {
+        "char": "gf",
+        "frame": 0,
+        "text": "Sooo I figured, why not take you with me and introduce y'all to each other?",
+        "speechRef": "speak4"
+    },
+    {
+        "char": "bf",
+        "frame": 0,
+        "text": "Boop Da bi Da Bam!",
+        "speechRef": ""
+    },
+    {
+        "char": "bf",
+        "frame": 0,
+        "text": "Bop bi bo Babans! BeSkboo",
+        "speechRef": ""
+    },
+    {
+        "char": "gf",
+        "frame": 0,
+        "text": "Right! I kknew you would love this idea; he loves music too! I bet he'll like you!",
+        "speechRef": "speak5"
+    },
+    {
+        "char": "gf",
+        "frame": 0,
+        "text": "Okay, I'll call a taxi, get ready!",
+        "speechRef": "speak6"
+    }
+]

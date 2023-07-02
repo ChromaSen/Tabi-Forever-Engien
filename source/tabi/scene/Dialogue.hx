@@ -73,12 +73,17 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		dialogueFrame.alpha = 0.6;
 		add(dialogueFrame);
 
-		speech = new FlxTypeText(0, 0, Math.floor(FlxG.width * 0.7), "", 16);
+		speech = new FlxTypeText(0, 0, Math.floor(FlxG.width * 0.85), "", 16);
 		speech.screenCenter(X);
-		speech.y = dialogueFrame.y + (dialogueFrame.height / 2) - (speech.height  / 2);
+		speech.y = dialogueFrame.y + (dialogueFrame.height / 2) - (speech.height / 2);
 		speech.setFormat(Paths.font("lato_bold.ttf"), 22);
 		speech.alignment = CENTER;
 		add(speech);
+		
+		if (Assets.exists(Paths.file('data/dialogue/$song.json'))) 
+			dialogueList = TJSON.parse(sys.io.File.getContent((Paths.file('data/dialogue/$song.json'))));
+		else
+			trace(song);
 
 		switch (song)
 		{
@@ -96,12 +101,14 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 				trace(song);
 		}
 
-		if (Assets.exists(Paths.file('data/dialogue/$song.json'))) 
+		for (list in dialogueList)
 		{
-			dialogueList = TJSON.parse(Paths.file('data/dialogue/$song.json'));
+			if (!__soundCache.exists(list.speechRef))
+			{
+				if (Assets.exists(Paths.getPath('sounds/dialogue/$song/${list.speechRef}', SOUND)))
+					__soundCache.set(list.speechRef, Paths.sound('dialogue/$song/${list.speechRef}'));
+			}
 		}
-		else
-			trace(song);
 	}
 
 	private var finishedSpeech:Bool = false;
@@ -112,14 +119,26 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 		if (canControl && FlxG.keys.anyJustPressed([SPACE, ENTER]))
 			nextDialogue();
 
+		speech.size = 22;
+
+		while (speech.height > dialogueFrame.height)
+			speech.size--;
+
 		super.update(elapsed);
 	}
 
-	@:keep
-	private inline function startDialogue():Void
+	private var currentFrame:Int = 0;
+
+	private function startDialogue():Void
 	{
 		speech.resetText(dialogueList[0].text);
 		speech.start(0.04, true);
+
+		if (__soundCache.exists(dialogueList[0].speechRef))
+		{
+			currentSpeech.loadEmbedded(__soundCache.get(dialogueList[0].speechRef));
+			currentSpeech.play();
+		}
 	}
 
 	private function nextDialogue():Void
@@ -132,10 +151,26 @@ class Dialogue extends FlxTypedGroup<FlxSprite>
 				finishDialogue();
 			else
 			{
-				trace('dun dialogue');
+				trace('${dialogueList[0].speechRef}');
 
 				speech.resetText(dialogueList[0].text);
 				speech.start(0.04, true);
+
+				if (__soundCache.exists(dialogueList[0].speechRef))
+				{
+					currentSpeech.loadEmbedded(__soundCache.get(dialogueList[0].speechRef));
+					currentSpeech.play();
+				}
+
+				if (dialogueList[0].frame != currentFrame)
+				{
+					switch (dialogueList[0].frame)
+					{
+						case -1:
+							FlxTween.color(backframe, 0.5, 0xFFFFFFFF, 0xFF000000);
+					}
+					currentFrame = dialogueList[0].frame;
+				}
 			}
 		}
 		else
